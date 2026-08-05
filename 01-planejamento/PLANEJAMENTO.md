@@ -39,36 +39,42 @@ Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/sug
 - **D3 — Cortes** conforme lista 🧊 do Trello.
 - **D4 — Correções obrigatórias**: coluna RPE, tabela `diagnostics`, volume no backend, score no backend, prompt de 5 blocos, testes, sem backdoor.
 
-## 3. Arquitetura alvo (MVC)
+## 3. Arquitetura alvo (MVC, TypeScript)
 
 ```
 server/src/
-  config/db.js
+  config/db.ts
+  types/        interfaces/tipos compartilhados (User, Division, SetLog, Diagnostic...)
   models/       User, Division, Exercise, Session, SetLog, Diagnostic (SQL)
   controllers/  auth, division, session, diagnostic
   services/     geminiService (5 blocos + mock), volumeService, scoreService
   routes/       finas (URL → controller)
   middleware/   auth (JWT)
-client/src/     views/ components/ services/ context/   ← camada de Visão
+client/src/     views/ components/ services/ context/   ← camada de Visão (React + TS, .tsx)
 ```
+
+Stack em TypeScript nas duas pontas: backend com `tsx`/`ts-node` + `tsc` para build,
+frontend com o template `react-ts` do Vite. `tsconfig.json` em `server/` e `client/`.
 
 Entidades: `users`, `muscle_groups`, `exercises`, `divisions`, `division_exercises`, `sessions`, `set_logs` (type warmup|work, weight, reps, **rpe 6–10**, rir 0–5), `diagnostics` (payload JSONB, score_geral).
 
 ## 4. Cronograma (FDD — uma feature por semana, entregável todo domingo)
 
-| Semana | Período | Feature / Foco | Entregável (domingo) |
-|---|---|---|---|
-| S1 | 05–09/08 | Fundação MVC + banco | Esqueleto full-stack + schema + seed |
-| S2 | 10–16/08 | F1 Autenticação (RF01) | Cadastro/login com JWT + testes |
-| S3 | 17–23/08 | F2a Divisão semanal (RF02) | CRUD divisão por dia da semana |
-| S4 | 24–30/08 | F2b Exercícios da rotina (RF02) | Montagem completa da rotina |
-| S5 | 31/08–06/09 | F3a Execução do treino (RF03) | Séries com tipo/carga/reps/RPE/RIR no banco |
-| S6 | 07–13/09 | F3b + F4 Volume semanal (RF04) | Endpoint de volume + testes = cálculo manual |
-| S7 | 14–20/09 | F5a Diagnóstico IA (RF05/06) | Prompt 5 blocos + score backend + persistência |
-| S8 | 21–27/09 | F5b + F6 Histórico (RF07) | Fluxo ponta-a-ponta completo |
-| S9 | 28/09–04/10 | Hardening + testes integração | 🏁 **DEV PRONTO** — suíte verde, tag v1.0-dev |
-| OUT | 05–19/10 | Validação | Heurística de Nielsen (11/10) + conteúdo IA (18/10) + code freeze (19/10) |
-| OUT/NOV | 20/10–06/11 | Escrita TCC II | Resultados (26/10), revisão orientador (06/11) |
+| Semana | Período | Feature / Foco | Sessão A (back) | Sessão B (front) | Entregável (domingo) |
+|---|---|---|---|---|---|
+| S1 | 05–09/08 | Fundação MVC + banco | Estruturar repo MVC (server + client) | *(mesma sessão A)* | Esqueleto full-stack + schema + seed |
+| S2 | 10–16/08 | F1 Autenticação (RF01) | model User + authController + JWT | Telas Login/Registro + AuthContext | Cadastro/login com JWT + testes |
+| S3 | 17–23/08 | F2a Divisão semanal (RF02) | DivisionModel + divisionController | Tela "Minha Divisão" | CRUD divisão por dia da semana |
+| S4 | 24–30/08 | F2b Exercícios da rotina (RF02) | ExerciseModel + endpoints da rotina | Seleção e ordenação de exercícios | Montagem completa da rotina |
+| S5 | 31/08–06/09 | F3a Execução do treino (RF03) | sessionController + SetLogModel | Tela "Treino de Hoje" (mobile-first) | Séries com tipo/carga/reps/RPE/RIR no banco |
+| S6 | 07–13/09 | F3b + F4 Volume semanal (RF04) | Finalizar sessão + volumeService | Testes do volume + painel "Volume da Semana" | Endpoint de volume + testes = cálculo manual |
+| S7 | 14–20/09 | F5a Diagnóstico IA (RF05/06) | geminiService (prompt 5 blocos) | diagnosticController + score_geral | Prompt 5 blocos + score backend + persistência |
+| S8 | 21–27/09 | F5b + F6 Histórico (RF07) | F6: histórico (backend) | Tela "Diagnóstico da Semana" + histórico (front) | Fluxo ponta-a-ponta completo |
+| S9 | 28/09–04/10 | Hardening + testes integração | Testes de integração (RF05/06/07 + RNF02/05/06) | Responsividade + limpeza + buffer de bugs | 🏁 **DEV PRONTO** — suíte verde, tag v1.0-dev |
+| OUT | 05–19/10 | Validação | — | Heurística de Nielsen (Frente 2) | Heurística de Nielsen (11/10) + conteúdo IA (18/10) + code freeze (19/10) |
+| OUT/NOV | 20/10–06/11 | Escrita TCC II | — | — | Resultados (26/10), revisão orientador (06/11) |
+
+Cada linha S2–S9 tem duas sessões de dev/semana (1 back + 1 front), espelhando 1:1 os cards do Trello e o `TASKS.md`. S1 é exceção: as duas sessões (A e B) estruturam back e front no mesmo esqueleto, sem split funcional.
 
 **Regras anti-atraso:** S9 é o buffer; Gemini sempre atrás de mock; nada entra no escopo sem passar pela lista 🧊; 2 semanas sem entregável = replanejar cortando.
 

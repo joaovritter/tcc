@@ -1,5 +1,9 @@
 # Instruções de consistência — Sistema × Texto do TCC
 
+## Referência do texto do TCC
+
+O texto oficial do TCC está em [tcc/planejamento/tcc1Joao.pdf](tcc1Joao.pdf). É esse documento que define os RFs, RNFs, metodologia, DER e prompt de 5 blocos citados neste diretório — qualquer verificação de "o que o TCC diz" deve consultar esse PDF.
+
 ## Regra principal
 
 O **sistema implementado** e o **texto do TCC** (RFs, RNFs, metodologia, DER, prompt de 5 blocos etc.) devem descrever **exatamente a mesma coisa**. Nenhum dos dois é "a referência automática" — os dois precisam ficar iguais.
