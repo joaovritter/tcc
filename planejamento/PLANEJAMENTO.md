@@ -35,7 +35,7 @@ Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/sug
 ## 2. Decisões de escopo (recomendadas — confirmar até 07/08)
 
 - **D1 — Recomeçar limpo neste repositório (`tcc`)**, MVC desde o início; o projeto antigo vira referência para portar seletivamente (AuthView, WorkoutView podado, seed de exercícios).
-- **D2 — Diagnóstico SEMANAL consolidado** (RF04+RF05), substituindo o feedback por sessão.
+- **D2 — Diagnóstico por SESSÃO** (mantém RF05/RF06 como no texto original do TCC); RF04 (volume semanal por grupamento) é calculado no backend de forma acumulativa, mas não é o gatilho do diagnóstico. ⚠️ ver card Trello sobre revisão de redação.
 - **D3 — Cortes** conforme lista 🧊 do Trello.
 - **D4 — Correções obrigatórias**: coluna RPE, tabela `diagnostics`, volume no backend, score no backend, prompt de 5 blocos, testes, sem backdoor.
 
@@ -68,7 +68,7 @@ Entidades: `users`, `muscle_groups`, `exercises`, `divisions`, `division_exercis
 | S8 | 21–27/09 | F5b + F6 Histórico (RF07) | Fluxo ponta-a-ponta completo |
 | S9 | 28/09–04/10 | Hardening + testes integração | 🏁 **DEV PRONTO** — suíte verde, tag v1.0-dev |
 | OUT | 05–19/10 | Validação | Heurística de Nielsen (11/10) + conteúdo IA (18/10) + code freeze (19/10) |
-| OUT/NOV | 20/10–06/11 | Escrita TCC II | Resultados (26/10), revisão orientador (01/11), **entrega 06/11** |
+| OUT/NOV | 20/10–06/11 | Escrita TCC II | Resultados (26/10), revisão orientador (06/11) |
 
 **Regras anti-atraso:** S9 é o buffer; Gemini sempre atrás de mock; nada entra no escopo sem passar pela lista 🧊; 2 semanas sem entregável = replanejar cortando.
 
