@@ -28,7 +28,9 @@ O protótipo feito com IA usa a mesma stack do TCC (React + Vite + Tailwind no f
 
 ### Extras fora do escopo (a cortar)
 
-Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/suggest-division`) · avaliação IA por sessão · metas de carga por série (`ai_target_*`) · séries tipo "feeder" · calendário mensal · dashboard elaborado · Redux · deploy. Detalhes e justificativas na lista **🧊 Cortado do Escopo** do Trello.
+Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/suggest-division`) · avaliação IA por sessão · metas de carga por série (`ai_target_*`) · calendário mensal · dashboard elaborado · Redux · deploy. Detalhes e justificativas na lista **🧊 Cortado do Escopo** do Trello.
+
+> **Reincluído no escopo (05/08):** séries tipo "feeder" — `SerieTreino.tipo` agora aceita `aquecimento | feeder | valida`.
 
 ---
 

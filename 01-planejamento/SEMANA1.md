@@ -104,14 +104,13 @@ mais simples pra começar, dá pra migrar pra ESM depois se quiser).
 
 ---
 
-## Passo 3 — `server/src/types/` (novo, por causa do TS)
+## Passo 3 — `server/src/types/` (adiado pra Semana 2)
 
 Pasta pra centralizar tipos/interfaces compartilhados entre `models`,
-`controllers` e `services` — por exemplo, mais pra frente: `interface User`,
-`interface SetLog` (com `type: 'warmup' | 'work'`, `rpe: number`, etc.),
-`interface Diagnostic`. Não precisa criar nada aqui ainda na Semana 1 (não
-tem model nenhum funcionando), mas já deixa a pasta reservada — ela vai
-crescer junto com `models/` a partir da Semana 2.
+`controllers` e `services` (`interface User`, `interface SetLog`,
+`interface Diagnostic`...). **Não criar ainda** — sem nenhum `model` de pé,
+não tem o que tipar. Cria junto com o primeiro `model` real (`User`, na
+Semana 2, F1 Autenticação).
 
 ---
 
