@@ -36,6 +36,7 @@ CREATE TABLE Treino (
   id_treino UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fk_usuario UUID NOT NULL REFERENCES Usuario(id_usuario),
   fk_divisao UUID REFERENCES Divisao(id_divisao),
+  completed BOOLEAN NOT NULL DEFAULT FALSE,
   data TIMESTAMP DEFAULT NOW(),
   duracao_total INTEGER
 );
@@ -54,6 +55,7 @@ CREATE TABLE SerieTreino (
 CREATE TABLE DiagnosticoIA (
   id_diagnostico UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fk_usuario UUID NOT NULL REFERENCES Usuario(id_usuario),
+  score_geral INT NOT NULL,
   semana_referencia DATE NOT NULL,
   data_geracao TIMESTAMP DEFAULT NOW(),
   conteudo_json JSONB NOT NULL
