@@ -8,13 +8,16 @@
 > (arquivos `.ts`/`.tsx`, `tsconfig.json`, tipos) em relação a um projeto Node
 > comum — sinalizado em cada passo.
 
+> ✅ **Semana 1 concluída em 09/08/2026.** Todos os critérios de aceite abaixo foram
+> cumpridos. O roteiro fica no repositório como registro do que foi feito.
+
 Critério de aceite (card 🎯 ENTREGÁVEL S1):
-- [ ] API Express sobe com `GET /health` respondendo
-- [ ] Front Vite+React sobe e consome `/health`
-- [ ] `schema.sql` cria as 8 tabelas do DER com FKs — `set_logs` COM coluna `rpe`
-- [ ] Seed com grupos musculares + ~40 exercícios rodando
-- [ ] Chave da API Gemini obtida e testada com um hello world
-- [ ] Commit + push + README com passos de setup
+- [x] API Express sobe com `GET /health` respondendo (`server/src/routes/healthRoutes.ts`)
+- [x] Front Vite+React sobe e consome `/health` (`client/src/App.tsx`)
+- [x] `schema.sql` cria as 8 tabelas do DER com FKs — `SerieTreino` COM coluna `rpe` (CHECK 6–10)
+- [x] Seed rodando: 7 grupamentos + 95 exercícios (`server/src/seed.ts`, em transação)
+- [x] Chave da API Gemini obtida e testada com um hello world (`server/scripts/test-gemini.ts`)
+- [x] Commit + push + README com passos de setup
 
 ---
 

@@ -1,8 +1,9 @@
 # Decisão de design: coluna `muscles[]` na tabela `divisions`
 
-> Documento pra levar pra avaliação externa (outro projeto similar). Registra
-> o contexto, a origem do campo, o problema identificado e as opções
-> avaliadas até agora — nenhuma foi definida ainda.
+> **Status: DECIDIDO em 09/08/2026 — Opção D (o campo não existe).** Documento
+> registra o contexto, a origem do campo, o problema identificado, as opções
+> avaliadas (A/B/C) e a decisão final. Reflexos já aplicados em
+> `PLANEJAMENTO.md` (D5), `TASKS.md` e nos cards S3/S4 do Trello.
 
 ## Contexto do projeto
 
@@ -116,10 +117,75 @@ atualizar.
 - **Consistência de dados:** só a Opção B garante que `muscles[]` nunca
   fique desatualizado em relação a `division_exercises`.
 
-## Estado atual
+## Decisão final
 
-Nenhuma opção foi definida. Opção A foi descartada na avaliação inicial por
-gerar experiência ruim pro usuário (dado desatualizado visível na tela).
-Em aberto entre B e C, buscando avaliação externa (projeto similar já
-entregue) pra decidir qual abordagem usar, ou se existe alternativa melhor
-não considerada aqui.
+**Opção D — sem coluna, músculos sempre derivados via JOIN, com estado
+vazio no dia 1.**
+
+Não existe `muscles[]` (nem qualquer campo equivalente) na tabela
+`divisions`/`Divisao`. Na criação da divisão, o usuário só escolhe o dia da
+semana e digita um nome livre (ex.: "Peito e Tríceps") — sem tela de
+seleção de grupamentos. Na exibição, o backend deriva os músculos
+treinados naquele dia via JOIN
+`divisions → division_exercises → exercises → muscle_groups`
+(`Divisao → DivisaoExercicio → Exercicio → GrupamentoMuscular` no schema
+atual), agregando os grupamentos distintos dos exercícios cadastrados. Se
+a divisão ainda não tem nenhum exercício (cenário do dia 1, antes da
+feature "Exercícios da rotina"), a tela mostra um estado vazio ("Nenhum
+exercício definido ainda") em vez de uma lista de músculos.
+
+Chegou-se a essa decisão passando pelas Opções A, B e C (ver histórico
+abaixo), depois de avaliação externa num projeto de referência ter
+confirmado que o campo nunca tinha uso funcional (só exibição) — o que
+levou à pergunta natural de por que persistir esse dado. A Opção D resolve
+isso na raiz: elimina o campo em vez de tentar mantê-lo consistente.
+
+### Justificativa
+
+1. **Elimina o problema de origem, não só mitiga.** Não existe dado
+   gravado, logo não existe dado pra ficar dessincronizado dos exercícios
+   reais. As Opções A/B/C giravam em torno de "como lidar com a
+   divergência"; D remove a pergunta.
+2. **Reduz fricção do usuário.** Ele não digita a mesma informação duas
+   vezes (nome da divisão + chips de grupamento que muitas vezes só serão
+   confirmados quando os exercícios forem cadastrados). Cadastro fica mais
+   simples: só dia da semana + nome livre.
+3. **Custo de leitura é desprezível nesta escala.** O JOIN com
+   `DISTINCT`/`array_agg` por divisão é uma query trivial para o volume de
+   dados de um TCC (um usuário, poucas divisões, poucos exercícios por
+   dia). O ganho de performance que justificaria persistir o array (razão
+   original da Opção B ter sido descartada) não se aplica aqui.
+4. **Estado vazio é mais honesto que dado adivinhado.** Mostrar "nenhum
+   exercício definido ainda" no dia 1 é mais correto do que mostrar chips
+   escolhidos manualmente (ou sugeridos pela IA) antes de qualquer
+   exercício existir de fato — que era exatamente o cenário problemático
+   que motivou o campo originalmente.
+5. **Sem perda funcional confirmada.** A análise do projeto de referência
+   já havia mostrado que o campo não alimentava cálculo de volume/frequência
+   (esses sempre foram derivados via JOIN em `exercises.muscle_group_id`),
+   não era input de nenhum prompt de diagnóstico de IA, e não alimentava
+   comparação "planejado vs. realizado". A única coisa que se perde é a
+   IA sugerir grupamentos *antes* de existir exercício — que nunca foi
+   consumida por nada além da própria tela.
+
+### Impacto na implementação
+
+- **Schema:** `Divisao` não ganha coluna `muscles`/`grupamentos` — o
+  `schema.sql` atual já está correto nesse sentido (só
+  `id_divisao, fk_usuario, dia_semana, nome`), não é necessária migração.
+- **Criação/edição de divisão:** formulário só pede dia da semana + nome
+  livre. Sem tela/etapa de seleção de grupamentos.
+- **Endpoint de leitura da divisão (GET):** faz o JOIN
+  `Divisao → DivisaoExercicio → Exercicio → GrupamentoMuscular`, agrega
+  grupamentos distintos por divisão, retorna lista vazia quando não há
+  exercícios ainda.
+- **Adicionar/remover exercício da divisão:** nenhum efeito colateral em
+  `Divisao` — o resumo de músculos já reflete a mudança na próxima leitura,
+  sem sync.
+- **Tela "Minha Divisão":** exibe o resumo derivado; mostra estado vazio
+  ("Nenhum exercício definido ainda") quando a divisão não tem exercícios.
+
+## Histórico da decisão (Opções A/B/C avaliadas antes de D)
+
+Registrado como referência do raciocínio percorrido — não reflete mais a
+decisão vigente.

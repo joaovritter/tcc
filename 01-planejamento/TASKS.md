@@ -3,20 +3,24 @@
 > **Quadro:** https://trello.com/b/eWQA6LXr
 > Este arquivo é o espelho em Markdown do Trello. Marque `[x]` aqui **ou** mova/marque no Trello — depois rode a skill **/trello-sync** para sincronizar os dois lados (regra: concluído em qualquer um dos lados = concluído nos dois).
 > Cada tarefa carrega o link do card correspondente — **não remova os links**, são a chave da sincronização.
+>
+> **Decisão vigente (09/08):** a tabela `Divisao` **não tem** `muscles[]` — os grupamentos
+> treinados em cada dia são derivados via JOIN `Divisao → DivisaoExercicio → Exercicio →
+> GrupamentoMuscular`. Ver [`DECISAO-MUSCLES-DIVISIONS.md`](./DECISAO-MUSCLES-DIVISIONS.md) (Opção D).
 
 ---
 
 ## S1 · 05–09/08 · Fundação MVC + Banco
 
-- [ ] 🎯 **ENTREGÁVEL S1 — Esqueleto full-stack rodando + banco criado** (entrega dom 09/08) — [card](https://trello.com/c/0TTVYhbo)
-  - [ ] API Express sobe com GET /health respondendo
-  - [ ] Front Vite+React sobe e consome /health
-  - [ ] schema.sql cria as 8 tabelas do DER com FKs (RNF02) — set_logs COM coluna rpe
-  - [ ] Seed com grupos musculares + ~40 exercícios rodando
-  - [ ] Chave da API Gemini obtida e testada com um hello world
-  - [ ] Commit + push + README com passos de setup
-- [ ] Sessão A — Estruturar repo MVC (server + client) — [card](https://trello.com/c/CKxENmZT)
-- [ ] Sessão B — schema.sql (DER do TCC) + seed de exercícios — [card](https://trello.com/c/RdPWPTlV)
+- [x] 🎯 **ENTREGÁVEL S1 — Esqueleto full-stack rodando + banco criado** (entrega dom 09/08) — [card](https://trello.com/c/0TTVYhbo)
+  - [x] API Express sobe com GET /health respondendo
+  - [x] Front Vite+React sobe e consome /health
+  - [x] schema.sql cria as 8 tabelas do DER com FKs (RNF02) — SerieTreino COM coluna rpe
+  - [x] Seed com grupos musculares + ~40 exercícios rodando (7 grupamentos + 95 exercícios)
+  - [x] Chave da API Gemini obtida e testada com um hello world
+  - [x] Commit + push + README com passos de setup
+- [x] Sessão A — Estruturar repo MVC (server + client) — [card](https://trello.com/c/CKxENmZT)
+- [x] Sessão B — schema.sql (DER do TCC) + seed de exercícios — [card](https://trello.com/c/RdPWPTlV)
 
 ## S2 · 10–16/08 · F1 Autenticação (RF01)
 
@@ -36,7 +40,8 @@
 - [ ] 🎯 **ENTREGÁVEL S3 — CRUD da divisão semanal** (entrega dom 23/08) — [card](https://trello.com/c/jCIep6AI)
   - [ ] GET /divisions e PUT /divisions funcionando (em transação)
   - [ ] Tela Minha Divisão salva e recarrega a semana toda
-  - [ ] Validações: day_of_week 0–6, grupamentos existentes
+  - [ ] Validações: dia_semana 0–6, nome obrigatório, sem dois registros no mesmo dia
+  - [ ] Sem coluna `muscles[]` — músculos derivados via JOIN, estado vazio até a S4 (Decisão D)
   - [ ] Teste de unidade do CRUD passando (matriz RF02)
 - [ ] Sessão A — Backend F2a: DivisionModel + divisionController — [card](https://trello.com/c/rXPtyCKg)
 - [ ] Sessão B — Frontend F2a: tela "Minha Divisão" — [card](https://trello.com/c/GRpUYeXC)
@@ -46,7 +51,8 @@
 - [ ] 🎯 **ENTREGÁVEL S4 — Montagem completa da rotina (RF02 completo)** (entrega dom 30/08) — [card](https://trello.com/c/ZO75u5Rr)
   - [ ] GET /exercises com grupamento muscular e filtro
   - [ ] Adicionar/remover/ordenar exercícios por dia funcionando
-  - [ ] Persistência em division_exercises com order_idx
+  - [ ] Persistência em DivisaoExercicio com ordem
+  - [ ] Resumo de músculos da divisão passa a aparecer (derivado do JOIN, Decisão D)
   - [ ] Fluxo completo divisão → exercícios sem erros no console
   - [ ] Print da rotina montada guardado (figura para o TCC)
 - [ ] Sessão A — Backend F2b: ExerciseModel + endpoints da rotina — [card](https://trello.com/c/vz5Xu9hg)

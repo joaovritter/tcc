@@ -40,6 +40,7 @@ Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/sug
 - **D2 — Diagnóstico por SESSÃO** (mantém RF05/RF06 como no texto original do TCC); RF04 (volume semanal por grupamento) é calculado no backend de forma acumulativa, mas não é o gatilho do diagnóstico. ⚠️ ver card Trello sobre revisão de redação.
 - **D3 — Cortes** conforme lista 🧊 do Trello.
 - **D4 — Correções obrigatórias**: coluna RPE, tabela `diagnostics`, volume no backend, score no backend, prompt de 5 blocos, testes, sem backdoor.
+- **D5 — Divisão sem `muscles[]` (09/08)**: `Divisao` guarda só `dia_semana` + `nome` livre; os grupamentos treinados no dia são **derivados via JOIN** `Divisao → DivisaoExercicio → Exercicio → GrupamentoMuscular` na leitura, com estado vazio enquanto não houver exercício. Elimina dado redundante e a necessidade de sincronizar array com `DivisaoExercicio`. Racional completo em [`DECISAO-MUSCLES-DIVISIONS.md`](./DECISAO-MUSCLES-DIVISIONS.md) (Opção D; A/B/C avaliadas e descartadas).
 
 ## 3. Arquitetura alvo (MVC, TypeScript)
 
@@ -58,7 +59,7 @@ client/src/     views/ components/ services/ context/   ← camada de Visão (Re
 Stack em TypeScript nas duas pontas: backend com `tsx`/`ts-node` + `tsc` para build,
 frontend com o template `react-ts` do Vite. `tsconfig.json` em `server/` e `client/`.
 
-Entidades: `users`, `muscle_groups`, `exercises`, `divisions`, `division_exercises`, `sessions`, `set_logs` (type warmup|work, weight, reps, **rpe 6–10**, rir 0–5), `diagnostics` (payload JSONB, score_geral).
+Entidades (nomes reais do `schema.sql`, em português, como no DER do TCC): `Usuario`, `GrupamentoMuscular`, `Exercicio`, `Divisao` (`dia_semana` 0–6 + `nome` — **sem** `muscles[]`, ver D5), `DivisaoExercicio` (`ordem`), `Treino` (`data`, `duracao_total`, `completed`), `SerieTreino` (`tipo`, `carga`, `repeticoes`, **`rpe` 6–10**, `rir` 0–5), `DiagnosticoIA` (`conteudo_json` JSONB, `score_geral`, `semana_referencia`).
 
 ## 4. Cronograma (FDD — uma feature por semana, entregável todo domingo)
 
