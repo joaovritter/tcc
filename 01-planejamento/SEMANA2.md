@@ -22,7 +22,7 @@ Critério de aceite (card 🎯 ENTREGÁVEL S2):
 
 ---
 
-## Passo 0 — `server/src/types/index.ts`
+## Passo 0 — `server/src/types/indexTypes.ts`
 
 Na Semana 1 isso ficou adiado por falta de model. Agora tem.
 
@@ -43,7 +43,9 @@ export interface Usuario {
 devolver em toda resposta (registro, login, `/me`). Ter um tipo separado
 pra isso torna impossível esquecer e devolver o hash sem querer: se a
 função promete `UsuarioPublico`, o TypeScript reclama se você tentar
-incluir `senha_hash` no retorno.
+incluir `senha_hash` no retorno. Também deixa a assinatura das funções do
+`userModel` mais limpa que repetir `Omit<Usuario, 'senha_hash'>` em cada
+uma.
 
 ```ts
 export interface UsuarioPublico {
@@ -53,16 +55,22 @@ export interface UsuarioPublico {
 }
 ```
 
-**O payload que vai dentro do JWT.** Mínimo possível — só o id, usado pra
-buscar o usuário de novo quando precisar.
+**O payload que vai dentro do JWT.** Sem esse tipo, o retorno de
+`jwt.verify()` vem como `string | JwtPayload` (tudo opcional), e pra ler o
+id seria preciso usar `any` — perdendo a checagem de tipo bem no ponto que
+decide quem é o usuário autenticado.
 
 ```ts
+// Formato do payload guardado dentro do JWT. Sem esse tipo, o retorno de
+// jwt.verify() vem como "string | JwtPayload" (tudo opcional) e pra ler
+// o id seria preciso usar "any" — perdendo a checagem de tipo bem no
+// ponto que decide quem é o usuário autenticado.
 export interface TokenPayload {
   id: string;
 }
 ```
 
-### Arquivo completo — `server/src/types/index.ts`
+### Arquivo completo — `server/src/types/indexTypes.ts`
 
 ```ts
 export interface Usuario {
@@ -78,6 +86,10 @@ export interface UsuarioPublico {
   email: string;
 }
 
+// Formato do payload guardado dentro do JWT. Sem esse tipo, o retorno de
+// jwt.verify() vem como "string | JwtPayload" (tudo opcional) e pra ler
+// o id seria preciso usar "any" — perdendo a checagem de tipo bem no
+// ponto que decide quem é o usuário autenticado.
 export interface TokenPayload {
   id: string;
 }
@@ -142,7 +154,7 @@ export async function buscarPorId(id: string): Promise<UsuarioPublico | null> {
 
 ```ts
 import { pool } from '../config/db';
-import { Usuario, UsuarioPublico } from '../types';
+import { Usuario, UsuarioPublico } from '../types/indexTypes';
 
 export async function criarUsuario(
   nome: string,
@@ -230,7 +242,7 @@ export function autenticar(
 ```ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { TokenPayload } from '../types';
+import { TokenPayload } from '../types/indexTypes';
 
 export interface AuthenticatedRequest extends Request {
   userId?: string;
@@ -646,6 +658,43 @@ test('/me sem token retorna 401, com token retorna 200', async () => {
 });
 ```
 
+**Token adulterado** — cobre o item 8 do card "Testes de unidade F1"
+(token válido ≠ token qualquer). Mudar um caractere do fim já é suficiente
+pra invalidar a assinatura e cair no `catch` do middleware.
+
+```ts
+test('/me com token adulterado retorna 401', async () => {
+  const email = `adult${Date.now()}@exemplo.com`;
+  await request(app).post('/auth/register').send({ nome: 'G', email, senha: '123456' });
+  const login = await request(app).post('/auth/login').send({ email, senha: '123456' });
+  const tokenAdulterado = login.body.token.slice(0, -1) + 'x';
+
+  const resposta = await request(app)
+    .get('/me')
+    .set('Authorization', `Bearer ${tokenAdulterado}`);
+
+  assert.equal(resposta.status, 401);
+});
+```
+
+**Senha guardada em hash** — cobre o item 9 (`senha nunca volta na
+resposta e está em hash no banco`). Usa o `userModel` direto pra confirmar
+o que ficou gravado, sem passar pela API — o hash do bcrypt sempre começa
+com `$2`, e nunca é igual à senha em texto puro.
+
+```ts
+test('senha é gravada como hash bcrypt, não em texto puro', async () => {
+  const email = `hash${Date.now()}@exemplo.com`;
+  await request(app).post('/auth/register').send({ nome: 'H', email, senha: '123456' });
+
+  const usuario = await userModel.buscarPorEmail(email);
+
+  assert.ok(usuario);
+  assert.notEqual(usuario!.senha_hash, '123456');
+  assert.match(usuario!.senha_hash, /^\$2/);
+});
+```
+
 ### Arquivo completo — `server/src/auth.test.ts`
 
 ```ts
@@ -653,6 +702,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import request from 'supertest';
 import app from './app';
+import * as userModel from './models/userModel';
 
 test('registro válido cria usuário e não devolve senha_hash', async () => {
   const resposta = await request(app)
@@ -720,6 +770,30 @@ test('/me sem token retorna 401, com token retorna 200', async () => {
 
   assert.equal(comToken.status, 200);
   assert.equal(comToken.body.usuario.email, email);
+});
+
+test('/me com token adulterado retorna 401', async () => {
+  const email = `adult${Date.now()}@exemplo.com`;
+  await request(app).post('/auth/register').send({ nome: 'G', email, senha: '123456' });
+  const login = await request(app).post('/auth/login').send({ email, senha: '123456' });
+  const tokenAdulterado = login.body.token.slice(0, -1) + 'x';
+
+  const resposta = await request(app)
+    .get('/me')
+    .set('Authorization', `Bearer ${tokenAdulterado}`);
+
+  assert.equal(resposta.status, 401);
+});
+
+test('senha é gravada como hash bcrypt, não em texto puro', async () => {
+  const email = `hash${Date.now()}@exemplo.com`;
+  await request(app).post('/auth/register').send({ nome: 'H', email, senha: '123456' });
+
+  const usuario = await userModel.buscarPorEmail(email);
+
+  assert.ok(usuario);
+  assert.notEqual(usuario!.senha_hash, '123456');
+  assert.match(usuario!.senha_hash, /^\$2/);
 });
 ```
 
