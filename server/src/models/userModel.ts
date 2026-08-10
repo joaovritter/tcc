@@ -1,5 +1,6 @@
+import { notStrictEqual } from 'node:assert';
 import { pool } from '../config/db'
-import type { UsuarioPublico } from '../types/indexTypes'
+import type { Usuario, UsuarioPublico } from '../types/indexTypes'
 
 export async function criarUsuario(
     nome: string,
@@ -17,8 +18,8 @@ export async function criarUsuario(
 
 export async function buscarPorEmail(
     email: string
-): Promise<UsuarioPublico | null> {
-    const resultado = await pool.query<UsuarioPublico>(
+): Promise<Usuario | null> {
+    const resultado = await pool.query<Usuario>(
         `SELECT * FROM Usuario WHERE email = $1`,
         [email]
     );

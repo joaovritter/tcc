@@ -3,7 +3,7 @@ export interface Usuario {
     id_usuario: string; //driver do pg sempre devolve UUID como string
     nome: string;
     email: string;
-    senhaHash: string;
+    senha_hash: string;
 }
 
 export interface UsuarioPublico{
