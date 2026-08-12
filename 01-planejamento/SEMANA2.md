@@ -1080,7 +1080,7 @@ mostra a mensagem que veio do `AuthContext`/`api.ts` — nunca um "algo deu
 errado" genérico.
 
 ```tsx
-async function handleSubmit(e: FormEvent) {
+async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
   e.preventDefault();
   setErro('');
   setEnviando(true);
@@ -1098,11 +1098,14 @@ async function handleSubmit(e: FormEvent) {
 }
 ```
 
+> `FormEvent` está `@deprecated` no `@types/react` 19.x — o tipo atual pra
+> `onSubmit` de `<form>` é `SubmitEvent`.
+
 ### Arquivo completo — `client/src/views/AuthView.tsx`
 
 ```tsx
 import { useState } from 'react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 export function AuthView() {
@@ -1114,7 +1117,7 @@ export function AuthView() {
   const [enviando, setEnviando] = useState(false);
   const { login, registrar } = useAuth();
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setErro('');
     setEnviando(true);
