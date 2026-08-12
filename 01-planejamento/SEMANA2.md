@@ -13,12 +13,12 @@
 > agora, e o padrão que você fixar aqui se repete em S3–S8.
 
 Critério de aceite (card 🎯 ENTREGÁVEL S2):
-- [ ] `POST /auth/register` cria usuário com senha em bcrypt
-- [ ] `POST /auth/login` retorna JWT válido
-- [ ] Middleware JWT protege rotas privadas (401 sem token)
+- [X] `POST /auth/register` cria usuário com senha em bcrypt
+- [X] `POST /auth/login` retorna JWT válido
+- [X] Middleware JWT protege rotas privadas (401 sem token)
 - [ ] Telas de Login e Registro funcionais com erros amigáveis
-- [ ] Testes de unidade de auth passando (matriz RF01)
-- [ ] Nenhuma credencial hardcoded (sem backdoor)
+- [X] Testes de unidade de auth passando (matriz RF01)
+- [X] Nenhuma credencial hardcoded (sem backdoor)
 
 ---
 
