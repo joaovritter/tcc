@@ -6,9 +6,10 @@ import * as userModel from '../models/userModel'
 
 //supertest finge ser um front/postman
 //datenow para gerar varios emails diferentes
+
 test('Registro válido cria usuário e não devolve senha_hash', async () => {
     const resposta = await request(app)
-        .post('auth/register')
+        .post('/auth/register')
         .send({ nome: 'Teste', email: `teste${Date.now()}@exemplo.com`, senha: '123456' });
 
     assert.equal(resposta.status, 201); //equal(valor_real, valor_esperado)
@@ -19,26 +20,46 @@ test('Registro válido cria usuário e não devolve senha_hash', async () => {
 
 test('registro com email duplicado retorna 400', async () => {
     const email = `duplicado${Date.now()}@exemplo.com`;
-    await request(app).post('auth/register').send({ nome: 'A', email, senha: '123456' });
+    await request(app).post('/auth/register').send({ nome: 'A', email, senha: '123456' });
 
     const resposta = await request(app)
-        .post('auth/register')
+        .post('/auth/register')
         .send({ nome: 'B', email, senha: '123456' });
 
     assert.equal(resposta.status, 400);
 });
 
+test('registro com senha curta retorna 400', async () => {
+    const resposta = await request(app)
+    .post('/auth/register')
+    .send({nome: 'F', email: `curta${Date.now()}@exemplo.com`, senha: '123'})
+
+    assert.equal(resposta.status, 400);
+})
+
 
 test('login correto retorna token', async () => {
     const email = `login${Date.now()}@exemplo.com`;
-    (await request(app).post('auth/register').send({ nome: 'C', email, senha: '123456' }))
+    (await request(app).post('/auth/register').send({ nome: 'C', email, senha: '123456' }))
 
     const resposta = await request(app)
-        .post('auth/login')
+        .post('/auth/login')
         .send({ email, senha: '123456' });
 
     assert.equal(resposta.status, 200);
     assert.ok(resposta.body.token);
+})
+
+
+test('login com senha errada retorna 401', async () => {
+    const email = `errada${Date.now()}@exemplo.com`;
+    await request(app).post('/auth/register').send({nome: 'D', email, senha: '123456'});
+
+    const resposta = await request(app)
+    .post('/auth/login')
+    .send({email, senha: 'senhaerrada'});
+
+    assert.equal(resposta.status, 401);
 })
 
 
@@ -75,7 +96,7 @@ test('/me com token adulterado retorna 401', async () => {
 
 test('senha é gravada como hash bcrypt. não em texto puro', async () => {
     const email = `hash${Date.now()}@exemplo.com`;
-    await request(app).post('/auth/register').send({ nome: 'F' })
+    await request(app).post('/auth/register').send({ nome: 'F', email, senha: '123456' })
 
     const usuario = await userModel.buscarPorEmail(email);
 

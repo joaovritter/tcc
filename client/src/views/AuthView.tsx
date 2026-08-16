@@ -11,8 +11,9 @@ export function AuthView() {
     const [enviando, setEnviando] = useState(false);
     const { login, registrar } = useAuth();
 
-    async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
-        e.preventDefault();
+   //funcao manipuladora de envio do formulario 
+    async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {  
+        e.preventDefault(); //evita o comportamento padrão: regarregar a pagina ao enviar o formulario 
         setErro('');
         setEnviando(true);
         try {
@@ -22,7 +23,7 @@ export function AuthView() {
                 await registrar(nome, email, senha);
             }
         } catch (error) {
-            setErro(error instanceof Error ? error.message : 'Erro inesperado');
+            setErro(error instanceof Error ? error.message : 'Erro inesperado'); //se for objeto Error, pega a mensagem, senao retorna 'Erro inesperado'
         } finally {
             setEnviando(false);
         }

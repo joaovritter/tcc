@@ -123,6 +123,7 @@
 
 ## OUT/NOV · 20/10–06/11 · Escrita TCC II + Entrega
 
+- [ ] Tirar prints das principais funcionalidades (máx. 6 figuras pro documento inteiro) — [card](https://trello.com/c/en1Tho0j)
 - [ ] Capítulo de resultados: telas, testes e matriz preenchida (até 26/10) — [card](https://trello.com/c/VRinhHiX)
 - [ ] Revisão do orientador + ajustes finais (até 01/11) — [card](https://trello.com/c/jPsMIk8V)
 - [ ] 🎓 ENTREGA FINAL TCC II — 06/11 — [card](https://trello.com/c/igTEVfpf)

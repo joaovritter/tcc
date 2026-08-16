@@ -16,7 +16,7 @@ Critério de aceite (card 🎯 ENTREGÁVEL S2):
 - [X] `POST /auth/register` cria usuário com senha em bcrypt
 - [X] `POST /auth/login` retorna JWT válido
 - [X] Middleware JWT protege rotas privadas (401 sem token)
-- [ ] Telas de Login e Registro funcionais com erros amigáveis
+- [X] Telas de Login e Registro funcionais com erros amigáveis
 - [X] Testes de unidade de auth passando (matriz RF01)
 - [X] Nenhuma credencial hardcoded (sem backdoor)
 
