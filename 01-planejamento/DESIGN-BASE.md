@@ -531,177 +531,33 @@ export function AuthView() {
 }
 ```
 
----
-
-## Passo 7 — Ajustar `client/src/App.tsx` (retroativo à S1/S2)
-
-O placeholder "logado como {nome}" sai — a saudação e o botão "Sair" já
-ficam cobertos pelo chip de usuário no rodapé da sidebar (Passo 4). Agora
-`App.tsx` só decide entre `AuthView` (deslogado) e `AppShell` (logado)
-envolvendo a tela de cada semana — aqui, `<DivisionView />` da S3.
-
-```tsx
-import { useAuth } from './context/AuthContext'
-import { AuthView } from './views/AuthView'
-import { DivisionView } from './views/DivisionView'
-import { AppShell } from './components/AppShell'
-import { PageLayout } from './components/PageLayout'
-import { Typography } from '@mui/material'
-
-function App() {
-  const { usuario, carregando } = useAuth()
-
-  if (carregando) {
-    return (
-      <PageLayout>
-        <Typography>Carregando...</Typography>
-      </PageLayout>
-    )
-  }
-
-  if (!usuario) {
-    return <AuthView />
-  }
-
-  return (
-    <AppShell>
-      <DivisionView />
-    </AppShell>
-  )
-}
-
-export default App
-```
-
-> Quando a S4 em diante adicionar mais telas (roteamento de verdade, com
-> `react-router` — ainda não existe no projeto, avaliar só quando houver
-> mais de uma tela logada pra navegar), o `App.tsx` passa a decidir **qual**
-> tela renderizar dentro do `<AppShell>` de acordo com a rota, mas o
-> `AppShell` em si não muda.
+> **`App.tsx` e `DivisionView.tsx` (a tela da S3) não estão aqui** — como são
+> específicos da S3, o código deles ficou direto em
+> [`SEMANA3.md`](./SEMANA3.md) (Passo 6), já usando `AppShell`,
+> `PageLayout` e `FeedbackAlert` definidos acima. Implemente os Passos 0–6
+> deste arquivo primeiro (tema, fontes, `PageLayout`, `FeedbackAlert`,
+> `Sidebar`, `AppShell`, `AuthView`); o Passo 6 do `SEMANA3.md` assume que
+> eles já existem.
 
 ---
 
-## Passo 8 — Ajustar `client/src/views/DivisionView.tsx` (S3)
+## Passo 7 — Fechar (parte desta base)
 
-Se você ainda não implementou a S3, implemente **já usando os componentes
-deste arquivo** em vez do HTML cru do roteiro `SEMANA3.md` (Passo 6) — o
-resto da lógica (`useState`, `useEffect`, `handleSalvar`, chamadas a
-`api.ts`) continua idêntico ao que está descrito lá, só a camada visual
-muda. Como agora ela já vive dentro do `AppShell` (Passo 5), não precisa
-mais se preocupar com saudação/logout — só com o conteúdo da tela em si.
+O fechamento completo (incluindo a tela "Minha Divisão") acontece no
+Passo 7 do `SEMANA3.md`, depois que `App.tsx`/`DivisionView.tsx` existirem.
+Aqui é só a checagem do que **esta base** já entrega sozinha:
 
-- `<div>` de cada dia → `<TextField>` dentro de um `<Stack>`
-- Envolver a lista de dias num `<Card>` do MUI, pra separar visualmente da
-  saudação do `App.tsx`
-- Mensagens de erro/sucesso → `<FeedbackAlert>` (Passo 3), removendo o
-  `sucesso: boolean` cru e usando `sucesso ? 'Divisão salva com sucesso!' : undefined`
-
-```tsx
-import { useEffect, useState } from 'react';
-import { Card, CardContent, Typography, TextField, Button, Stack } from '@mui/material';
-import * as api from '../services/api';
-import { FeedbackAlert } from '../components/FeedbackAlert';
-
-const DIAS = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
-
-export function DivisionView() {
-  const [nomes, setNomes] = useState<string[]>(Array(7).fill(''));
-  const [carregando, setCarregando] = useState(true);
-  const [salvando, setSalvando] = useState(false);
-  const [erro, setErro] = useState('');
-  const [sucesso, setSucesso] = useState(false);
-
-  useEffect(() => {
-    async function carregar() {
-      try {
-        const { divisoes } = await api.buscarDivisoes();
-        const novosNomes = Array(7).fill('');
-        for (const divisao of divisoes) {
-          novosNomes[divisao.dia_semana] = divisao.nome;
-        }
-        setNomes(novosNomes);
-      } catch (erro) {
-        setErro(erro instanceof Error ? erro.message : 'Erro ao carregar');
-      } finally {
-        setCarregando(false);
-      }
-    }
-    carregar();
-  }, []);
-
-  async function handleSalvar() {
-    setErro('');
-    setSucesso(false);
-    setSalvando(true);
-    try {
-      const divisoes = nomes
-        .map((nome, dia_semana) => ({ dia_semana, nome: nome.trim() }))
-        .filter((d) => d.nome.length > 0);
-      await api.salvarDivisoes(divisoes);
-      setSucesso(true);
-    } catch (erro) {
-      setErro(erro instanceof Error ? erro.message : 'Erro ao salvar');
-    } finally {
-      setSalvando(false);
-    }
-  }
-
-  if (carregando) {
-    return <Typography>Carregando...</Typography>;
-  }
-
-  return (
-    <Card variant="outlined">
-      <CardContent>
-        <Typography variant="h2" gutterBottom>
-          Minha Divisão
-        </Typography>
-        <Stack spacing={2}>
-          {DIAS.map((dia, i) => (
-            <TextField
-              key={i}
-              label={dia}
-              placeholder="Ex.: Peito e tríceps"
-              value={nomes[i]}
-              onChange={(e) => {
-                const novos = [...nomes];
-                novos[i] = e.target.value;
-                setNomes(novos);
-              }}
-              fullWidth
-            />
-          ))}
-          <FeedbackAlert
-            erro={erro}
-            sucesso={sucesso ? 'Divisão salva com sucesso!' : undefined}
-          />
-          <Button variant="contained" onClick={handleSalvar} disabled={salvando}>
-            {salvando ? 'Salvando...' : 'Salvar semana'}
-          </Button>
-        </Stack>
-      </CardContent>
-    </Card>
-  );
-}
-```
-
----
-
-## Passo 9 — Fechar
-
-1. Rodar `npm run dev` no client e conferir visualmente: tela de login,
-   registro, e "Minha Divisão" dentro do `AppShell` — sidebar colapsada por
-   padrão, expande no hover/Tab, item "Minha divisão" ativo em verde, os
-   outros três esmaecidos e sem clique.
-2. Testar a sidebar por teclado (Tab até ela) — confirma que expande no
-   foco, não só no mouse (acessibilidade).
+1. Rodar `npm run dev` no client e conferir visualmente: tela de login e
+   registro usando o tema (cor primária, fontes Sora/Plus Jakarta Sans,
+   cantos arredondados).
+2. Passar o mouse/dar Tab na sidebar (ela só aparece depois de logado —
+   nesse ponto ainda sem `DivisionView`, o `AppShell` pode ser testado
+   temporariamente envolvendo qualquer children, ex. um `<Typography>` de
+   placeholder) — confirma que expande no hover **e** no foco de teclado.
 3. Rodar `npm run build` — confirma que os tipos do MUI/Framer Motion não
    quebraram nada.
-4. Print de antes/depois (HTML cru vs. com MUI + sidebar) é uma boa figura
-   opcional pro capítulo de resultados, mostrando evolução da UI.
-5. Commit descrevendo: "base de design (MUI + Framer Motion, sidebar
-   flutuante) aplicada retroativamente a Auth/App + na tela nova de
-   Divisão".
+4. Commit descrevendo: "base de design (MUI + Framer Motion, sidebar
+   flutuante) aplicada retroativamente ao Auth".
 
 ## Regras pra daqui pra frente (S4 em diante)
 

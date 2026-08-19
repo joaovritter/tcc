@@ -19,11 +19,12 @@
 > **vazio** por enquanto — é esperado, não é bug. Ver
 > [`DECISAO-MUSCLES-DIVISIONS.md`](./DECISAO-MUSCLES-DIVISIONS.md) (Opção D).
 
-> **Design decidido em 19/08:** o Passo 6 abaixo (front em HTML cru) foi
-> **substituído** — implemente `DivisionView.tsx` seguindo
-> [`DESIGN-BASE.md`](./DESIGN-BASE.md) (Passo 8), que já usa MUI + sidebar
-> flutuante (`AppShell`) em vez do HTML sem estilo descrito aqui. Os Passos
-> 0–5 deste arquivo (backend) continuam valendo sem nenhuma mudança.
+> **Design decidido em 19/08:** o front desta semana (Passo 6) já usa a base
+> de design de [`DESIGN-BASE.md`](./DESIGN-BASE.md) — MUI + sidebar
+> flutuante (`AppShell`), que precisa estar implementada **antes** de
+> começar o Passo 6 aqui (`theme.ts`, `PageLayout`, `FeedbackAlert`,
+> `Sidebar`, `AppShell` — Passos 0 a 7 daquele arquivo). Os Passos 0–5 deste
+> arquivo (backend) não dependem disso e podem ser feitos em qualquer ordem.
 
 Critério de aceite (card 🎯 ENTREGÁVEL S3):
 - [ ] `GET /divisions` e `PUT /divisions` funcionando (em transação)
@@ -481,19 +482,33 @@ export function salvarDivisoes(divisoes: { dia_semana: number; nome: string }[])
 
 ---
 
-## Passo 6 — Front: `client/src/views/DivisionView.tsx` (⚠️ substituído, ver nota no topo)
+## Passo 6 — Front: `client/src/views/DivisionView.tsx`
 
-**Grade fixa de 7 dias** (domingo=0 a sábado=6) — cada linha tem um input
-de nome; dia sem nome preenchido simplesmente não entra no array mandado
-pro backend. Isso evita ter que gerenciar "adicionar linha"/"remover
-linha" manualmente: a grade sempre tem 7 posições, só varia o que está
-preenchido.
+Já implementada usando a base de design (MUI + `AppShell`) — se você ainda
+não tem `theme.ts`, `PageLayout`, `FeedbackAlert`, `Sidebar` e `AppShell`,
+faça isso primeiro seguindo `DESIGN-BASE.md` (Passos 0 a 7). O resto desta
+seção assume que essa base já existe.
+
+**Grade fixa de 7 dias** (domingo=0 a sábado=6) — cada linha tem um
+`TextField`; dia sem nome preenchido simplesmente não entra no array
+mandado pro backend. Isso evita ter que gerenciar "adicionar linha"/
+"remover linha" manualmente: a grade sempre tem 7 posições, só varia o que
+está preenchido.
 
 **Ao montar a tela**, busca as divisões salvas e popula os nomes nos dias
 correspondentes — se o usuário já tinha configurado a semana antes, ela
-recarrega igual (item do critério de aceite).
+recarrega igual (item do critério de aceite). A tela já vive dentro do
+`AppShell` (sidebar + `PageLayout`), então não precisa se preocupar com
+saudação/logout — só com o conteúdo em si. Erro/sucesso usam
+`<FeedbackAlert>` em vez de `<p role="alert">` cru, e a lista de dias fica
+dentro de um `<Card>` do MUI.
 
 ```tsx
+import { useEffect, useState } from 'react';
+import { Card, CardContent, Typography, TextField, Button, Stack } from '@mui/material';
+import * as api from '../services/api';
+import { FeedbackAlert } from '../components/FeedbackAlert';
+
 const DIAS = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 
 export function DivisionView() {
@@ -539,33 +554,40 @@ export function DivisionView() {
   }
 
   if (carregando) {
-    return <p>Carregando...</p>;
+    return <Typography>Carregando...</Typography>;
   }
 
   return (
-    <div>
-      <h1>Minha Divisão</h1>
-      {DIAS.map((dia, i) => (
-        <div key={i}>
-          <label>{dia}</label>
-          <input
-            type="text"
-            placeholder="Ex.: Peito e tríceps"
-            value={nomes[i]}
-            onChange={(e) => {
-              const novos = [...nomes];
-              novos[i] = e.target.value;
-              setNomes(novos);
-            }}
+    <Card variant="outlined">
+      <CardContent>
+        <Typography variant="h2" gutterBottom>
+          Minha Divisão
+        </Typography>
+        <Stack spacing={2}>
+          {DIAS.map((dia, i) => (
+            <TextField
+              key={i}
+              label={dia}
+              placeholder="Ex.: Peito e tríceps"
+              value={nomes[i]}
+              onChange={(e) => {
+                const novos = [...nomes];
+                novos[i] = e.target.value;
+                setNomes(novos);
+              }}
+              fullWidth
+            />
+          ))}
+          <FeedbackAlert
+            erro={erro}
+            sucesso={sucesso ? 'Divisão salva com sucesso!' : undefined}
           />
-        </div>
-      ))}
-      {erro && <p role="alert">{erro}</p>}
-      {sucesso && <p>Divisão salva com sucesso!</p>}
-      <button onClick={handleSalvar} disabled={salvando}>
-        {salvando ? 'Salvando...' : 'Salvar semana'}
-      </button>
-    </div>
+          <Button variant="contained" onClick={handleSalvar} disabled={salvando}>
+            {salvando ? 'Salvando...' : 'Salvar semana'}
+          </Button>
+        </Stack>
+      </CardContent>
+    </Card>
   );
 }
 ```
@@ -575,38 +597,66 @@ export function DivisionView() {
 > `DivisaoExercicio` existir (S4). Não implementar um placeholder fake; a
 > ausência é esperada pela Decisão D.
 
-**Ligar no `App.tsx`**, ao lado do placeholder "logado como {nome}" da S2 —
-ainda sem biblioteca de rotas (só entra quando houver mais de uma tela pra
-navegar, o que passa a ser o caso a partir da S4/S5):
+**Ligar no `App.tsx`** — decide entre `AuthView` (deslogado) e `AppShell`
+envolvendo `<DivisionView />` (logado). A saudação e o "Sair" já ficam
+cobertos pelo chip de usuário no rodapé da sidebar, então `App.tsx` não
+precisa mais deles:
 
 ```tsx
-if (!usuario) {
-  return <AuthView />
+import { useAuth } from './context/AuthContext'
+import { AuthView } from './views/AuthView'
+import { DivisionView } from './views/DivisionView'
+import { AppShell } from './components/AppShell'
+import { PageLayout } from './components/PageLayout'
+import { Typography } from '@mui/material'
+
+function App() {
+  const { usuario, carregando } = useAuth()
+
+  if (carregando) {
+    return (
+      <PageLayout>
+        <Typography>Carregando...</Typography>
+      </PageLayout>
+    )
+  }
+
+  if (!usuario) {
+    return <AuthView />
+  }
+
+  return (
+    <AppShell>
+      <DivisionView />
+    </AppShell>
+  )
 }
 
-return (
-  <div>
-    <h1>Logado como {usuario.nome}</h1>
-    <button onClick={logout}>Sair</button>
-    <DivisionView />
-  </div>
-)
+export default App
 ```
+
+> Quando a S4 em diante adicionar mais telas (roteamento de verdade, com
+> `react-router` — ainda não existe no projeto, avaliar só quando houver
+> mais de uma tela logada pra navegar), o `App.tsx` passa a decidir **qual**
+> tela renderizar dentro do `<AppShell>` de acordo com a rota, mas o
+> `AppShell` em si não muda.
 
 ---
 
 ## Passo 7 — Fechar a semana
 
-1. Testar o fluxo pela interface: logar → preencher 2–3 dias → salvar → F5
-   → os dias continuam preenchidos → apagar um dia e salvar de novo →
-   confirma que sumiu (prova que é substituição, não soma).
+1. Testar o fluxo pela interface: logar → sidebar aparece (colapsada,
+   expande no hover/Tab, "Minha divisão" ativa em verde, os outros três
+   itens esmaecidos) → preencher 2–3 dias → salvar → F5 → os dias continuam
+   preenchidos → apagar um dia e salvar de novo → confirma que sumiu (prova
+   que é substituição, não soma).
 2. Rodar `npm run test` no server — suíte verde (S2 + S3 juntas).
 3. Rodar `npm run build` nos dois lados — sem erro de tipo.
-4. Print da tela "Minha Divisão" preenchida — vira figura do capítulo de
-   resultados.
-5. Commit + push. Sugestão de mensagem: descrever as duas frentes (CRUD
-   backend em transação + tela) já que normalmente viram um commit por
-   sessão.
+4. Print da tela "Minha Divisão" preenchida (já com sidebar) — vira figura
+   do capítulo de resultados.
+5. Commit + push. Sugestão de mensagem: descrever as frentes (CRUD backend
+   em transação + tela com a base de design) já que normalmente viram um
+   commit por sessão.
 
 ---
 
