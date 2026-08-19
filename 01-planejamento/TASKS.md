@@ -24,18 +24,24 @@
 
 ## S2 · 10–16/08 · F1 Autenticação (RF01)
 
-- [ ] 🎯 **ENTREGÁVEL S2 — Cadastro e login funcionais (RF01)** (entrega dom 16/08) — [card](https://trello.com/c/AvLbGD9z)
-  - [ ] POST /auth/register cria usuário com senha bcrypt
-  - [ ] POST /auth/login retorna JWT válido
-  - [ ] Middleware JWT protege rotas privadas (401 sem token)
-  - [ ] Telas de Login e Registro funcionais com erros amigáveis
-  - [ ] Testes de unidade de auth passando (matriz RF01)
-  - [ ] Nenhuma credencial hardcoded (sem backdoor)
-- [ ] Sessão A — Backend F1: model User + authController + JWT — [card](https://trello.com/c/oeNbbi1E)
-- [ ] Sessão B — Frontend F1: telas Login/Registro + AuthContext — [card](https://trello.com/c/XTpJ798X)
-- [ ] Testes de unidade F1 (matriz RF01) — [card](https://trello.com/c/2eFXLYJg)
+- [x] 🎯 **ENTREGÁVEL S2 — Cadastro e login funcionais (RF01)** (entrega dom 16/08) — [card](https://trello.com/c/AvLbGD9z)
+  - [x] POST /auth/register cria usuário com senha bcrypt
+  - [x] POST /auth/login retorna JWT válido
+  - [x] Middleware JWT protege rotas privadas (401 sem token)
+  - [x] Telas de Login e Registro funcionais com erros amigáveis
+  - [x] Testes de unidade de auth passando (matriz RF01)
+  - [x] Nenhuma credencial hardcoded (sem backdoor)
+- [x] Sessão A — Backend F1: model User + authController + JWT — [card](https://trello.com/c/oeNbbi1E)
+- [x] Sessão B — Frontend F1: telas Login/Registro + AuthContext — [card](https://trello.com/c/XTpJ798X)
+- [x] Testes de unidade F1 (matriz RF01) — [card](https://trello.com/c/2eFXLYJg)
 
-## S3 · 17–23/08 · F2a Divisão Semanal (RF02)
+## S3 · 17–23/08 · F2a Divisão Semanal (RF02) + Base de Design
+
+> **Decisão (19/08):** antes da S3 ter ficado com telas em HTML puro (S1/S2),
+> foi criada uma base de design transversal (MUI + Framer Motion, sidebar
+> flutuante com hover-expand, sem Tailwind). Ver
+> [`DESIGN-BASE.md`](./DESIGN-BASE.md). A tela desta semana já nasce usando
+> essa base.
 
 - [ ] 🎯 **ENTREGÁVEL S3 — CRUD da divisão semanal** (entrega dom 23/08) — [card](https://trello.com/c/jCIep6AI)
   - [ ] GET /divisions e PUT /divisions funcionando (em transação)
@@ -44,7 +50,8 @@
   - [ ] Sem coluna `muscles[]` — músculos derivados via JOIN, estado vazio até a S4 (Decisão D)
   - [ ] Teste de unidade do CRUD passando (matriz RF02)
 - [ ] Sessão A — Backend F2a: DivisionModel + divisionController — [card](https://trello.com/c/rXPtyCKg)
-- [ ] Sessão B — Frontend F2a: tela "Minha Divisão" — [card](https://trello.com/c/GRpUYeXC)
+- [ ] Base de Design — tema MUI + Sidebar flutuante (hover-expand) + AppShell — [card](https://trello.com/c/OPK0Sp8k)
+- [ ] Sessão B — Frontend F2a: tela "Minha Divisão" (já com MUI + AppShell) — [card](https://trello.com/c/GRpUYeXC)
 
 ## S4 · 24–30/08 · F2b Exercícios da Rotina (RF02)
 
