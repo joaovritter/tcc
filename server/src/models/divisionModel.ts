@@ -19,7 +19,7 @@ export async function buscarPorUsuario(
 export async function substituirSemana(
     fkUsuario: string,
     divisoes: DivisaoInput[]
-): Promise<Divisao[]>{
+): Promise<Divisao[]> {
     const client = await pool.connect();
     try {
         await client.query('BEGIN');
