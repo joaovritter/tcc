@@ -1,15 +1,19 @@
-
-import { AuthView } from './views/AuthView';
-import { useAuth } from './context/AuthContext';
-
-import './App.css';
+import { useAuth } from './context/AuthContext'
+import { AuthView } from './views/AuthView'
+import { DivisionView } from './views/DivisionView'
+import { AppShell } from './components/AppShell'
+import { PageLayout } from './components/PageLayout'
+import { Typography } from '@mui/material'
 
 function App() {
-  const { usuario, carregando, logout } = useAuth()
+  const { usuario, carregando } = useAuth()
 
   if (carregando) {
-    return <p>Carregando...</p>
-
+    return (
+      <PageLayout>
+        <Typography>Carregando...</Typography>
+      </PageLayout>
+    )
   }
 
   if (!usuario) {
@@ -17,11 +21,10 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Logado como {usuario.nome}</h1>
-      <button onClick={logout}>Sair</button>
-    </div>
+    <AppShell>
+      <DivisionView />
+    </AppShell>
   )
 }
 
-export default App
+export default App 

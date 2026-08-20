@@ -9,15 +9,11 @@ interface OpcoesFetch extends RequestInit {
 
 //funcao que monta url, injeta o token quando existe, e transforma resposta de erro numa exceção
 // ...(spread) tira a embalagem de objeto ou lista e despeja só o conteudo.
-
 async function apiFetch(caminho: string, opcoes: OpcoesFetch = {}) {
-
     const token = localStorage.getItem('token');
 
     //junta url, injeta cabeçalho de autorizacao e converte o corpo da requisicao
-
-    const resposta = await fetch(`${API_URL}${caminho}`, {
-        
+    const resposta = await fetch(`${API_URL}${caminho}`, { 
         ...opcoes, //repassa qualquer propriedade recebida em opcoes
         headers: {
             'Content-Type': 'application/json',
@@ -33,6 +29,9 @@ async function apiFetch(caminho: string, opcoes: OpcoesFetch = {}) {
     }
     return dados;
 }
+
+
+//============================usuario===================================
 
 export interface Usuario {
     id_usuario: string;
@@ -59,4 +58,24 @@ export function login (email: string, senha: string){
 //funcao de /me, traz informacoes do usuario
 export function buscarPerfil(){
     return apiFetch('/me') as Promise<{usuario: Usuario}>;
+}
+
+
+//============================divisao===================================
+
+export interface Divisao {
+    id_divisao: string;
+    dia_semana: number;
+    nome: string;
+}
+
+export function buscarDivisoes(){
+    return apiFetch('/divisions') as Promise<{ divisoes: Divisao[] }>
+}
+
+export function salvarDivisoes(divisoes: { dia_semana: number; nome: string}[]){
+    return apiFetch('/divisions', {
+        method: 'PUT',
+        body: { divisoes },
+    }) as Promise<{ divisoes: Divisao[]}>;
 }
