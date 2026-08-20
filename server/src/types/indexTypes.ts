@@ -17,3 +17,17 @@ export interface UsuarioPublico{
 export interface TokenPayload {
     id: string;
 }
+
+export interface Divisao {
+    id_divisao: string;
+    fk_usuario: string;
+    dia_semana: number;
+    nome: string;
+}
+
+//formato que o front manda no put não tem id_divisao nem fk_usuario. esse tipo evita aceitar um payload que escreve divisao de outro usuario
+export interface DivisaoInput{
+    dia_semana: string;
+    nome: string;
+}
+

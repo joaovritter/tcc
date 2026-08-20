@@ -22,7 +22,8 @@ CREATE TABLE Divisao (
   id_divisao UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fk_usuario UUID NOT NULL REFERENCES Usuario(id_usuario),
   dia_semana INTEGER NOT NULL CHECK (dia_semana BETWEEN 0 AND 6),
-  nome TEXT NOT NULL
+  nome TEXT NOT NULL,
+  UNIQUE (fk_usuario, dia_semana)
 );
 
 CREATE TABLE DivisaoExercicio (

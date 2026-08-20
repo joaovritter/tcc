@@ -12,6 +12,12 @@
 > model/controller/rotas fixado aqui (e a decisão de salvar a semana inteira
 > numa transação) se repete em quase toda feature daqui pra frente.
 
+> **Decisão vigente (19/08):** `substituirSemana` faz **UPSERT**, não
+> apaga-e-reinsere. Apagar tudo e regravar trocaria o `id_divisao` de todo
+> dia a cada salvamento — a partir da S4, `DivisaoExercicio` referencia
+> `fk_divisao`, e reinserir quebraria esse vínculo (erro de FK, ou apagão
+> em cascata se a FK tiver `ON DELETE CASCADE`). Ver Passo 1.
+
 > **Decisão vigente (09/08):** `Divisao` **não tem** coluna `muscles[]` — os
 > grupamentos treinados em cada dia são derivados via JOIN
 > `Divisao → DivisaoExercicio → Exercicio → GrupamentoMuscular`. Como essa
@@ -83,10 +89,21 @@ export interface DivisaoInput {
 ## Passo 1 — `server/src/models/divisionModel.ts`
 
 Só SQL aqui — igual ao `userModel.ts` da S2. O ponto novo é a
-**transação**: o `PUT /divisions` substitui a semana inteira de uma vez
-(apaga tudo que era do usuário e insere de novo), e isso só é seguro dentro
-de `BEGIN`/`COMMIT` — se o insert do terceiro dia falhar, os dois primeiros
-não podem ter ficado gravados sozinhos.
+**transação com UPSERT**: o `PUT /divisions` sincroniza a semana inteira de
+uma vez, mas **sem apagar e reinserir tudo**.
+
+**Por que não apagar tudo e reinserir:** parecia mais simples, mas troca o
+`id_divisao` de todo dia a cada salvamento — inclusive dos dias que não
+mudaram. A partir da S4, `DivisaoExercicio` referencia `fk_divisao`; se o
+`id_divisao` mudar toda vez que o usuário salvar a semana (mesmo só
+editando um dia), isso quebra o vínculo: ou o banco recusa o `DELETE`
+(erro de FK), ou — se a FK tiver `ON DELETE CASCADE` — apaga em cascata os
+exercícios de todos os dias junto, mesmo os que o usuário não tocou.
+
+**Pré-requisito no schema:** um índice `UNIQUE (fk_usuario, dia_semana)` em
+`Divisao` (já adicionado em `schema.sql`) — é o que permite o
+`ON CONFLICT` do upsert funcionar; sem ele, o Postgres não sabe qual
+constraint usar pra decidir "já existe".
 
 **`buscarPorUsuario`** — lista as divisões do usuário logado, ordenadas por
 dia da semana (facilita o front montar a grade sem reordenar no cliente).
@@ -101,10 +118,18 @@ export async function buscarPorUsuario(fkUsuario: string): Promise<Divisao[]> {
 }
 ```
 
-**`substituirSemana`** — recebe a lista completa da semana e troca tudo
-numa transação. Pega um client do pool (não o `pool.query` direto) porque
-`BEGIN`/`COMMIT`/`ROLLBACK` precisam rodar na **mesma conexão** — usar o
-pool normal poderia mandar cada comando pra uma conexão diferente.
+**`substituirSemana`** — dentro de uma transação (pega um `client` do pool,
+não o `pool.query` direto, porque `BEGIN`/`COMMIT`/`ROLLBACK` precisam
+rodar na **mesma conexão**):
+
+1. Apaga só os dias que **não vieram** no payload (`dia_semana != ALL($2)`)
+   — são os dias que o usuário efetivamente removeu da semana. Se um desses
+   dias já tiver exercícios atrelados (S4+), o `DELETE` falha por FK e a
+   transação inteira sofre `ROLLBACK` — melhor um erro tratável no
+   controller do que apagar dado de treino sem avisar.
+2. Para cada dia do payload, faz `INSERT ... ON CONFLICT (fk_usuario,
+   dia_semana) DO UPDATE` — se o dia já existia, só atualiza o `nome`
+   mantendo o mesmo `id_divisao`; se não existia, insere.
 
 ```ts
 export async function substituirSemana(
@@ -114,21 +139,31 @@ export async function substituirSemana(
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
-    await client.query('DELETE FROM Divisao WHERE fk_usuario = $1', [fkUsuario]);
 
-    const inseridas: Divisao[] = [];
+    const diasMantidos = divisoes.map((d) => d.dia_semana);
+
+    await client.query(
+      `DELETE FROM Divisao
+       WHERE fk_usuario = $1
+       AND dia_semana != ALL($2::int[])`,
+      [fkUsuario, diasMantidos]
+    );
+
+    const salvas: Divisao[] = [];
     for (const divisao of divisoes) {
       const resultado = await client.query<Divisao>(
         `INSERT INTO Divisao (fk_usuario, dia_semana, nome)
          VALUES ($1, $2, $3)
+         ON CONFLICT (fk_usuario, dia_semana)
+         DO UPDATE SET nome = EXCLUDED.nome
          RETURNING *`,
         [fkUsuario, divisao.dia_semana, divisao.nome]
       );
-      inseridas.push(resultado.rows[0]);
+      salvas.push(resultado.rows[0]);
     }
 
     await client.query('COMMIT');
-    return inseridas;
+    return salvas;
   } catch (erro) {
     await client.query('ROLLBACK');
     throw erro;
@@ -159,21 +194,31 @@ export async function substituirSemana(
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
-    await client.query('DELETE FROM Divisao WHERE fk_usuario = $1', [fkUsuario]);
 
-    const inseridas: Divisao[] = [];
+    const diasMantidos = divisoes.map((d) => d.dia_semana);
+
+    await client.query(
+      `DELETE FROM Divisao
+       WHERE fk_usuario = $1
+       AND dia_semana != ALL($2::int[])`,
+      [fkUsuario, diasMantidos]
+    );
+
+    const salvas: Divisao[] = [];
     for (const divisao of divisoes) {
       const resultado = await client.query<Divisao>(
         `INSERT INTO Divisao (fk_usuario, dia_semana, nome)
          VALUES ($1, $2, $3)
+         ON CONFLICT (fk_usuario, dia_semana)
+         DO UPDATE SET nome = EXCLUDED.nome
          RETURNING *`,
         [fkUsuario, divisao.dia_semana, divisao.nome]
       );
-      inseridas.push(resultado.rows[0]);
+      salvas.push(resultado.rows[0]);
     }
 
     await client.query('COMMIT');
-    return inseridas;
+    return salvas;
   } catch (erro) {
     await client.query('ROLLBACK');
     throw erro;
@@ -439,6 +484,30 @@ test('segundo PUT /divisions substitui a semana anterior', async () => {
 });
 ```
 
+**`id_divisao` de um dia que continua na semana não muda entre salvamentos**
+— é o comportamento que o UPSERT existe pra garantir (protege o vínculo
+futuro com `DivisaoExercicio` na S4):
+
+```ts
+test('id_divisao é preservado ao editar um dia que já existia', async () => {
+  const { token } = await registrarELogar();
+
+  const primeira = await request(app)
+    .put('/divisions')
+    .set('Authorization', `Bearer ${token}`)
+    .send({ divisoes: [{ dia_semana: 1, nome: 'Nome original' }] });
+  const idOriginal = primeira.body.divisoes[0].id_divisao;
+
+  const segunda = await request(app)
+    .put('/divisions')
+    .set('Authorization', `Bearer ${token}`)
+    .send({ divisoes: [{ dia_semana: 1, nome: 'Nome editado' }] });
+
+  assert.equal(segunda.body.divisoes[0].id_divisao, idOriginal);
+  assert.equal(segunda.body.divisoes[0].nome, 'Nome editado');
+});
+```
+
 **Helper compartilhado** no topo do arquivo de teste, pra não repetir
 registro+login em cada `test`:
 
@@ -675,6 +744,13 @@ export default App
   `pool.connect()` + `client.query` — sem isso, `BEGIN`/`COMMIT` não têm
   garantia de rodar na mesma conexão e a transação não protege nada de
   verdade.
+- Implementar `substituirSemana` como `DELETE` de tudo + `INSERT` de novo
+  (parecia mais simples) — troca o `id_divisao` de todo dia a cada
+  salvamento, mesmo dos que não mudaram, e quebra o vínculo com
+  `DivisaoExercicio` na S4. Usar o UPSERT do Passo 1.
+- Esquecer o `UNIQUE (fk_usuario, dia_semana)` no `schema.sql` — sem esse
+  índice, o `ON CONFLICT` do upsert não tem em que se basear e a query
+  falha.
 - Esquecer o `client.release()` no `finally` — cada conexão não liberada
   fica presa até o pool esgotar.
 - Validar `dia_semana` só no front — o backend precisa rejeitar sozinho

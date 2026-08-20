@@ -1,4 +1,3 @@
-import { notStrictEqual } from 'node:assert';
 import { pool } from '../config/db'
 import type { Usuario, UsuarioPublico } from '../types/indexTypes'
 
