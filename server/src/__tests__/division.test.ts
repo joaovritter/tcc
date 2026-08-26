@@ -21,8 +21,8 @@ test('PUT /divisions salva a semana e GET devolve igual', async () => {
         .set('Authorization', `Bearer ${token}`)
         .send({
             divisoes: [
-                { dia_saemana: 1, nome: 'Peitoe triceps' },
-                { dia_saemana: 3, nome: 'Costas e biceps' },
+                { dia_semana: 1, nome: 'Peitoe triceps' },
+                { dia_semana: 3, nome: 'Costas e biceps' },
             ]
         });
 

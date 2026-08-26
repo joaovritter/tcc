@@ -43,15 +43,15 @@
 > [`DESIGN-BASE.md`](./DESIGN-BASE.md). A tela desta semana já nasce usando
 > essa base.
 
-- [ ] 🎯 **ENTREGÁVEL S3 — CRUD da divisão semanal** (entrega dom 23/08) — [card](https://trello.com/c/jCIep6AI)
-  - [ ] GET /divisions e PUT /divisions funcionando (em transação)
-  - [ ] Tela Minha Divisão salva e recarrega a semana toda
-  - [ ] Validações: dia_semana 0–6, nome obrigatório, sem dois registros no mesmo dia
-  - [ ] Sem coluna `muscles[]` — músculos derivados via JOIN, estado vazio até a S4 (Decisão D)
-  - [ ] Teste de unidade do CRUD passando (matriz RF02)
-- [ ] Sessão A — Backend F2a: DivisionModel + divisionController — [card](https://trello.com/c/rXPtyCKg)
-- [ ] Base de Design — tema MUI + Sidebar flutuante (hover-expand) + AppShell — [card](https://trello.com/c/OPK0Sp8k)
-- [ ] Sessão B — Frontend F2a: tela "Minha Divisão" (já com MUI + AppShell) — [card](https://trello.com/c/GRpUYeXC)
+- [x] 🎯 **ENTREGÁVEL S3 — CRUD da divisão semanal** (entrega dom 23/08) — [card](https://trello.com/c/jCIep6AI)
+  - [x] GET /divisions e PUT /divisions funcionando (em transação)
+  - [x] Tela Minha Divisão salva e recarrega a semana toda
+  - [x] Validações: dia_semana 0–6, nome obrigatório, sem dois registros no mesmo dia
+  - [x] Sem coluna `muscles[]` — músculos derivados via JOIN, estado vazio até a S4 (Decisão D)
+  - [x] Teste de unidade do CRUD passando (matriz RF02)
+- [x] Sessão A — Backend F2a: DivisionModel + divisionController — [card](https://trello.com/c/rXPtyCKg)
+- [x] Base de Design — tema MUI + Sidebar flutuante (hover-expand) + AppShell — [card](https://trello.com/c/OPK0Sp8k)
+- [x] Sessão B — Frontend F2a: tela "Minha Divisão" (já com MUI + AppShell) — [card](https://trello.com/c/GRpUYeXC)
 
 ## S4 · 24–30/08 · F2b Exercícios da Rotina (RF02)
 

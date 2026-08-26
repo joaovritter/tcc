@@ -31,3 +31,11 @@ export interface DivisaoInput{
     nome: string;
 }
 
+
+export interface Exercicio {
+    id_exercicio: string;
+    nome_exercicio: string;
+    fk_grupamento: string;
+}
+
+
