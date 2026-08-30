@@ -26,7 +26,7 @@ Critério de aceite (card 🎯 ENTREGÁVEL S4):
 
 ## Passo 0 — `server/src/types/indexTypes.ts`
 
-Acrescentar os tipos de `Exercicio` (espelha o catálogo fixo, seed da S1) e
+- [x] Acrescentar os tipos de `Exercicio` (espelha o catálogo fixo, seed da S1) e
 de `DivisaoExercicio` (o vínculo que esta semana passa a gravar).
 
 ```ts
@@ -61,7 +61,7 @@ export interface DivisaoExercicioInput {
 
 ## Passo 1 — `server/src/models/exerciseModel.ts`
 
-Só leitura — o catálogo de exercícios é fixo (seed da S1), não tem
+- [ ] Só leitura — o catálogo de exercícios é fixo (seed da S1), não tem
 CRUD nesta feature. `listarTodos` aceita um `fk_grupamento` opcional pra
 filtrar (o card pede "filtro").
 
@@ -109,7 +109,7 @@ export async function listar(req: Request, res: Response) {
 
 ### `server/src/routes/exerciseRoutes.ts`
 
-Rota autenticada (mesma regra da S3: nada logado-only fica público), mas
+- [ ] Rota autenticada (mesma regra da S3: nada logado-only fica público), mas
 sem regra de dono — o catálogo é o mesmo pra todo usuário.
 
 ```ts
@@ -124,7 +124,7 @@ router.get('/exercises', autenticar, listar);
 export default router;
 ```
 
-Registrar em `app.ts` ao lado de `divisionRoutes`:
+- [ ] Registrar em `app.ts` ao lado de `divisionRoutes`:
 
 ```ts
 import exerciseRoutes from './routes/exerciseRoutes';
@@ -132,7 +132,7 @@ import exerciseRoutes from './routes/exerciseRoutes';
 app.use(exerciseRoutes);
 ```
 
-**Teste manual:** `GET /exercises` com token devolve a lista dos ~95
+- [x] **Teste manual:** `GET /exercises` com token devolve a lista dos ~95
 exercícios da seed, com `nome_grupamento`. `GET /exercises?grupamento=1`
 filtra só um grupamento.
 
@@ -140,14 +140,14 @@ filtra só um grupamento.
 
 ## Passo 2 — `server/src/models/divisionModel.ts` (acrescentar)
 
-Duas funções novas. Diferente do `substituirSemana` da S3, aqui o
+- [x] Duas funções novas. Diferente do `substituirSemana` da S3, aqui o
 apaga-e-reinsere **não tem o mesmo problema**: `DivisaoExercicio` não é
 referenciado por nenhuma tabela filha ainda (isso só chega na S5, e mesmo
 lá é `Treino`/`SerieTreino` que referencia `Exercicio`/`Divisao`
 diretamente, não `DivisaoExercicio`). Então trocar o `id_divisao_exercicio`
 a cada salvamento é seguro — mais simples que replicar o UPSERT da S3.
 
-**`buscarExerciciosDoDia`** — lista os exercícios de uma divisão, na ordem
+- [x] **`buscarExerciciosDoDia`** — lista os exercícios de uma divisão, na ordem
 salva, já com nome do exercício e do grupamento (pro front não fazer outro
 fetch pra montar a lista):
 
@@ -169,7 +169,7 @@ export async function buscarExerciciosDoDia(
 }
 ```
 
-**`substituirExerciciosDoDia`** — dentro de uma transação: apaga tudo que
+- [x] **`substituirExerciciosDoDia`** — dentro de uma transação: apaga tudo que
 existia pra aquela divisão e insere de novo na ordem do array recebido
 (`ordem` = índice no array + 1). Simples porque, como explicado acima, não
 há FK filha pra proteger ainda.
@@ -207,7 +207,7 @@ export async function substituirExerciciosDoDia(
 }
 ```
 
-**`buscarResumoMusculos`** — o "resumo de músculos" do critério de aceite:
+- [x] **`buscarResumoMusculos`** — o "resumo de músculos" do critério de aceite:
 grupamentos distintos treinados em cada dia da semana do usuário, via JOIN
 completo (Decisão D — nunca lido de coluna, sempre calculado). Devolve por
 `dia_semana` pra o front não ter que cruzar nada:
@@ -240,15 +240,15 @@ export async function buscarResumoMusculos(
 }
 ```
 
-> Acrescentar `ExercicioDoDia` em `indexTypes.ts` (`DivisaoExercicio` +
-> `nome_exercicio` + `nome_grupamento`) — mesmo padrão de
-> `ExercicioComGrupamento` do Passo 0.
+- [x] Acrescentar `ExercicioDoDia` em `indexTypes.ts` (`DivisaoExercicio` +
+`nome_exercicio` + `nome_grupamento`) — mesmo padrão de
+`ExercicioComGrupamento` do Passo 0.
 
 ---
 
 ## Passo 3 — `server/src/controllers/divisionController.ts` (acrescentar)
 
-**Dono da divisão sempre confirmado antes de tocar em `DivisaoExercicio`**
+- [ ] **Dono da divisão sempre confirmado antes de tocar em `DivisaoExercicio`**
 — igual ao cuidado da S3 com `req.userId`, mas agora em duas etapas: primeiro
 confere que o `id_divisao` da URL pertence ao usuário do token, só depois
 mexe nos exercícios. Sem essa checagem, um usuário poderia montar a rotina
@@ -318,7 +318,7 @@ router.get('/divisions/muscle-summary', autenticar, resumoMusculos);
 > tem esse segundo segmento). Só checar se, no futuro, alguém criar
 > `/divisions/:algumaCoisa` sem sufixo — aí a ordem passaria a importar.
 
-**Teste manual:** `PUT /divisions/:id/exercises` com 2-3 `fk_exercicio`
+- [ ] **Teste manual:** `PUT /divisions/:id/exercises` com 2-3 `fk_exercicio`
 existentes (pegos do `GET /exercises`), depois `GET` no mesmo endpoint
 confere a ordem. `GET /divisions/muscle-summary` já mostra os grupamentos
 do dia que acabou de ganhar exercícios.
@@ -327,7 +327,7 @@ do dia que acabou de ganhar exercícios.
 
 ## Passo 5 — Testes de unidade (matriz RF02, parte 2)
 
-Mesmo runner da S2/S3. Precisa de uma divisão existente antes de testar
+- [ ] Mesmo runner da S2/S3. Precisa de uma divisão existente antes de testar
 exercícios — helper novo que registra, loga e cria um dia via `PUT
 /divisions`, devolvendo o `id_divisao`.
 
@@ -410,7 +410,7 @@ test('GET /divisions/muscle-summary reflete os exercícios salvos', async () => 
 });
 ```
 
-Salvar num arquivo novo, `server/src/__tests__/exercise.test.ts`, reaproveitando
+- [ ] Salvar num arquivo novo, `server/src/__tests__/exercise.test.ts`, reaproveitando
 o helper `registrarELogar` (mesma ideia da S3 — se preferir, extrair os
 helpers pra um `testHelpers.ts` compartilhado agora que são usados em dois
 arquivos).
@@ -464,7 +464,7 @@ export function buscarResumoMusculos() {
 
 ## Passo 7 — Front: tela de exercícios por dia
 
-**Onde encaixar na navegação:** ainda não há `react-router` (adiado desde
+- [ ] **Onde encaixar na navegação:** ainda não há `react-router` (adiado desde
 a S3). Caminho mais simples que não força roteamento cedo demais: em
 `DivisionView`, cada linha de dia preenchido ganha um botão "Exercícios"
 que abre um segundo componente (`DayExercisesView` ou um `Dialog` do MUI)
@@ -472,7 +472,7 @@ recebendo o `id_divisao` daquele dia. Decidir Dialog vs. tela separada é
 livre — o roteiro assume **Dialog**, por não exigir estado de navegação
 nenhum.
 
-**`client/src/components/DayExercisesDialog.tsx`** — carrega o catálogo
+- [ ] **`client/src/components/DayExercisesDialog.tsx`** — carrega o catálogo
 (Passo 6) e os exercícios já salvos daquele dia; adicionar empurra pro fim
 da lista, remover tira, subir/descer troca posição no array (mais simples
 que drag-and-drop pra um MVP — arrastar é melhoria futura, não critério de
@@ -622,7 +622,7 @@ export function DayExercisesDialog({ idDivisao, nomeDia, aberto, onFechar }: Pro
 }
 ```
 
-**Em `DivisionView.tsx`** — cada dia preenchido ganha o botão que abre o
+- [ ] **Em `DivisionView.tsx`** — cada dia preenchido ganha o botão que abre o
 Dialog, e a lista de grupamentos do resumo (Passo 6, `buscarResumoMusculos`)
 aparece como `Chip`s abaixo do nome do dia assim que existir algo salvo:
 
@@ -651,17 +651,17 @@ setResumo(resumo);
 
 ## Passo 8 — Fechar a semana
 
-1. Testar pela interface: abrir "Minha Divisão" → dia com nome salvo mostra
+1. [ ] Testar pela interface: abrir "Minha Divisão" → dia com nome salvo mostra
    botão "Exercícios" → abrir Dialog → adicionar 3-4 exercícios de
    grupamentos diferentes → reordenar com as setas → salvar → fechar e
    reabrir o Dialog → ordem e itens continuam → voltar pra tela principal →
    chips do resumo de músculos aparecem no dia.
-2. Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 juntas).
-3. Rodar `npm run build` nos dois lados — sem erro de tipo.
-4. Print da rotina montada (dia com 3+ exercícios e resumo de músculos
+2. [ ] Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 juntas).
+3. [ ] Rodar `npm run build` nos dois lados — sem erro de tipo.
+4. [ ] Print da rotina montada (dia com 3+ exercícios e resumo de músculos
    visível) — figura pro capítulo de resultados, conforme o critério de
    aceite pede.
-5. Commit + push. Sugestão: um commit pra backend (catálogo + vínculo +
+5. [ ] Commit + push. Sugestão: um commit pra backend (catálogo + vínculo +
    resumo) e outro pro Dialog de exercícios, espelhando as duas sessões.
 
 ---
