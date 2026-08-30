@@ -93,7 +93,9 @@ export async function listarTodos(
 import { Request, Response } from 'express';
 import * as exerciseModel from '../models/exerciseModel';
 
-export async function listar(req: Request, res: Response) {
+// nome explícito: `listar` sozinho não diz o quê. Convenção adotada em toda
+// a S4 — verbo + substantivo do domínio (`listarExercicios`, `salvarDivisoes`)
+export async function listarExercicios(req: Request, res: Response) {
   const grupamento = req.query.grupamento
     ? Number(req.query.grupamento)
     : undefined;
@@ -114,12 +116,12 @@ sem regra de dono — o catálogo é o mesmo pra todo usuário.
 
 ```ts
 import { Router } from 'express';
-import { listar } from '../controllers/exerciseController';
+import { listarExercicios } from '../controllers/exerciseController';
 import { autenticar } from '../middlewares/auth';
 
 const router = Router();
 
-router.get('/exercises', autenticar, listar);
+router.get('/exercises', autenticar, listarExercicios);
 
 export default router;
 ```
@@ -248,32 +250,40 @@ export async function buscarResumoMusculos(
 
 ## Passo 3 — `server/src/controllers/divisionController.ts` (acrescentar)
 
-- [ ] **Dono da divisão sempre confirmado antes de tocar em `DivisaoExercicio`**
+- [x] **Dono da divisão sempre confirmado antes de tocar em `DivisaoExercicio`**
 — igual ao cuidado da S3 com `req.userId`, mas agora em duas etapas: primeiro
 confere que o `id_divisao` da URL pertence ao usuário do token, só depois
 mexe nos exercícios. Sem essa checagem, um usuário poderia montar a rotina
 de outro só adivinhando um UUID.
 
+- [x] **Dois detalhes de tipagem** que aparecem assim que se escreve esse
+código:
+  - o tipo do middleware se chama `AuthenticateRequest` (sem "d") — é o nome
+  exportado em `middlewares/auth.ts` desde a S2;
+  - `req.params.id` é tipado como `string | string[]`, então passar direto
+  pra uma função que pede `string` não compila. `req.params.id as string`
+  resolve (a rota é `/:id`, sempre um segmento só).
+
 ```ts
-async function confirmarDono(idDivisao: string, fkUsuario: string) {
+async function confirmarDonoDivisao(idDivisao: string, fkUsuario: string) {
   const divisoes = await divisionModel.buscarPorUsuario(fkUsuario);
   return divisoes.some((d) => d.id_divisao === idDivisao);
 }
 
-export async function listarExercicios(req: AuthenticatedRequest, res: Response) {
-  const { id } = req.params;
-  if (!(await confirmarDono(id, req.userId as string))) {
+export async function listarExerciciosDivisao(req: AuthenticateRequest, res: Response) {
+  const id = req.params.id as string; //express tipa params como string | string[]
+  if (!(await confirmarDonoDivisao(id, req.userId as string))) {
     return res.status(404).json({ erro: 'Divisão não encontrada' });
   }
   const exercicios = await divisionModel.buscarExerciciosDoDia(id);
   return res.status(200).json({ exercicios });
 }
 
-export async function salvarExercicios(req: AuthenticatedRequest, res: Response) {
-  const { id } = req.params;
+export async function salvarExerciciosDivisao(req: AuthenticateRequest, res: Response) {
+  const id = req.params.id as string;
   const { exercicios } = req.body as { exercicios: DivisaoExercicioInput[] };
 
-  if (!(await confirmarDono(id, req.userId as string))) {
+  if (!(await confirmarDonoDivisao(id, req.userId as string))) {
     return res.status(404).json({ erro: 'Divisão não encontrada' });
   }
   if (!Array.isArray(exercicios)) {
@@ -294,7 +304,7 @@ export async function salvarExercicios(req: AuthenticatedRequest, res: Response)
   }
 }
 
-export async function resumoMusculos(req: AuthenticatedRequest, res: Response) {
+export async function listarResumoMusculos(req: AuthenticateRequest, res: Response) {
   const resumo = await divisionModel.buscarResumoMusculos(req.userId as string);
   return res.status(200).json({ resumo });
 }
@@ -305,20 +315,31 @@ export async function resumoMusculos(req: AuthenticatedRequest, res: Response) {
 ## Passo 4 — `server/src/routes/divisionRoutes.ts` (acrescentar)
 
 ```ts
-router.get('/divisions/:id/exercises', autenticar, listarExercicios);
-router.put('/divisions/:id/exercises', autenticar, salvarExercicios);
-router.get('/divisions/muscle-summary', autenticar, resumoMusculos);
+import {
+  listarDivisoes, salvarDivisoes,
+  listarExerciciosDivisao, salvarExerciciosDivisao, listarResumoMusculos,
+} from '../controllers/divisionController';
+
+router.get('/divisions/:id/exercises', autenticar, listarExerciciosDivisao);
+router.put('/divisions/:id/exercises', autenticar, salvarExerciciosDivisao);
+router.get('/divisions/muscle-summary', autenticar, listarResumoMusculos);
 ```
 
-> **Cuidado com ordem de rota no Express:** `/divisions/muscle-summary`
-> precisa vir **antes** de `/divisions/:id/exercises` seria irrelevante aqui
-> (prefixos diferentes), mas fica registrada depois de `/divisions` e
-> `/divisions/:id/exercises` de qualquer forma — como `:id` é um segmento
-> fixo seguido de `/exercises`, não colide com `/muscle-summary` (que não
-> tem esse segundo segmento). Só checar se, no futuro, alguém criar
-> `/divisions/:algumaCoisa` sem sufixo — aí a ordem passaria a importar.
+> **Ordem de rota no Express — aqui não importa.** O Express testa os padrões
+> na ordem de registro, mas antes disso o número de segmentos precisa bater:
+> `/divisions/muscle-summary` tem 2 segmentos e `/divisions/:id/exercises`
+> tem 3 (`:id` casa exatamente um segmento, e o padrão ainda exige
+> `/exercises` depois dele). Uma requisição a `/muscle-summary` nunca chega a
+> ser comparada com o padrão de 3 segmentos, então tanto faz qual das duas
+> registra primeiro.
+>
+> Onde a ordem **passaria** a importar: no dia em que existir um
+> `GET /divisions/:id` (2 segmentos, mesmo formato de
+> `/divisions/muscle-summary`). Aí o `:id` casaria primeiro e o handler
+> receberia `req.params.id === 'muscle-summary'` — a rota literal teria que
+> ser registrada antes da paramétrica.
 
-- [ ] **Teste manual:** `PUT /divisions/:id/exercises` com 2-3 `fk_exercicio`
+- [x] **Teste manual:** `PUT /divisions/:id/exercises` com 2-3 `fk_exercicio`
 existentes (pegos do `GET /exercises`), depois `GET` no mesmo endpoint
 confere a ordem. `GET /divisions/muscle-summary` já mostra os grupamentos
 do dia que acabou de ganhar exercícios.
@@ -681,7 +702,7 @@ setResumo(resumo);
   `substituirExerciciosDoDia` — aqui não precisa: `DivisaoExercicio` ainda
   não é referenciada por nenhuma FK filha, então apagar-e-reinserir é
   seguro e mais simples. Não é a mesma decisão da S3 por engano de cópia.
-- Esquecer de checar `confirmarDono` antes de listar/salvar exercícios de
+- Esquecer de checar `confirmarDonoDivisao` antes de listar/salvar exercícios de
   uma `id_divisao` vinda da URL — sem isso, qualquer usuário logado edita a
   rotina de qualquer outro só sabendo (ou adivinhando) o UUID.
 - Calcular o resumo de músculos no front, cruzando `catálogo` +

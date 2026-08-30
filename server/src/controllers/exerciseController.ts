@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import * as exerciseModel from '../models/exerciseModel';
 
-export async function listar (req: Request, res: Response){
+export async function listarExercicios (req: Request, res: Response){
     const grupamento = req.query.grupamento
     ? Number(req.query.grupamento)
     : undefined;

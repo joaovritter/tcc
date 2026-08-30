@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "seed": "tsx src/seed.ts",
+    "db:reset": "tsx src/resetDb.ts && npm run seed",
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "tsx --test src/**/*.test.ts"

@@ -1,3 +1,16 @@
+-- Derruba tudo antes de recriar, para o arquivo poder ser executado mais de uma
+-- vez (o projeto nao usa migrations: rodar este schema e o que realinha o banco
+-- com as mudancas feitas aqui). Ordem invertida das dependencias: filhas
+-- primeiro, Usuario por ultimo. IF EXISTS para funcionar em banco vazio tambem.
+DROP TABLE IF EXISTS DiagnosticoIA CASCADE;
+DROP TABLE IF EXISTS SerieTreino CASCADE;
+DROP TABLE IF EXISTS Treino CASCADE;
+DROP TABLE IF EXISTS DivisaoExercicio CASCADE;
+DROP TABLE IF EXISTS Divisao CASCADE;
+DROP TABLE IF EXISTS Exercicio CASCADE;
+DROP TABLE IF EXISTS GrupamentoMuscular CASCADE;
+DROP TABLE IF EXISTS Usuario CASCADE;
+
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 CREATE TABLE Usuario (

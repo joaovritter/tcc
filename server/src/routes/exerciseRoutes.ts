@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { listar } from '../controllers/exerciseController';
+import { listarExercicios } from '../controllers/exerciseController';
 import { autenticar } from '../middlewares/auth';
 
 const router = Router();
 
-router.get('/exercises', autenticar, listar);
+router.get('/exercises', autenticar, listarExercicios);
 
 export default router;
