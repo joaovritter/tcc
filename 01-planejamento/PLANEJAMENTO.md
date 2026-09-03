@@ -30,7 +30,7 @@ O protótipo feito com IA usa a mesma stack do TCC (React + Vite + Tailwind no f
 
 Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/suggest-division`) · avaliação IA por sessão · metas de carga por série (`ai_target_*`) · calendário mensal · dashboard elaborado · Redux · deploy. Detalhes e justificativas na lista **🧊 Cortado do Escopo** do Trello.
 
-> **Reincluído no escopo (05/08):** séries tipo "feeder" — `SerieTreino.tipo` agora aceita `aquecimento | feeder | valida`.
+> **Reincluído no escopo (05/08):** séries tipo "feeder" — `SerieTreino.tipo` agora aceita `aquecimento | feeder | work` (ver D9 quanto ao nome do terceiro valor).
 
 ---
 
@@ -44,6 +44,9 @@ Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/sug
 - **D6 — Sidebar vira barra inferior no mobile (31/08)**: a `Sidebar` (`client/src/components/Sidebar.tsx`) hoje é fixa à esquerda com expansão por hover — em tela estreita isso não cabe bem (barra fininha do lado, sem hover em touch). Decisão: usar `useMediaQuery` (breakpoint `sm`) para renderizar uma barra horizontal fixa embaixo (só ícones, sem expandir) em telas pequenas, mantendo a sidebar vertical no desktop. Implementação entra na S9 (Sessão B — Responsividade), não agora.
 
 - **D7 — Navegação por estado até a S9 (03/09)**: com a segunda tela logada (`TodaySessionView`, S5), o `App.tsx` passa a alternar telas com um `useState<'divisao' | 'treino'>` repassado à `Sidebar`, em vez de entrar `react-router`. Roteamento real (URL, back do navegador, rota protegida) só se justifica com mais telas e fica para a S9 — meio-caminho agora custaria duas refatorações. Registro do racional em [`SEMANA5.md`](./SEMANA5.md) (Passo 6).
+- **D9 — Tipo da série permanece `work` no banco (03/09)**: `SerieTreino.tipo` fica como está no `schema.sql` — `CHECK (tipo IN ('aquecimento','feeder','work'))`. Renomear para `valida` foi avaliado e **descartado**: o schema é a fonte da verdade e não se mexe nele por questão de nomenclatura. Quem se ajusta é o **texto do TCC**, que passa a citar os três valores como estão no banco. Divergência encerrada — nada pendente para a S9.
+  - **RPE/RIR só existem em série válida (03/09):** `aquecimento` e `feeder` não recebem nota de esforço — o campo não aparece na tela e o backend recusa (400) se vier preenchido; série `work`, ao contrário, **exige** RPE e RIR. O `CHECK` do banco não cobre isso (ele só valida a faixa 6–10, e `NULL` passa), então a regra vive na validação do controller. Fecha a pergunta que estava em aberto para a S7: sem nota nessas séries, não há o que mandar para o bloco 3 do prompt — o Gemini recebe RPE/RIR só das séries válidas.
+  - Redação a usar no texto (evita a armadilha de dizer que `feeder` "não é usado" — ele é gravado, só não conta volume): *"As séries são classificadas em três tipos: `aquecimento`, `feeder` e `work` (série válida). Apenas as séries válidas são contabilizadas no volume semanal por grupamento (RF04), em conformidade com o limiar de 10 séries semanais [Schoenfeld], que considera séries efetivas de trabalho, e somente elas registram as métricas de esforço percebido (RPE e RIR). As séries de aquecimento e feeder são registradas para preservar a fidelidade do histórico de treino, mas excluídas do cálculo de volume e da análise de esforço."*
 - **D8 — Séries são registro histórico, não configuração (03/09)**: `SerieTreino` entra por `POST` individual e sai por `DELETE` pontual — o padrão "apaga-e-reinsere" das S3/S4 não se aplica, porque cada série é um fato datado que a S6 vai contar como volume. `GET /sessions/today` não cria treino; quem cria é o `POST /sessions/start`, idempotente por dia.
 
 ## 3. Arquitetura alvo (MVC, TypeScript)

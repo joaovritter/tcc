@@ -78,9 +78,9 @@
 ## S5 · 31/08–06/09 · F3a Execução do Treino (RF03)
 
 > Roteiro da semana: [`SEMANA5.md`](./SEMANA5.md).
-> ⚠️ **Divergência aberta:** o card fala em série `válida`, o `schema.sql` já
-> está com `CHECK (tipo IN ('aquecimento','feeder','work'))`. O roteiro segue
-> o banco; decidir depois se o texto do TCC ou o schema muda — [card](https://trello.com/c/TtU2bmBR).
+> ✅ **Divergência resolvida (03/09, D9):** o tipo da série fica `aquecimento |
+> feeder | work` como está no `schema.sql`; quem se ajusta é o texto do TCC.
+> Redação sugerida em D9 no [`PLANEJAMENTO.md`](./PLANEJAMENTO.md) — [card](https://trello.com/c/TtU2bmBR).
 
 - [ ] 🎯 **ENTREGÁVEL S5 — Treino do dia registrado no banco (RF03)** (entrega dom 06/09) — [card](https://trello.com/c/HLKbI7u9)
   - [ ] GET /sessions/today monta o treino a partir da divisão

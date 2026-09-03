@@ -29,16 +29,17 @@ Critério de aceite (card 🎯 ENTREGÁVEL S5):
 
 ---
 
-> ⚠️ **Divergência a resolver (INSTRUCOES.md).** O card do Trello e o
-> `TASKS.md` escrevem o tipo da série como `aquecimento | válida`; o
-> `schema.sql` (S1) já está criado com `CHECK (tipo IN
-> ('aquecimento','feeder','work'))` — três valores, e o terceiro em inglês.
-> O roteiro segue **o banco** (`aquecimento | feeder | work`), porque mudar
-> o CHECK agora exigiria recriar tabela. O que precisa ser decidido: se o
-> texto do TCC fala em "série válida", ou o texto passa a citar `work`, ou
-> o schema é renomeado numa semana de folga (S9). Card `⚠️ Divergência TCC ×
-> Sistema — nome do tipo de série` a criar na lista 📌 do Trello. A `S5` não
-> depende dessa decisão pra rodar.
+> ✅ **Divergência resolvida (03/09) — Decisão D9.** O texto do TCC e os cards
+> falavam em `aquecimento | válida`; o `schema.sql` (S1) tem
+> `CHECK (tipo IN ('aquecimento','feeder','work'))`. **Fica como está no
+> banco** — o schema é a fonte da verdade e não se mexe nele por questão de
+> nomenclatura. Quem se ajusta é o texto, que passa a citar os três valores
+> como existem: `aquecimento`, `feeder` e `work` (série válida).
+>
+> Ao escrever, **não** diga que `feeder` "não é usado" — ele é gravado e
+> aparece no histórico; o que ele não faz é contar volume. Redação sugerida
+> em D9 no `PLANEJAMENTO.md`. Só as séries `work` entram no volume semanal
+> (RF04, S6), junto do limiar de 10 séries [Schoenfeld].
 
 ---
 
@@ -83,6 +84,9 @@ export interface SerieTreinoInput {
   tipo: TipoSerie;
   carga: number;
   repeticoes: number;
+  // opcionais no TIPO, obrigatórios na REGRA quando tipo = 'work': só série
+  // válida leva nota de esforço (D9). Em aquecimento/feeder o campo nem
+  // aparece na tela, e o backend recusa se vier preenchido — ver Passo 2
   rpe?: number | null;
   rir?: number | null;
 }
@@ -303,6 +307,21 @@ export async function comecarTreino(req: AuthenticateRequest, res: Response) {
 validação aqui devolve 400 com mensagem legível. Os dois níveis coexistem de
 propósito: o CHECK é a garantia (RNF02), a validação é a mensagem.
 
+- [ ] **Nota de esforço só em série válida (D9).** `aquecimento` e `feeder`
+**não têm** RPE/RIR — o campo some da tela (Passo 7) e o backend recusa se
+vier preenchido, em vez de gravar. É o par natural da D9: se essas séries não
+contam volume nem entram no diagnóstico, uma nota de esforço nelas é dado sem
+uso, e dado sem uso vira dado inconsistente. Repare que o `CHECK` do banco
+**não** pega esse caso (ele só olha a faixa 6–10, e `NULL` passa), então essa
+regra existe **só** aqui — é a única barreira.
+
+> **A recíproca também vale, e é decisão fechada (03/09):** série `work`
+> **exige** RPE e RIR — não é campo opcional. Sem eles o diagnóstico da S7
+> não tem o que analisar (bloco 3 da Tabela V) e a série vira registro pela
+> metade. Consequência prática: o botão "Registrar série" fica desabilitado
+> até a nota estar preenchida quando o tipo é `work` (Passo 7), e o backend
+> recusa com 400 se alguém contornar a tela.
+
 ```ts
 function validarSerie(serie: SerieTreinoInput): string | null {
   const tipos: TipoSerie[] = ['aquecimento', 'feeder', 'work'];
@@ -319,12 +338,26 @@ function validarSerie(serie: SerieTreinoInput): string | null {
   if (!Number.isInteger(serie.repeticoes) || serie.repeticoes <= 0) {
     return 'repeticoes precisa ser um inteiro maior que zero';
   }
-  // rpe e rir são opcionais (aquecimento normalmente não leva nota), mas se
-  // vierem precisam estar na faixa da RNF03
-  if (serie.rpe != null && (serie.rpe < 6 || serie.rpe > 10)) {
+
+  // D9: só série válida (work) leva nota de esforço. Em aquecimento/feeder o
+  // campo nem aparece na tela — se veio preenchido é bug no front ou chamada
+  // fora da interface; recusa em vez de gravar dado que ninguém vai usar
+  if (serie.tipo !== 'work') {
+    if (serie.rpe != null || serie.rir != null) {
+      return 'séries de aquecimento e feeder não recebem rpe/rir';
+    }
+    return null;
+  }
+
+  // daqui pra baixo é série válida: rpe/rir são obrigatórios e valem a faixa
+  // da RNF03 (o CHECK do banco deixa NULL passar, então quem exige é aqui)
+  if (serie.rpe == null || serie.rir == null) {
+    return 'série válida precisa de rpe e rir';
+  }
+  if (serie.rpe < 6 || serie.rpe > 10) {
     return 'rpe precisa estar entre 6 e 10';
   }
-  if (serie.rir != null && (serie.rir < 0 || serie.rir > 5)) {
+  if (serie.rir < 0 || serie.rir > 5) {
     return 'rir precisa estar entre 0 e 5';
   }
   return null;
@@ -426,9 +459,10 @@ app.use(sessionRoutes);
 - [ ] **Teste manual (Postman):** com um dia da semana que tenha divisão +
 exercícios salvos, `GET /sessions/today` devolve `divisao` preenchida,
 `exercicios` na ordem e `treino: null`. `POST /sessions/start` cria (201) e,
-chamado de novo, devolve o mesmo (200). `POST /sessions/:id/sets` com
-`rpe: 12` devolve 400; com `rpe: 9` devolve 201. `GET /sessions/today` de
-novo já traz a série na lista.
+chamado de novo, devolve o mesmo (200). `POST /sessions/:id/sets`, cinco
+casos: `work` com `rpe: 12` → 400; `work` com `rpe: 9, rir: 1` → 201;
+`work` sem `rpe` → 400; `aquecimento` com `rpe: 8` → 400; `aquecimento` sem
+nota nenhuma → 201. `GET /sessions/today` de novo já traz as séries na lista.
 
 ---
 
@@ -537,14 +571,61 @@ test('RPE e RIR fora da faixa da RNF03 são recusados com 400', async () => {
   const rpeAlto = await request(app)
     .post(`/sessions/${idTreino}/sets`)
     .set('Authorization', `Bearer ${token}`)
-    .send({ ...base, rpe: 12 });
+    .send({ ...base, rpe: 12, rir: 1 });
   const rirAlto = await request(app)
     .post(`/sessions/${idTreino}/sets`)
     .set('Authorization', `Bearer ${token}`)
-    .send({ ...base, rir: 9 });
+    .send({ ...base, rpe: 9, rir: 9 });
 
   assert.equal(rpeAlto.status, 400);
   assert.equal(rirAlto.status, 400);
+});
+```
+
+- [ ] **Os dois testes da D9** — o que garante que aquecimento/feeder não
+carregam nota, e o que garante que série válida não passa sem ela. Sem esse
+par, a regra do Passo 2 é a única coisa que segura, e ninguém percebe se ela
+se perder num refactor:
+
+```ts
+test('aquecimento e feeder não aceitam rpe/rir (D9)', async () => {
+  const { token, exercicio } = await registrarComRotinaDeHoje();
+  const inicio = await request(app)
+    .post('/sessions/start')
+    .set('Authorization', `Bearer ${token}`);
+  const idTreino = inicio.body.treino.id_treino as string;
+
+  const comNota = await request(app)
+    .post(`/sessions/${idTreino}/sets`)
+    .set('Authorization', `Bearer ${token}`)
+    .send({ fk_exercicio: exercicio.id_exercicio, tipo: 'aquecimento', carga: 20, repeticoes: 15, rpe: 8 });
+
+  const semNota = await request(app)
+    .post(`/sessions/${idTreino}/sets`)
+    .set('Authorization', `Bearer ${token}`)
+    .send({ fk_exercicio: exercicio.id_exercicio, tipo: 'aquecimento', carga: 20, repeticoes: 15 });
+
+  assert.equal(comNota.status, 400);
+  assert.equal(semNota.status, 201);
+  assert.equal(semNota.body.serie.rpe, null);
+  assert.equal(semNota.body.serie.rir, null);
+});
+```
+
+```ts
+test('série válida sem rpe/rir é recusada (D9)', async () => {
+  const { token, exercicio } = await registrarComRotinaDeHoje();
+  const inicio = await request(app)
+    .post('/sessions/start')
+    .set('Authorization', `Bearer ${token}`);
+  const idTreino = inicio.body.treino.id_treino as string;
+
+  const resposta = await request(app)
+    .post(`/sessions/${idTreino}/sets`)
+    .set('Authorization', `Bearer ${token}`)
+    .send({ fk_exercicio: exercicio.id_exercicio, tipo: 'work', carga: 60, repeticoes: 10 });
+
+  assert.equal(resposta.status, 400);
 });
 ```
 
@@ -626,6 +707,7 @@ export function registrarSerie(
     tipo: TipoSerie;
     carga: number;
     repeticoes: number;
+    // null em aquecimento/feeder, preenchidos em série válida (D9)
     rpe?: number | null;
     rir?: number | null;
   }
@@ -738,21 +820,44 @@ digitou). Guardar num objeto indexado por `fk_exercicio`:
 const [rascunhos, setRascunhos] = useState<Record<number, Rascunho>>({});
 
 function atualizarRascunho(fk: number, campo: keyof Rascunho, valor: string) {
-  setRascunhos((atual) => ({
-    ...atual,
-    [fk]: { ...RASCUNHO_VAZIO, ...atual[fk], [campo]: valor },
-  }));
+  setRascunhos((atual) => {
+    const novo = { ...RASCUNHO_VAZIO, ...atual[fk], [campo]: valor };
+    // trocar pra aquecimento/feeder limpa a nota (D9): o campo some da tela,
+    // mas o que já foi digitado continuaria no estado e iria junto no POST —
+    // e aí o backend recusa com 400 num campo que o usuário nem vê mais
+    if (campo === 'tipo' && valor !== 'work') {
+      novo.rpe = '';
+      novo.rir = '';
+    }
+    return { ...atual, [fk]: novo };
+  });
 }
+```
+
+- [ ] **Os campos de RPE/RIR só existem em série válida (D9).** Renderização
+condicional pelo `rascunho.tipo` — não `disabled`, e sim fora do DOM: campo
+desabilitado ainda ocupa espaço numa tela de celular e sugere que existe
+alguma forma de preencher.
+
+```tsx
+{rascunho.tipo === 'work' && (
+  <>
+    <TextField label="RPE" ... />
+    <TextField label="RIR" ... />
+  </>
+)}
 ```
 
 - [ ] **Campos ficam como `string` no estado, viram `number` só no envio.**
 Se o `useState` for `number`, apagar o campo pra digitar de novo dá `NaN` e o
 input trava. `Number(rascunho.carga)` no `registrar()` resolve, e `rpe`/`rir`
-em branco viram `null` (aquecimento não leva nota).
+vão como `null` sempre que o tipo não for `work` — a mesma regra da D9, agora
+no envio.
 
 ```tsx
 async function registrar(fkExercicio: number) {
   const rascunho = rascunhos[fkExercicio] ?? RASCUNHO_VAZIO;
+  const ehValida = rascunho.tipo === 'work';
   setErro('');
   try {
     await api.registrarSerie(treino!.id_treino, {
@@ -760,8 +865,10 @@ async function registrar(fkExercicio: number) {
       tipo: rascunho.tipo,
       carga: Number(rascunho.carga),
       repeticoes: Number(rascunho.repeticoes),
-      rpe: rascunho.rpe === '' ? null : Number(rascunho.rpe),
-      rir: rascunho.rir === '' ? null : Number(rascunho.rir),
+      // null explícito em aquecimento/feeder (D9) — nunca Number('') = 0,
+      // que gravaria "RPE 0" e ainda tomaria 400 na faixa 6–10
+      rpe: ehValida ? Number(rascunho.rpe) : null,
+      rir: ehValida ? Number(rascunho.rir) : null,
     });
     await recarregar(); // relê /sessions/today: a lista de séries vem do banco
   } catch (erro) {
@@ -785,9 +892,12 @@ O arquivo completo está no anexo, no fim deste roteiro.
 1. [ ] Testar pela interface, **no celular ou no DevTools em modo mobile**:
    entrar → "Treino de hoje" → dia sem divisão mostra o estado vazio → montar
    uma divisão pra hoje na outra tela → voltar → "Começar treino" → registrar
-   3-4 séries (uma de aquecimento sem RPE, o resto `work` com RPE/RIR) →
-   apagar uma → recarregar a página: as séries continuam lá.
-2. [ ] Tentar RPE 12 pela interface e confirmar que o erro aparece amigável
+   3-4 séries (uma de aquecimento, o resto `work` com RPE/RIR) → apagar uma →
+   recarregar a página: as séries continuam lá.
+2. [ ] Conferir a D9 na tela: escolher "Aquecimento" **faz os campos de RPE e
+   RIR sumirem**; digitar RPE 9, trocar pra "Aquecimento" e salvar grava a
+   série **sem** nota (não 0, não 9).
+3. [ ] Tentar RPE 12 pela interface e confirmar que o erro aparece amigável
    (vem do 400 do backend, não de um `alert` do navegador).
 3. [ ] Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 + S5).
 4. [ ] Rodar `npm run build` nos dois lados — sem erro de tipo.
@@ -828,6 +938,11 @@ O arquivo completo está no anexo, no fim deste roteiro.
 - **Esquecer o `buscarPorId` antes de gravar série.** Mesmo buraco da S4: sem
   confirmar o dono, qualquer usuário logado grava série no treino de outro
   sabendo o UUID.
+- **Deixar a nota de esforço vazar pra aquecimento/feeder.** Dois jeitos de
+  acontecer: esconder o campo na tela mas não limpar o rascunho ao trocar o
+  tipo (o valor antigo vai junto no POST), ou mandar `Number('')`, que é `0`
+  e não `null` — grava "RPE 0" ou toma 400 na faixa 6–10. Os dois estão
+  cobertos no Passo 7; a regra de verdade é a do backend (D9).
 - **Um formulário só pra todos os exercícios.** Alternar de exercício apaga o
   que foi digitado — usar o `Record<number, Rascunho>` do Passo 7.
 - **Calcular volume/total de séries na tela.** A RNF03 manda todo cálculo pro
@@ -971,11 +1086,25 @@ function validarSerie(serie: SerieTreinoInput): string | null {
   if (!Number.isInteger(serie.repeticoes) || serie.repeticoes <= 0) {
     return 'repeticoes precisa ser um inteiro maior que zero';
   }
-  //rpe e rir sao opcionais (aquecimento nao leva nota), mas se vierem precisam estar na faixa
-  if (serie.rpe != null && (serie.rpe < 6 || serie.rpe > 10)) {
+
+  //D9: so serie valida (work) leva nota de esforco. Em aquecimento/feeder o campo
+  //nem aparece na tela - se veio preenchido e bug no front, recusa em vez de gravar
+  if (serie.tipo !== 'work') {
+    if (serie.rpe != null || serie.rir != null) {
+      return 'séries de aquecimento e feeder não recebem rpe/rir';
+    }
+    return null;
+  }
+
+  //serie valida: rpe/rir obrigatorios e na faixa da RNF03
+  //(o CHECK do banco deixa NULL passar, entao quem exige e aqui)
+  if (serie.rpe == null || serie.rir == null) {
+    return 'série válida precisa de rpe e rir';
+  }
+  if (serie.rpe < 6 || serie.rpe > 10) {
     return 'rpe precisa estar entre 6 e 10';
   }
-  if (serie.rir != null && (serie.rir < 0 || serie.rir > 5)) {
+  if (serie.rir < 0 || serie.rir > 5) {
     return 'rir precisa estar entre 0 e 5';
   }
   return null;
@@ -1153,10 +1282,16 @@ export function TodaySessionView() {
 
   //um rascunho por exercicio: um formulario global perderia o que foi digitado ao trocar de exercicio
   function atualizarRascunho(fk: number, campo: keyof Rascunho, valor: string) {
-    setRascunhos((atual) => ({
-      ...atual,
-      [fk]: { ...RASCUNHO_VAZIO, ...atual[fk], [campo]: valor },
-    }));
+    setRascunhos((atual) => {
+      const novo = { ...RASCUNHO_VAZIO, ...atual[fk], [campo]: valor };
+      //D9: trocar pra aquecimento/feeder limpa a nota - o campo some da tela, mas o
+      //que ja foi digitado continuaria no estado e iria junto no POST, tomando 400
+      if (campo === 'tipo' && valor !== 'work') {
+        novo.rpe = '';
+        novo.rir = '';
+      }
+      return { ...atual, [fk]: novo };
+    });
   }
 
   async function comecar() {
@@ -1169,10 +1304,11 @@ export function TodaySessionView() {
     }
   }
 
-  //converte pra number so no envio; rpe/rir em branco viram null (aquecimento nao leva nota)
+  //converte pra number so no envio; rpe/rir vao null quando o tipo nao e work (D9)
   async function registrar(fkExercicio: number) {
     if (!hoje?.treino) return;
     const rascunho = rascunhos[fkExercicio] ?? RASCUNHO_VAZIO;
+    const ehValida = rascunho.tipo === 'work';
     setErro('');
     try {
       await api.registrarSerie(hoje.treino.id_treino, {
@@ -1180,8 +1316,9 @@ export function TodaySessionView() {
         tipo: rascunho.tipo,
         carga: Number(rascunho.carga),
         repeticoes: Number(rascunho.repeticoes),
-        rpe: rascunho.rpe === '' ? null : Number(rascunho.rpe),
-        rir: rascunho.rir === '' ? null : Number(rascunho.rir),
+        //null explicito, nunca Number('') = 0 - gravaria "RPE 0" e tomaria 400 na faixa
+        rpe: ehValida ? Number(rascunho.rpe) : null,
+        rir: ehValida ? Number(rascunho.rir) : null,
       });
       setRascunhos((atual) => ({ ...atual, [fkExercicio]: RASCUNHO_VAZIO }));
       await recarregar(); //a lista de series vem do banco, nao do estado local
@@ -1310,30 +1447,41 @@ export function TodaySessionView() {
                         atualizarRascunho(exercicio.fk_exercicio, 'repeticoes', e.target.value)
                       }
                     />
-                    <TextField
-                      label="RPE"
-                      size="small"
-                      inputMode="numeric"
-                      value={rascunho.rpe}
-                      onChange={(e) =>
-                        atualizarRascunho(exercicio.fk_exercicio, 'rpe', e.target.value)
-                      }
-                    />
-                    <TextField
-                      label="RIR"
-                      size="small"
-                      inputMode="numeric"
-                      value={rascunho.rir}
-                      onChange={(e) =>
-                        atualizarRascunho(exercicio.fk_exercicio, 'rir', e.target.value)
-                      }
-                    />
+                    {/* D9: nota de esforco so existe em serie valida - fora do DOM,
+                        nao apenas disabled (campo morto ocupa espaco na tela do celular) */}
+                    {rascunho.tipo === 'work' && (
+                      <>
+                        <TextField
+                          label="RPE"
+                          size="small"
+                          inputMode="numeric"
+                          value={rascunho.rpe}
+                          onChange={(e) =>
+                            atualizarRascunho(exercicio.fk_exercicio, 'rpe', e.target.value)
+                          }
+                        />
+                        <TextField
+                          label="RIR"
+                          size="small"
+                          inputMode="numeric"
+                          value={rascunho.rir}
+                          onChange={(e) =>
+                            atualizarRascunho(exercicio.fk_exercicio, 'rir', e.target.value)
+                          }
+                        />
+                      </>
+                    )}
                   </Stack>
 
                   <Button
                     variant="contained"
                     onClick={() => registrar(exercicio.fk_exercicio)}
-                    disabled={!rascunho.carga || !rascunho.repeticoes}
+                    disabled={
+                      !rascunho.carga ||
+                      !rascunho.repeticoes ||
+                      //serie valida so fecha com nota preenchida (D9)
+                      (rascunho.tipo === 'work' && (!rascunho.rpe || !rascunho.rir))
+                    }
                   >
                     Registrar série
                   </Button>
