@@ -672,7 +672,7 @@ setResumo(resumo);
 
 ## Passo 8 — Fechar a semana
 
-1. [ ] Testar pela interface: abrir "Minha Divisão" → dia com nome salvo mostra
+1. [x] Testar pela interface: abrir "Minha Divisão" → dia com nome salvo mostra
    botão "Exercícios" → abrir Dialog → adicionar 3-4 exercícios de
    grupamentos diferentes → reordenar com as setas → salvar → fechar e
    reabrir o Dialog → ordem e itens continuam → voltar pra tela principal →
@@ -682,7 +682,7 @@ setResumo(resumo);
 4. [ ] Print da rotina montada (dia com 3+ exercícios e resumo de músculos
    visível) — figura pro capítulo de resultados, conforme o critério de
    aceite pede.
-5. [ ] Commit + push. Sugestão: um commit pra backend (catálogo + vínculo +
+5. [x] Commit + push. Sugestão: um commit pra backend (catálogo + vínculo +
    resumo) e outro pro Dialog de exercícios, espelhando as duas sessões.
 
 ---

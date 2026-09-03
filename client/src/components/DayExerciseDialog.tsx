@@ -152,7 +152,7 @@ export function DayExercisesDialog({ idDivisao, nomeDia, aberto, onFechar }: Pro
                       <ArrowDownwardIcon />
                     </IconButton>
                     <IconButton onClick={() => remover(i)}>
-                      <DeleteIcon />
+                      <DeleteIcon color="error" />
                     </IconButton>
                   </>
                 }
