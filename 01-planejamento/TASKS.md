@@ -63,13 +63,13 @@
 
 ## S4 · 24–30/08 · F2b Exercícios da Rotina (RF02)
 
-- [ ] 🎯 **ENTREGÁVEL S4 — Montagem completa da rotina (RF02 completo)** (entrega dom 30/08) — [card](https://trello.com/c/ZO75u5Rr)
+- [x] 🎯 **ENTREGÁVEL S4 — Montagem completa da rotina (RF02 completo)** (entrega dom 30/08) — [card](https://trello.com/c/ZO75u5Rr)
   - [x] GET /exercises com grupamento muscular e filtro
   - [x] Adicionar/remover/ordenar exercícios por dia funcionando
   - [x] Persistência em DivisaoExercicio com ordem
   - [x] Resumo de músculos da divisão passa a aparecer (derivado do JOIN, Decisão D)
-  - [ ] Fluxo completo divisão → exercícios sem erros no console
-  - [ ] Print da rotina montada guardado (figura para o TCC)
+  - [x] Fluxo completo divisão → exercícios sem erros no console
+  - [x] Print da rotina montada guardado (figura para o TCC)
 - [x] Sessão A — Backend F2b: ExerciseModel + endpoints da rotina — [card](https://trello.com/c/vz5Xu9hg)
   - Arquivos: `types/indexTypes.ts`, `models/exerciseModel.ts`, `controllers/exerciseController.ts`, `routes/exerciseRoutes.ts`, `models/divisionModel.ts` (acrescentar), `controllers/divisionController.ts` (acrescentar), `routes/divisionRoutes.ts` (acrescentar), `app.ts` (registrar rota), `__tests__/exercise.test.ts`
 - [x] Sessão B — Frontend F2b: seleção e ordenação de exercícios — [card](https://trello.com/c/MjLJfaAZ)
@@ -77,16 +77,21 @@
 
 ## S5 · 31/08–06/09 · F3a Execução do Treino (RF03)
 
+> Roteiro da semana: [`SEMANA5.md`](./SEMANA5.md).
+> ⚠️ **Divergência aberta:** o card fala em série `válida`, o `schema.sql` já
+> está com `CHECK (tipo IN ('aquecimento','feeder','work'))`. O roteiro segue
+> o banco; decidir depois se o texto do TCC ou o schema muda — [card](https://trello.com/c/TtU2bmBR).
+
 - [ ] 🎯 **ENTREGÁVEL S5 — Treino do dia registrado no banco (RF03)** (entrega dom 06/09) — [card](https://trello.com/c/HLKbI7u9)
   - [ ] GET /sessions/today monta o treino a partir da divisão
-  - [ ] Registro de série com tipo (aquecimento|válida), carga, reps, RPE e RIR
+  - [ ] Registro de série com tipo (aquecimento|feeder|work), carga, reps, RPE e RIR
   - [ ] Validações de faixa no backend: RPE 6–10, RIR 0–5 (RNF03)
   - [ ] Tela usável no celular durante o treino (RNF01)
   - [ ] Campos persistidos corretamente + teste de unidade (matriz RF03)
 - [ ] Sessão A — Backend F3a: sessionController + SetLogModel — [card](https://trello.com/c/oVROzoSE)
   - Arquivos: `types/indexTypes.ts` (acrescentar), `models/sessionModel.ts`, `controllers/sessionController.ts`, `routes/sessionRoutes.ts`, `app.ts` (registrar rota), `__tests__/session.test.ts`
 - [ ] Sessão B — Frontend F3a: tela "Treino de Hoje" (mobile-first) — [card](https://trello.com/c/W2qkDGiE)
-  - Arquivos: `services/api.ts` (acrescentar), `views/TodaySessionView.tsx`, `App.tsx` (acrescentar)
+  - Arquivos: `services/api.ts` (acrescentar + tratar 204 no `apiFetch`), `views/TodaySessionView.tsx`, `App.tsx` (estado de tela), `components/AppShell.tsx` (repassar props), `components/Sidebar.tsx` (navegação entre telas, sem react-router)
 
 ## S6 · 07–13/09 · F3b Finalizar + F4 Volume Semanal (RF04)
 

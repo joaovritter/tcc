@@ -43,6 +43,9 @@ Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/sug
 - **D5 — Divisão sem `muscles[]` (09/08)**: `Divisao` guarda só `dia_semana` + `nome` livre; os grupamentos treinados no dia são **derivados via JOIN** `Divisao → DivisaoExercicio → Exercicio → GrupamentoMuscular` na leitura, com estado vazio enquanto não houver exercício. Elimina dado redundante e a necessidade de sincronizar array com `DivisaoExercicio`. Racional completo em [`DECISAO-MUSCLES-DIVISIONS.md`](./DECISAO-MUSCLES-DIVISIONS.md) (Opção D; A/B/C avaliadas e descartadas).
 - **D6 — Sidebar vira barra inferior no mobile (31/08)**: a `Sidebar` (`client/src/components/Sidebar.tsx`) hoje é fixa à esquerda com expansão por hover — em tela estreita isso não cabe bem (barra fininha do lado, sem hover em touch). Decisão: usar `useMediaQuery` (breakpoint `sm`) para renderizar uma barra horizontal fixa embaixo (só ícones, sem expandir) em telas pequenas, mantendo a sidebar vertical no desktop. Implementação entra na S9 (Sessão B — Responsividade), não agora.
 
+- **D7 — Navegação por estado até a S9 (03/09)**: com a segunda tela logada (`TodaySessionView`, S5), o `App.tsx` passa a alternar telas com um `useState<'divisao' | 'treino'>` repassado à `Sidebar`, em vez de entrar `react-router`. Roteamento real (URL, back do navegador, rota protegida) só se justifica com mais telas e fica para a S9 — meio-caminho agora custaria duas refatorações. Registro do racional em [`SEMANA5.md`](./SEMANA5.md) (Passo 6).
+- **D8 — Séries são registro histórico, não configuração (03/09)**: `SerieTreino` entra por `POST` individual e sai por `DELETE` pontual — o padrão "apaga-e-reinsere" das S3/S4 não se aplica, porque cada série é um fato datado que a S6 vai contar como volume. `GET /sessions/today` não cria treino; quem cria é o `POST /sessions/start`, idempotente por dia.
+
 ## 3. Arquitetura alvo (MVC, TypeScript)
 
 ```

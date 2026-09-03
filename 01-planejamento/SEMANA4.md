@@ -19,8 +19,8 @@ Critério de aceite (card 🎯 ENTREGÁVEL S4):
 - [x] Adicionar/remover/ordenar exercícios por dia funcionando
 - [x] Persistência em `DivisaoExercicio` com `ordem`
 - [x] Resumo de músculos da divisão passa a aparecer (derivado do JOIN, Decisão D)
-- [ ] Fluxo completo divisão → exercícios sem erros no console
-- [ ] Print da rotina montada guardado (figura para o TCC)
+- [x] Fluxo completo divisão → exercícios sem erros no console
+- [x] Print da rotina montada guardado (figura para o TCC)
 
 ---
 
