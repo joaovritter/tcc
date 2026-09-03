@@ -85,7 +85,30 @@ Cada linha S2–S9 tem duas sessões de dev/semana (1 back + 1 front), espelhand
 
 **Regras anti-atraso:** S9 é o buffer; Gemini sempre atrás de mock; nada entra no escopo sem passar pela lista 🧊; 2 semanas sem entregável = replanejar cortando.
 
-## 5. Referência rápida — prompt de 5 blocos (Tabela V)
+## 5. Figuras do capítulo de resultados (máx. 5)
+
+Decidido em 03/09: **5 figuras no documento inteiro** (era 6). Critério de seleção — cada figura prova **um RF diferente**; o que a matriz de rastreabilidade e os testes já comprovam não vira figura.
+
+| # | Figura | Semana | Prova |
+|---|---|---|---|
+| 1 | Minha Divisão com a semana preenchida + chips de músculos do dia | S4 ✅ | RF02 completo (e a D5 visível: grupamentos vindos do JOIN) |
+| 2 | Treino de Hoje **no celular**, com 3–4 séries registradas (carga/reps/RPE/RIR) | S5 | RF03 + RNF01 |
+| 3 | Volume da Semana por grupamento, com o limiar de 10 séries marcado | S6 | RF04 + embasamento [Schoenfeld] |
+| 4 | Diagnóstico da Semana: score 0–100 + análise por grupamento + recomendações | S7 | RF05/RF06 — figura central do trabalho |
+| 5 | Histórico: progressão de carga + diagnósticos anteriores | S8 | RF07 |
+
+**Cortadas:** tela de login/registro (RF01 já comprovado pela matriz + testes de unidade; não tem nada específico deste trabalho) e o Dialog de seleção de exercícios (o resultado dele já aparece na Fig. 1).
+
+**Plano B se o espaço apertar:** juntar volume + diagnóstico numa figura composta da **mesma semana de dados** — vira 1 figura, e ganha em argumento, porque mostra o dado que entrou na IA ao lado do diagnóstico que saiu dele. Ficariam 4.
+
+**Regras de captura:**
+- Tirar **todas depois do code freeze** (19/10), não semana a semana — figuras com UI de épocas diferentes destoam entre capítulos.
+- **Mesmo usuário e mesma semana de dados** nas 5, pra o leitor seguir uma narrativa: essa divisão → esse treino → esse volume → esse diagnóstico.
+- **Dados realistas** (exercícios e cargas plausíveis; nada de "teste", "aaa", 999 kg).
+- Fig. 2 em **retrato, recortada no aparelho** — é ela que sustenta a RNF01; print de navegador estreitado não convence.
+- Conferir legibilidade **no PDF impresso**: se não der pra ler o RPE, a figura não prova nada.
+
+## 6. Referência rápida — prompt de 5 blocos (Tabela V)
 
 1. **Persona** — especialista em fisiologia do exercício, domínio restrito
 2. **Contexto** — semana de referência + grupamentos treinados

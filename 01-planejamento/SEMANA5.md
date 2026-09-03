@@ -791,8 +791,11 @@ O arquivo completo está no anexo, no fim deste roteiro.
    (vem do 400 do backend, não de um `alert` do navegador).
 3. [ ] Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 + S5).
 4. [ ] Rodar `npm run build` nos dois lados — sem erro de tipo.
-5. [ ] Print da tela de treino no celular com séries registradas — figura pro
-   capítulo de resultados (RNF01).
+5. [ ] Print da tela de treino no celular com séries registradas — é a
+   **Fig. 2** das 5 do documento (RF03 + RNF01, ver seção 5 do
+   `PLANEJAMENTO.md`). Vale tirar um provisório agora pra garantir que a tela
+   fecha o critério; a versão final sai depois do code freeze, com os mesmos
+   dados das outras figuras.
 6. [ ] Commit + push. Sugestão: um commit de backend (model + controller +
    rotas + testes) e outro de frontend (navegação + `TodaySessionView`).
 
