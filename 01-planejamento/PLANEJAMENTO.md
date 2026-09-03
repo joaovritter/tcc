@@ -41,6 +41,7 @@ Onboarding com perfil/anamnese/lesões · sugestão de divisão por IA (`/ai/sug
 - **D3 — Cortes** conforme lista 🧊 do Trello.
 - **D4 — Correções obrigatórias**: coluna RPE, tabela `diagnostics`, volume no backend, score no backend, prompt de 5 blocos, testes, sem backdoor.
 - **D5 — Divisão sem `muscles[]` (09/08)**: `Divisao` guarda só `dia_semana` + `nome` livre; os grupamentos treinados no dia são **derivados via JOIN** `Divisao → DivisaoExercicio → Exercicio → GrupamentoMuscular` na leitura, com estado vazio enquanto não houver exercício. Elimina dado redundante e a necessidade de sincronizar array com `DivisaoExercicio`. Racional completo em [`DECISAO-MUSCLES-DIVISIONS.md`](./DECISAO-MUSCLES-DIVISIONS.md) (Opção D; A/B/C avaliadas e descartadas).
+- **D6 — Sidebar vira barra inferior no mobile (31/08)**: a `Sidebar` (`client/src/components/Sidebar.tsx`) hoje é fixa à esquerda com expansão por hover — em tela estreita isso não cabe bem (barra fininha do lado, sem hover em touch). Decisão: usar `useMediaQuery` (breakpoint `sm`) para renderizar uma barra horizontal fixa embaixo (só ícones, sem expandir) em telas pequenas, mantendo a sidebar vertical no desktop. Implementação entra na S9 (Sessão B — Responsividade), não agora.
 
 ## 3. Arquitetura alvo (MVC, TypeScript)
 

@@ -11,7 +11,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <Box sx={{ minHeight: '100vh' }}>
       <Sidebar />
-      <Box sx={{ pl: { xs: '20px', md: '136px' } }}>
+      <Box sx={{ pl: { xs: '116px', md: '136px' } }}>
         <PageLayout>{children}</PageLayout>
       </Box>
     </Box>

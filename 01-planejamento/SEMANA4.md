@@ -15,10 +15,10 @@
 > `DivisaoExercicio`, então o resumo deixa de ficar vazio.
 
 Critério de aceite (card 🎯 ENTREGÁVEL S4):
-- [ ] `GET /exercises` com grupamento muscular e filtro
-- [ ] Adicionar/remover/ordenar exercícios por dia funcionando
-- [ ] Persistência em `DivisaoExercicio` com `ordem`
-- [ ] Resumo de músculos da divisão passa a aparecer (derivado do JOIN, Decisão D)
+- [x] `GET /exercises` com grupamento muscular e filtro
+- [x] Adicionar/remover/ordenar exercícios por dia funcionando
+- [x] Persistência em `DivisaoExercicio` com `ordem`
+- [x] Resumo de músculos da divisão passa a aparecer (derivado do JOIN, Decisão D)
 - [ ] Fluxo completo divisão → exercícios sem erros no console
 - [ ] Print da rotina montada guardado (figura para o TCC)
 
@@ -348,7 +348,7 @@ do dia que acabou de ganhar exercícios.
 
 ## Passo 5 — Testes de unidade (matriz RF02, parte 2)
 
-- [ ] Mesmo runner da S2/S3. Precisa de uma divisão existente antes de testar
+- [x] Mesmo runner da S2/S3. Precisa de uma divisão existente antes de testar
 exercícios — helper novo que registra, loga e cria um dia via `PUT
 /divisions`, devolvendo o `id_divisao`.
 
@@ -356,7 +356,7 @@ exercícios — helper novo que registra, loga e cria um dia via `PUT
 async function registrarComDivisao() {
   const { token } = await registrarELogar();
   const divisao = await request(app)
-    .put('/divisions')
+.put('/divisions')
     .set('Authorization', `Bearer ${token}`)
     .send({ divisoes: [{ dia_semana: 1, nome: 'Peito e tríceps' }] });
   return { token, idDivisao: divisao.body.divisoes[0].id_divisao as string };
@@ -431,7 +431,7 @@ test('GET /divisions/muscle-summary reflete os exercícios salvos', async () => 
 });
 ```
 
-- [ ] Salvar num arquivo novo, `server/src/__tests__/exercise.test.ts`, reaproveitando
+- [x] Salvar num arquivo novo, `server/src/__tests__/exercise.test.ts`, reaproveitando
 o helper `registrarELogar` (mesma ideia da S3 — se preferir, extrair os
 helpers pra um `testHelpers.ts` compartilhado agora que são usados em dois
 arquivos).
@@ -485,7 +485,7 @@ export function buscarResumoMusculos() {
 
 ## Passo 7 — Front: tela de exercícios por dia
 
-- [ ] **Onde encaixar na navegação:** ainda não há `react-router` (adiado desde
+- [x] **Onde encaixar na navegação:** ainda não há `react-router` (adiado desde
 a S3). Caminho mais simples que não força roteamento cedo demais: em
 `DivisionView`, cada linha de dia preenchido ganha um botão "Exercícios"
 que abre um segundo componente (`DayExercisesView` ou um `Dialog` do MUI)
@@ -493,7 +493,7 @@ recebendo o `id_divisao` daquele dia. Decidir Dialog vs. tela separada é
 livre — o roteiro assume **Dialog**, por não exigir estado de navegação
 nenhum.
 
-- [ ] **`client/src/components/DayExercisesDialog.tsx`** — carrega o catálogo
+- [x] **`client/src/components/DayExercisesDialog.tsx`** — carrega o catálogo
 (Passo 6) e os exercícios já salvos daquele dia; adicionar empurra pro fim
 da lista, remover tira, subir/descer troca posição no array (mais simples
 que drag-and-drop pra um MVP — arrastar é melhoria futura, não critério de
@@ -643,7 +643,7 @@ export function DayExercisesDialog({ idDivisao, nomeDia, aberto, onFechar }: Pro
 }
 ```
 
-- [ ] **Em `DivisionView.tsx`** — cada dia preenchido ganha o botão que abre o
+- [x] **Em `DivisionView.tsx`** — cada dia preenchido ganha o botão que abre o
 Dialog, e a lista de grupamentos do resumo (Passo 6, `buscarResumoMusculos`)
 aparece como `Chip`s abaixo do nome do dia assim que existir algo salvo:
 
@@ -677,8 +677,8 @@ setResumo(resumo);
    grupamentos diferentes → reordenar com as setas → salvar → fechar e
    reabrir o Dialog → ordem e itens continuam → voltar pra tela principal →
    chips do resumo de músculos aparecem no dia.
-2. [ ] Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 juntas).
-3. [ ] Rodar `npm run build` nos dois lados — sem erro de tipo.
+2. [x] Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 juntas).
+3. [x] Rodar `npm run build` nos dois lados — sem erro de tipo.
 4. [ ] Print da rotina montada (dia com 3+ exercícios e resumo de músculos
    visível) — figura pro capítulo de resultados, conforme o critério de
    aceite pede.

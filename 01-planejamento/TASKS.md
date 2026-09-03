@@ -64,16 +64,16 @@
 ## S4 · 24–30/08 · F2b Exercícios da Rotina (RF02)
 
 - [ ] 🎯 **ENTREGÁVEL S4 — Montagem completa da rotina (RF02 completo)** (entrega dom 30/08) — [card](https://trello.com/c/ZO75u5Rr)
-  - [ ] GET /exercises com grupamento muscular e filtro
-  - [ ] Adicionar/remover/ordenar exercícios por dia funcionando
-  - [ ] Persistência em DivisaoExercicio com ordem
-  - [ ] Resumo de músculos da divisão passa a aparecer (derivado do JOIN, Decisão D)
+  - [x] GET /exercises com grupamento muscular e filtro
+  - [x] Adicionar/remover/ordenar exercícios por dia funcionando
+  - [x] Persistência em DivisaoExercicio com ordem
+  - [x] Resumo de músculos da divisão passa a aparecer (derivado do JOIN, Decisão D)
   - [ ] Fluxo completo divisão → exercícios sem erros no console
   - [ ] Print da rotina montada guardado (figura para o TCC)
-- [ ] Sessão A — Backend F2b: ExerciseModel + endpoints da rotina — [card](https://trello.com/c/vz5Xu9hg)
+- [x] Sessão A — Backend F2b: ExerciseModel + endpoints da rotina — [card](https://trello.com/c/vz5Xu9hg)
   - Arquivos: `types/indexTypes.ts`, `models/exerciseModel.ts`, `controllers/exerciseController.ts`, `routes/exerciseRoutes.ts`, `models/divisionModel.ts` (acrescentar), `controllers/divisionController.ts` (acrescentar), `routes/divisionRoutes.ts` (acrescentar), `app.ts` (registrar rota), `__tests__/exercise.test.ts`
-- [ ] Sessão B — Frontend F2b: seleção e ordenação de exercícios — [card](https://trello.com/c/MjLJfaAZ)
-  - Arquivos: `services/api.ts` (acrescentar), `components/DayExercisesDialog.tsx`, `views/DivisionView.tsx` (acrescentar)
+- [x] Sessão B — Frontend F2b: seleção e ordenação de exercícios — [card](https://trello.com/c/MjLJfaAZ)
+  - Arquivos: `services/api.ts` (acrescentar), `components/DayExerciseDialog.tsx` (com busca + filtro por grupamento), `views/DivisionView.tsx` (acrescentar)
 
 ## S5 · 31/08–06/09 · F3a Execução do Treino (RF03)
 
@@ -136,6 +136,7 @@
   - [ ] RNF02: registros órfãos rejeitados pelo banco (teste)
   - [ ] RNF06: falha simulada da API preserva registros (teste)
   - [ ] Responsividade OK nos fluxos críticos (RNF01)
+  - [ ] Sidebar vira barra inferior (ícones) em telas pequenas — Decisão D6
   - [ ] Código limpo: sem console.logs, código morto ou TODOs
   - [ ] Tag v1.0-dev criada e enviada (🏁 DEV PRONTO antes de 06/10)
 - [ ] Sessão A — Testes de integração (RF05/06/07 + RNF02/05/06) — [card](https://trello.com/c/tLtCxKQu)
