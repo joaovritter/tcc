@@ -62,8 +62,8 @@ CREATE TABLE SerieTreino (
   tipo TEXT NOT NULL CHECK (tipo IN ('aquecimento','feeder', 'work')),
   carga NUMERIC NOT NULL,
   repeticoes INTEGER NOT NULL,
-  rpe INTEGER CHECK (rpe BETWEEN 6 AND 10),
-  rir INTEGER CHECK (rir BETWEEN 0 AND 5)
+  rir INTEGER CHECK (rir BETWEEN 0 AND 4), -- unico dado de entrada; usuario reporta AQUI (RIR ou RPE, nunca os dois)
+  rpe INTEGER GENERATED ALWAYS AS (10 - rir) STORED -- nunca digitado: sempre calculado a partir do rir (RPE = 10 - RIR)
 );
 
 CREATE TABLE DiagnosticoIA (

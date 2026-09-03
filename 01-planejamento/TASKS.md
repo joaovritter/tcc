@@ -84,12 +84,12 @@
 
 - [ ] 🎯 **ENTREGÁVEL S5 — Treino do dia registrado no banco (RF03)** (entrega dom 06/09) — [card](https://trello.com/c/HLKbI7u9)
   - [ ] GET /sessions/today monta o treino a partir da divisão
-  - [ ] Registro de série com tipo (aquecimento|feeder|work), carga, reps, RPE e RIR
-  - [ ] Validações de faixa no backend: RPE 6–10, RIR 0–5 (RNF03)
+  - [ ] Registro de série com tipo (aquecimento|feeder|work), carga, reps e nota de esforço (RIR **ou** RPE — usuário escolhe, D9)
+  - [ ] Validações de faixa no backend: RIR 0–4 / RPE 6–10 (RNF03), convertidas pro par completo antes de gravar
   - [ ] Tela usável no celular durante o treino (RNF01)
   - [ ] Campos persistidos corretamente + teste de unidade (matriz RF03)
 - [ ] Sessão A — Backend F3a: sessionController + SetLogModel — [card](https://trello.com/c/oVROzoSE)
-  - Arquivos: `types/indexTypes.ts` (acrescentar), `models/sessionModel.ts`, `controllers/sessionController.ts`, `routes/sessionRoutes.ts`, `app.ts` (registrar rota), `__tests__/session.test.ts`
+  - Arquivos: `schema.sql` (ajustar `SerieTreino`: `rir` canônico + `rpe` coluna gerada, ver D9), `types/indexTypes.ts` (acrescentar), `models/sessionModel.ts`, `controllers/sessionController.ts`, `routes/sessionRoutes.ts`, `app.ts` (registrar rota), `__tests__/session.test.ts`
 - [ ] Sessão B — Frontend F3a: tela "Treino de Hoje" (mobile-first) — [card](https://trello.com/c/W2qkDGiE)
   - Arquivos: `services/api.ts` (acrescentar + tratar 204 no `apiFetch`), `views/TodaySessionView.tsx`, `App.tsx` (estado de tela), `components/AppShell.tsx` (repassar props), `components/Sidebar.tsx` (navegação entre telas, sem react-router)
 

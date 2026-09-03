@@ -1,3 +1,4 @@
+//============== usuario =====================================
 
 export interface Usuario {
     id_usuario: string; //driver do pg sempre devolve UUID como string
@@ -6,7 +7,7 @@ export interface Usuario {
     senha_hash: string;
 }
 
-export interface UsuarioPublico{
+export interface UsuarioPublico {
     id_usuario: string;
     nome: string;
     email: string;
@@ -20,6 +21,7 @@ export interface TokenPayload {
 
 
 
+//============== divisao =====================================
 
 export interface Divisao {
     id_divisao: string;
@@ -29,14 +31,14 @@ export interface Divisao {
 }
 
 //formato que o front manda no put não tem id_divisao nem fk_usuario. esse tipo evita aceitar um payload que escreve divisao de outro usuario
-export interface DivisaoInput{
+export interface DivisaoInput {
     dia_semana: string;
     nome: string;
 }
 
 
 
-
+//============== divisao_exercicio e exercicio =====================================
 
 export interface Exercicio {
     id_exercicio: number;
@@ -58,7 +60,7 @@ export interface DivisaoExercicio {
 }
 
 //payload do front pro PUT: sí o id do exercicio, evita mandar ordem duplicado
-export interface DivisaoExercicioInput{
+export interface DivisaoExercicioInput {
     fk_exercicio: number;
 }
 
@@ -69,3 +71,39 @@ export interface ExercicioDoDia extends DivisaoExercicio {
     nome_grupamento: string;
 }
 
+
+
+//============== treino e serie =====================================
+
+export interface Treino {
+    id_treino: string;
+    fk_usuario: string;
+    fk_divisao: string | null;
+    completed: boolean;
+    data: string;
+    duracao_total: number | null;
+}
+
+// faz o TS barrar um tipo inválido antes mesmo de o Postgres reclamar
+export type TipoSerie = 'aquecimento' | 'feeder' | 'work';
+
+export interface SerieTreino {
+    id_serie: number;
+    fk_treino: string;
+    fk_exercicio: number;
+    tipo: TipoSerie;
+    carga: string; // NUMERIC volta como string no driver pg
+    repeticoes: number;
+    rpe: number | null;
+    rir: number | null;
+}
+
+export interface SerieTreinoInput {
+    fk_exercicio: number;
+    tipo: TipoSerie;
+    carga: number;
+    repeticoes: number;
+    rpe?: number | null;
+    rir?: number | null;
+
+}
