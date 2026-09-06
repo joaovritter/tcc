@@ -93,17 +93,41 @@ export interface SerieTreino {
     fk_exercicio: number;
     tipo: TipoSerie;
     carga: string; // NUMERIC volta como string no driver pg
-    repeticoes: number;
     rpe: number | null;
     rir: number | null;
+    repeticoes: number;
 }
 
+//rir/rpe: o usuário escolhe: UM dos dois pra reportar (nunca os dois, nunca nenhum em série válida)
+// o controller resolve qual foi mandado e converte pro canônico antes de chamar o model.
 export interface SerieTreinoInput {
     fk_exercicio: number;
     tipo: TipoSerie;
-    carga: number;
+    carga: number; // NUMERIC volta como string no driver pg
     repeticoes: number;
     rpe?: number | null;
     rir?: number | null;
 
+}
+
+//nunca tem `rpe` (é coluna gerada, o Postgres calcula sozinho), só o canônico `rir`, ou `null` quando a série não é válida
+export interface NovaSerieTreino {
+  fk_exercicio: number;
+  tipo: TipoSerie;
+  carga: number;
+  repeticoes: number;
+  rir: number | null;
+}
+
+//serie com nome do exercicio, usada na resposta do GET /sessions/today para listar séries ja registradas na rotina do dia
+export interface SerieComExercicio extends SerieTreino {
+  nome_exercicio: string;
+}
+
+export interface TreinoDeHoje {
+  dia_semana: number;
+  divisao: Divisao | null;
+  treino: Treino | null;
+  exercicios: ExercicioDoDia[];
+  series: SerieComExercicio[];
 }

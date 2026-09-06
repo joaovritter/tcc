@@ -74,7 +74,7 @@ Critério de aceite (card 🎯 ENTREGÁVEL S5):
 
 ## Passo 0 — `server/schema.sql` + `server/src/types/indexTypes.ts`
 
-- [ ] **Só esta semana mexe em schema.** É o único passo dela que toca no
+- [X] **Só esta semana mexe em schema.** É o único passo dela que toca no
 banco em vez de só ler/gravar — e como a tabela `SerieTreino` ainda está
 vazia (a feature nem foi escrita), é o momento mais barato que vai existir
 pra fazer essa mudança. Trocar a definição da tabela e rodar
@@ -94,20 +94,20 @@ CREATE TABLE SerieTreino (
 );
 ```
 
-- [ ] **O que muda em relação ao schema da S1:** `rir` passa a vir **antes**
+- [x] **O que muda em relação ao schema da S1:** `rir` passa a vir **antes**
 de `rpe` na declaração (a coluna gerada referencia `rir`, então ele precisa
 existir primeiro no `CREATE TABLE`); a faixa do `CHECK (rir ...)` estreita de
 `0–5` pra `0–4`; e `rpe` deixa de ter `CHECK` próprio — não precisa, já sai
 garantido em `6–10` pela faixa de `rir` mais a fórmula.
 
-- [ ] **`GENERATED ALWAYS AS ... STORED` é uma coluna real**, gravada em
+- [x] **`GENERATED ALWAYS AS ... STORED` é uma coluna real**, gravada em
 disco igual qualquer outra — aparece no `\d SerieTreino`, no `SELECT *`, no
 `pg_dump`. A única diferença prática: **não dá pra mandar valor pra ela num
 `INSERT`** (o Postgres calcula sozinho e recusa se você tentar preencher).
 Isso importa no Passo 1 — o `INSERT` do model já sai **sem** `rpe` na lista
 de colunas.
 
-- [ ] Acrescentar os tipos de `Treino` e `SerieTreino`, espelhando o
+- [x] Acrescentar os tipos de `Treino` e `SerieTreino`, espelhando o
 `schema.sql`. `carga` é `NUMERIC` no Postgres e o driver `pg` devolve
 `NUMERIC` **como string** (pra não perder precisão) — por isso o tipo aqui é
 `string`, não `number`. Ignorar isso é a causa nº 1 de `"50" + "10" = "5010"`
@@ -184,10 +184,10 @@ export interface TreinoDeHoje {
 
 ## Passo 1 — `server/src/models/sessionModel.ts`
 
-- [ ] Arquivo novo. Quatro funções: achar/criar o treino de hoje, listar as
+- [X] Arquivo novo. Quatro funções: achar/criar o treino de hoje, listar as
 séries dele, inserir uma série e apagar uma série.
 
-- [ ] **`buscarTreinoAberto`** — o treino de hoje é o do usuário com
+- [X] **`buscarTreinoAberto`** — o treino de hoje é o do usuário com
 `completed = false` e `data` no dia corrente. `data::date = CURRENT_DATE`
 compara só a parte de data do `TIMESTAMP`, ignorando a hora:
 
@@ -206,7 +206,7 @@ export async function buscarTreinoAberto(
 }
 ```
 
-- [ ] **`criarTreino`** — insere um treino vazio ligado (opcionalmente) à
+- [X] **`criarTreino`** — insere um treino vazio ligado (opcionalmente) à
 divisão do dia. `fk_divisao` é nullable no schema de propósito: dá pra treinar
 num dia sem divisão cadastrada, e se a divisão for apagada depois o treino
 histórico não some.
@@ -226,7 +226,7 @@ export async function criarTreino(
 }
 ```
 
-- [ ] **`buscarSeries`** — as séries de um treino, com o nome do exercício
+- [X] **`buscarSeries`** — as séries de um treino, com o nome do exercício
 junto (mesmo motivo da S4: o front não deve cruzar catálogo na mão). Ordem
 por `id_serie` = ordem cronológica de registro, que é exatamente a ordem em
 que a pessoa treinou.
@@ -247,7 +247,7 @@ export async function buscarSeries(
 }
 ```
 
-- [ ] **`registrarSerie`** — um `INSERT` só, sem transação: é uma linha em uma
+- [X] **`registrarSerie`** — um `INSERT` só, sem transação: é uma linha em uma
 tabela, o próprio `INSERT` já é atômico. Transação aqui seria ruído (diferente
 da S3/S4, onde eram N operações que precisavam valer ou falhar juntas).
 Recebe `NovaSerieTreino`, não `SerieTreinoInput` — quem resolve `rir` OU
@@ -278,7 +278,7 @@ export async function registrarSerie(
 }
 ```
 
-- [ ] **`apagarSerie`** — apagar errando o dedo acontece o tempo todo durante o
+- [X] **`apagarSerie`** — apagar errando o dedo acontece o tempo todo durante o
 treino. O `fk_treino` entra no `WHERE` junto com o id: assim uma série só pode
 ser apagada pelo treino a que pertence, e o controller confirma o dono do
 treino antes (mesma ideia do `confirmarDonoDivisao` da S4). `rowCount` diz se
@@ -297,7 +297,7 @@ export async function apagarSerie(
 }
 ```
 
-- [ ] **`buscarPorId`** — usada só pra confirmar dono antes de mexer nas
+- [X] **`buscarPorId`** — usada só pra confirmar dono antes de mexer nas
 séries (o equivalente ao `confirmarDonoDivisao` da S4, mas aqui dá pra
 resolver numa consulta só, porque `Treino` tem `fk_usuario` direto):
 
@@ -318,13 +318,13 @@ export async function buscarPorId(
 
 ## Passo 2 — `server/src/controllers/sessionController.ts`
 
-- [ ] **`treinoDeHoje` (GET)** — monta a tela inteira numa requisição só:
+- [x] **`treinoDeHoje` (GET)** — monta a tela inteira numa requisição só:
 descobre o dia da semana, acha a divisão daquele dia, puxa os exercícios da
 rotina (reaproveitando `divisionModel.buscarExerciciosDoDia` da S4 — não
 duplicar a query) e devolve o treino aberto com as séries já registradas, se
 houver.
 
-- [ ] **O GET não cria treino.** Tentador fazer `GET /sessions/today` criar a
+- [x] **O GET não cria treino.** Tentador fazer `GET /sessions/today` criar a
 linha em `Treino` quando não existe, mas isso deixa um `INSERT` escondido
 atrás de um verbo de leitura: abrir a tela por curiosidade passaria a sujar o
 histórico com treinos vazios todo dia. Quem cria é o `POST /sessions/start`,
@@ -335,7 +335,7 @@ export async function treinoDeHoje(req: AuthenticateRequest, res: Response) {
   const fkUsuario = req.userId as string;
   const diaSemana = new Date().getDay(); // 0 = domingo, igual ao CHECK do schema
 
-  const divisoes = await divisionModel.buscarPorUsuario(fkUsuario);
+  const divisoes = await divisionModel.buscarDivisaoPorUsuario(fkUsuario);
   const divisao = divisoes.find((d) => d.dia_semana === diaSemana) ?? null;
 
   const exercicios = divisao
@@ -349,9 +349,9 @@ export async function treinoDeHoje(req: AuthenticateRequest, res: Response) {
     hoje: { dia_semana: diaSemana, divisao, treino, exercicios, series },
   });
 }
-```
+``` 
 
-- [ ] **`comecarTreino` (POST)** — idempotente de propósito: se já existe
+- [x] **`comecarTreino` (POST)** — idempotente de propósito: se já existe
 treino aberto hoje, devolve o mesmo em vez de criar outro. Sem isso, recarregar
 a tela e clicar de novo geraria dois treinos no mesmo dia e o volume da S6
 contaria a semana errada.
@@ -366,7 +366,7 @@ export async function comecarTreino(req: AuthenticateRequest, res: Response) {
   }
 
   const diaSemana = new Date().getDay();
-  const divisoes = await divisionModel.buscarPorUsuario(fkUsuario);
+  const divisoes = await divisionModel.buscarDivisaoPorUsuario(fkUsuario);
   const divisao = divisoes.find((d) => d.dia_semana === diaSemana) ?? null;
 
   const treino = await sessionModel.criarTreino(
@@ -454,7 +454,7 @@ function validarSerie(
 }
 ```
 
-- [ ] **`registrarSerie` (POST)** — confirma dono, valida, insere. O `404` pra
+- [X] **`registrarSerie` (POST)** — confirma dono, valida, insere. O `404` pra
 treino de outro usuário é o mesmo padrão da S4: não confirmar que existe e não
 pertence, só "não encontrado".
 
@@ -1299,7 +1299,7 @@ export async function treinoDeHoje(req: AuthenticateRequest, res: Response) {
   const fkUsuario = req.userId as string;
   const diaSemana = new Date().getDay(); //0 = domingo, igual ao CHECK do schema
 
-  const divisoes = await divisionModel.buscarPorUsuario(fkUsuario);
+  const divisoes = await divisionModel.buscarDivisaoPorUsuario(fkUsuario);
   const divisao = divisoes.find((d) => d.dia_semana === diaSemana) ?? null;
 
   const exercicios = divisao
@@ -1325,7 +1325,7 @@ export async function comecarTreino(req: AuthenticateRequest, res: Response) {
   }
 
   const diaSemana = new Date().getDay();
-  const divisoes = await divisionModel.buscarPorUsuario(fkUsuario);
+  const divisoes = await divisionModel.buscarDivisaoPorUsuario(fkUsuario);
   const divisao = divisoes.find((d) => d.dia_semana === diaSemana) ?? null;
 
   const treino = await sessionModel.criarTreino(

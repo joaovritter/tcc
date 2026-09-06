@@ -3,7 +3,7 @@ import type { Divisao, DivisaoInput, DivisaoExercicioInput, ExercicioDoDia } fro
 
 
 //lista divisoes do usuario logado, ordena por dia a semana
-export async function buscarPorUsuario(
+export async function buscarDivisaoPorUsuario(
     fkUsuario: string
 ): Promise<Divisao[]> {
     const resultado = await pool.query<Divisao>(
