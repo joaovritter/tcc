@@ -377,7 +377,7 @@ export async function comecarTreino(req: AuthenticateRequest, res: Response) {
 }
 ```
 
-- [ ] **`validarSerie`** — faz duas coisas numa passada só: valida os campos
+- [X] **`validarSerie`** — faz duas coisas numa passada só: valida os campos
 básicos (mesmo de sempre) e **resolve** a nota de esforço — recebe `rir` OU
 `rpe` do `SerieTreinoInput` e devolve um `NovaSerieTreino` já com `rir`
 canônico, pronto pro model. Por isso o retorno é uma união discriminada
@@ -483,7 +483,7 @@ export async function registrarSerie(req: AuthenticateRequest, res: Response) {
 }
 ```
 
-- [ ] **`apagarSerie` (DELETE)** — `req.params.idSerie` chega como string;
+- [X] **`apagarSerie` (DELETE)** — `req.params.idSerie` chega como string;
 `Number()` + `Number.isNaN` antes de ir pro banco evita mandar `NaN` pro
 Postgres (que erra com uma mensagem bem menos clara que um 400):
 
@@ -513,7 +513,7 @@ export async function apagarSerie(req: AuthenticateRequest, res: Response) {
 
 ## Passo 3 — `server/src/routes/sessionRoutes.ts`
 
-- [ ] Todas autenticadas, como as demais desde a S2.
+- [X] Todas autenticadas, como as demais desde a S2.
 
 ```ts
 import { Router } from 'express';
@@ -538,7 +538,7 @@ export default router;
 > aparecer `GET /sessions/:id` (2 segmentos, paramétrico), aí `/today` e
 > `/start` **precisam** vir registrados antes.
 
-- [ ] Registrar em `app.ts` ao lado das outras:
+- [X] Registrar em `app.ts` ao lado das outras:
 
 ```ts
 import sessionRoutes from './routes/sessionRoutes';

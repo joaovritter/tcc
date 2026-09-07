@@ -24,6 +24,8 @@ export async function treinoDeHoje(req: AuthenticateRequest, res: Response) {
     });
 }
 
+
+//comeca o treino com divisao do dia, se ja tiver treino aberto devolve ele.
 export async function comecarTreino(req: AuthenticateRequest, res: Response) {
     const fkUsuario = req.userId as string;
 
@@ -94,3 +96,54 @@ function validarSerie(
     }
     return { valor: { ...base, rir: 10 - serie.rpe! } };
 }
+
+
+//Post: confirma dono, valida, insere
+export async function registrarSerie(req: AuthenticateRequest, res: Response) {
+    const idTreino = req.params.id as string;
+    const serie = req.body as SerieTreinoInput;
+
+    const treino = await sessionModel.buscarPorId(idTreino, req.userId as string);
+    if (!treino) {
+        return res.status(404).json({ erro: 'Treino não encontrado' });
+    }
+
+    const validado = validarSerie(serie);
+    if ('erro' in validado) {
+        return res.status(400).json({ erro: validado.erro });
+    }
+
+    try {
+        const serieSalva = await sessionModel.registrarSerie(idTreino, validado.valor);
+        return res.status(201).json({ serie: serieSalva});
+    }catch (erro){
+        console.error(erro);
+        return res.status(500).json({ erro: 'Erro ao registrar série' });
+    }
+}
+
+
+// Delete: req.params.idSerie chega como string
+// Number() + Number.isNaN antes de ir pro banco evita mandar NaN pro Postgres
+export async function apagarSerie(req: AuthenticateRequest, res: Response){
+    const idTreino = req.params.id as string;
+    const idSerie = Number(req.params.idSeries);
+
+    if (Number.isNaN(idSerie)){
+        return res.status(400).json({ erro: 'id da serie invalido'});
+    }
+
+    const treino = await sessionModel.buscarPorId(idTreino, req.userId as string);
+    if(!treino){
+        return res.status(404).json({ erro: 'serie nao encontrada'});
+    }
+
+    const apagou = await sessionModel.apagarSerie(idTreino, idSerie);
+    if(!apagou){
+        return res.status(404).json({ erro: 'serie nao encontrada'});
+    }
+    return res.status(204).send();
+}
+
+
+

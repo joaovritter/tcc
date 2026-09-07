@@ -3,8 +3,9 @@ import cors from 'cors';
 import 'dotenv/config';
 import healthRoutes from './routes/healthRoutes';
 import authRoutes from './routes/authRoutes';
-import divisionRoutes from './routes/divisionRoutes'
-import exerciseRoutes from './routes/exerciseRoutes'
+import divisionRoutes from './routes/divisionRoutes';
+import exerciseRoutes from './routes/exerciseRoutes';
+import sessionRoutes from './routes/sessionRoutes';
 
 //separa o listen no index.js para que os testes importem a aplicação express sem que ela suba
 const app = express ();
@@ -15,5 +16,6 @@ app.use(healthRoutes);
 app.use(authRoutes);
 app.use(divisionRoutes);
 app.use(exerciseRoutes);
+app.use(sessionRoutes);
 
 export default app;
