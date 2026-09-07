@@ -93,8 +93,14 @@ function validarSerie(
         if (serie.rir! < 0 || serie.rir! > 4) {
             return { erro: 'rir deve ser um número entre 0 e 4' };
         }
+        return { valor: { ...base, rir: serie.rir! } };
     }
-    return { valor: { ...base, rir: 10 - serie.rpe! } };
+
+    const rirCalculado = 10 - serie.rpe!;
+    if (rirCalculado < 0 || rirCalculado > 4) {
+        return { erro: 'rpe deve resultar em um rir entre 0 e 4 (ou seja, rpe entre 6 e 10)' };
+    }
+    return { valor: { ...base, rir: rirCalculado } };
 }
 
 

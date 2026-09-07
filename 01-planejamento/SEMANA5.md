@@ -546,7 +546,7 @@ import sessionRoutes from './routes/sessionRoutes';
 app.use(sessionRoutes);
 ```
 
-- [ ] **Teste manual (Postman):** com um dia da semana que tenha divisão +
+- [X] **Teste manual (Postman):** com um dia da semana que tenha divisão +
 exercícios salvos, `GET /sessions/today` devolve `divisao` preenchida,
 `exercicios` na ordem e `treino: null`. `POST /sessions/start` cria (201) e,
 chamado de novo, devolve o mesmo (200). `POST /sessions/:id/sets`, seis
