@@ -87,3 +87,27 @@ export async function buscarPorId(
   );
   return resultado.rows[0] ?? null;
 }
+
+/**
+ * query de finalizar o treino
+ * - marca completed = true;
+ * - duracao_total = calcula a diferença entre NOW() e data;
+ * - EXTRACT(EPOCH FROM ...): Converte a diferença de tempo para segundos;
+ * - /60: Converte os segundos para minutos;
+ * - ROUND(...)::int: Arredonda e converte para número inteiro;
+ * - GREATEST(1, ...): Garante que a duração mínima seja de 1 minuto, mesmo se o treino tiver durado menos.
+*/
+export async function finalizarTreino(
+  idTreino: string,
+  fkUsuario: string
+): Promise<Treino | null> {
+  const resultado = await pool.query<Treino>( 
+    `UPDATE Treino
+    SET completed = TRUE,
+      duracao_total = GREATEST(1, ROUND(EXTRACT(EPOCH FROM (NOW() - data)) /60)::int)
+    WHERE id_treino = $1 AND fk_usuario = $2 AND completed = FALSE
+    RETURNING *`,
+    [idTreino, fkUsuario]
+  );
+  return resultado.rows[0] ?? null;
+}

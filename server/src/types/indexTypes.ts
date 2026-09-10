@@ -131,3 +131,24 @@ export interface TreinoDeHoje {
   exercicios: ExercicioDoDia[];
   series: SerieComExercicio[];
 }
+
+
+
+
+//============== métricas (RF04) =====================================
+
+//uma linha do painel de volume semanal: quantas series validas o usuario
+//acumulou naquele grupamento na semana de referencia
+export interface VolumeGrupamento {
+    id_grupamento: number;
+    nome_grupamento: string;
+    series_validas: number; // COUNT(...)::int - sem ::int o pg devolve como string (BIGINT)
+    atingiu_limiar: boolean; //comaparação feita no backend (RNF03)
+}
+
+//resposta interia do GET /metrics/volume-weekly
+export interface VolumeSemanal {
+    semana_referencia: string; 
+    limiar: number; 
+    grupamentos: VolumeGrupamento[];
+}

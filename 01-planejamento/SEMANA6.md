@@ -145,13 +145,15 @@ tela nunca funcionou. Nenhum teste da S5 cobre o `DELETE`, por isso passou
 batido; o Passo 8 desta semana fecha esse buraco.
 
 - [x] **Reparo 5 — decidir o nome da chave: `divisao` ou `divisaoHoje`.** Três
-lugares discordam hoje: o tipo `TreinoDeHoje` (backend) declara `divisao`, o
-`sessionController` responde `divisaoHoje`, e o `session.test.ts` lê
-`hoje.divisao` (por isso falha com `Cannot read properties of undefined`). O
-front seguiu o controller e usa `divisaoHoje`.
-**Fica `divisao`** — o tipo é o contrato, o wrapper já se chama `hoje` (então
-`hoje.divisaoHoje` é redundante) e é o único lado que o teste já cobre. Custo:
-duas linhas no front.
+lugares discordavam: o tipo `TreinoDeHoje` (backend), o `sessionController` e o
+`session.test.ts`, que lê `hoje.divisao` e por isso falha com `Cannot read
+properties of undefined`.
+**Fica `divisaoHoje`** (decidido em 10/09). O tipo, o controller, o `api.ts` e a
+`TodaySessionView` já usam esse nome — então o desempate custa **uma linha**: em
+`session.test.ts`, `resposta.body.hoje.divisao` vira
+`resposta.body.hoje.divisaoHoje`. A alternativa era padronizar em `divisao`
+(`hoje.divisaoHoje` é redundante, já que o wrapper se chama `hoje`), mas isso
+custaria mexer em quatro arquivos por questão de estética.
 
 - [x] Os reparos 3, 4 e 5 **não têm passo próprio** — entram junto nos Passos
 3, 4, 9 e 11, que já reescrevem esses arquivos inteiros. Não faça duas vezes.
@@ -262,7 +264,7 @@ export async function listarResumoMusculos(req: AuthenticateRequest, res: Respon
 
 ## Passo 1 — `server/src/types/indexTypes.ts`
 
-- [ ] **Imports: nenhum.** Este arquivo é a base da pirâmide — todo mundo
+- [x] **Imports: nenhum.** Este arquivo é a base da pirâmide — todo mundo
 importa dele e ele não importa de ninguém. Se um dia ele precisar importar
 algo do projeto, é sinal de que um tipo foi parar no lugar errado.
 
@@ -270,14 +272,14 @@ algo do projeto, é sinal de que um tipo foi parar no lugar errado.
 já existe muda nesta semana — `Treino` já tem `completed` e `duracao_total`
 (vieram do `schema.sql` da S1), então finalizar treino não pede tipo novo.
 
-- [ ] **`VolumeGrupamento`** — uma linha do painel. `series_validas` é
+- [x] **`VolumeGrupamento`** — uma linha do painel. `series_validas` é
 `number`, não `string`: o `COUNT` do Postgres é `BIGINT`, que o driver `pg`
 devolveria como **string** pelo mesmo motivo do `NUMERIC` (precisão além do
 `Number` do JS). O `::int` no `SELECT` do Passo 5 resolve isso na origem —
 `INTEGER` o driver converte pra `number` normalmente. É a mesma armadilha da
 `carga`, resolvida do outro lado.
 
-- [ ] **`atingiu_limiar` é campo do backend, não do front.** Poderia sair de
+- [x] **`atingiu_limiar` é campo do backend, não do front.** Poderia sair de
 `series_validas >= 10` numa linha de JSX, mas aí a regra científica do TCC
 (limiar de 10 séries [Schoenfeld]) passaria a morar na camada de Visão, contra
 a RNF03. O backend manda a comparação já feita; a tela só pinta.
@@ -302,8 +304,8 @@ export interface VolumeSemanal {
 }
 ```
 
-- [ ] **`TreinoDeHoje` fica como está** (`divisao`, não `divisaoHoje`) — quem
-se ajusta é o controller, pelo Reparo 5.
+- [x] **`TreinoDeHoje` fica como está** (`divisaoHoje`) — quem se ajusta é o
+teste, pelo Reparo 5. Nada muda neste arquivo além do bloco de métricas.
 
 ### `server/src/types/indexTypes.ts` (completo)
 
@@ -436,7 +438,7 @@ export interface SerieComExercicio extends SerieTreino {
 
 export interface TreinoDeHoje {
   dia_semana: number;
-  divisao: Divisao | null;
+  divisaoHoje: Divisao | null;
   treino: Treino | null;
   exercicios: ExercicioDoDia[];
   series: SerieComExercicio[];
@@ -467,25 +469,25 @@ export interface VolumeSemanal {
 
 ## Passo 2 — `server/src/models/sessionModel.ts`
 
-- [ ] **Imports: nada novo.** O `Treino` já estava na lista de tipos importados
+- [x] **Imports: nada novo.** O `Treino` já estava na lista de tipos importados
 e o `pool` já está lá. Só entra uma função no fim do arquivo.
 
-- [ ] **`finalizarTreino`** — um `UPDATE` só, que faz três coisas de uma vez:
+- [x] **`finalizarTreino`** — um `UPDATE` só, que faz três coisas de uma vez:
 marca `completed`, calcula a duração e confirma o dono. Colocar `fk_usuario` no
 `WHERE` (em vez de checar antes em outra query) fecha a corrida entre "conferi
 o dono" e "gravei": não existe janela entre as duas.
 
-- [ ] **A duração sai do próprio banco** (D12): `NOW() - data` é um `INTERVAL`,
+- [x] **A duração sai do próprio banco** (D12): `NOW() - data` é um `INTERVAL`,
 `EXTRACT(EPOCH FROM ...)` transforma em segundos, dividido por 60 vira minuto.
 O `::int` no fim é obrigatório porque `duracao_total` é `INTEGER` e o `ROUND`
 devolve `NUMERIC`.
 
-- [ ] **`GREATEST(1, ...)` não é frescura:** um treino de teste registrado e
+- [x] **`GREATEST(1, ...)` não é frescura:** um treino de teste registrado e
 finalizado em 20 segundos arredondaria pra `0`, e `0` é indistinguível de "não
 sei a duração" na hora de ler o histórico. O piso de 1 minuto mantém a coluna
 com significado.
 
-- [ ] **`AND completed = FALSE` no `WHERE`** é o que torna a operação
+- [x] **`AND completed = FALSE` no `WHERE`** é o que torna a operação
 idempotente ao contrário do `start`: finalizar duas vezes não recalcula a
 duração (o que a esticaria até o momento do segundo clique). A segunda chamada
 não acha linha, `rows[0]` é `undefined`, e o controller devolve 409.
@@ -626,7 +628,7 @@ export async function finalizarTreino(
 
 ## Passo 3 — `server/src/controllers/sessionController.ts`
 
-- [ ] **Imports primeiro.** A lista atual importa quatro tipos que ninguém usa
+- [x] **Imports primeiro.** A lista atual importa quatro tipos que ninguém usa
 (`Treino`, `SerieTreino`, `SerieComExercicio`) e o `Request` do express, que
 também não aparece — o controller inteiro usa `AuthenticateRequest`. Limpar
 agora, porque a partir da S7 esse arquivo só cresce:
@@ -641,30 +643,30 @@ import {
 } from '../types/indexTypes';
 ```
 
-- [ ] **`TreinoDeHoje` passa a ser usado de verdade** (Reparo 5). Hoje ele é
-importado e ignorado, e a resposta é montada num objeto literal solto — por
-isso ninguém percebeu que a chave saía como `divisaoHoje`. Tipar a variável
-antes de responder faz o TS reclamar na hora se o nome divergir de novo:
+- [x] **`TreinoDeHoje` passa a ser usado de verdade** (Reparo 5). Hoje ele é
+importado e ignorado, e a resposta é montada num objeto literal solto — foi por
+isso que a chave pôde divergir do tipo sem ninguém perceber. Tipar a variável
+antes de responder faz o TS reclamar na hora se acontecer de novo:
 
 ```ts
-const hoje: TreinoDeHoje = { dia_semana: diaSemana, divisao, treino, exercicios, series };
+const hoje: TreinoDeHoje = { dia_semana: diaSemana, divisaoHoje, treino, exercicios, series };
 return res.status(200).json({ hoje });
 ```
 
-- [ ] **`validarSerie` recebe o Reparo 3** (`!= null` no lugar de `!== null`).
+- [x] **`validarSerie` recebe o Reparo 3** (`!= null` no lugar de `!== null`).
 Uma linha, e ela é a diferença entre aceitar e recusar uma série de
 aquecimento.
 
-- [ ] **`apagarSerie` recebe o Reparo 4** (`req.params.idSerie`, sem o "s"). O
+- [x] **`apagarSerie` recebe o Reparo 4** (`req.params.idSerie`, sem o "s"). O
 nome tem que bater **exatamente** com o `:idSerie` declarado no Passo 4 — o
 express não avisa quando não bate, só entrega `undefined`.
 
-- [ ] **`finalizarTreino` (POST)** — a única função nova do arquivo. Três
+- [x] **`finalizarTreino` (POST)** — a única função nova do arquivo. Três
 respostas possíveis, e a ordem das checagens importa: primeiro 404 (não existe
 ou não é seu — a mesma resposta pros dois casos, pra não vazar a existência de
 treino alheio), depois 409 se já estava fechado, e só então o `UPDATE`.
 
-- [ ] **Por que 409 e não 400 ou 200:** 400 diria que o corpo está malformado,
+- [x] **Por que 409 e não 400 ou 200:** 400 diria que o corpo está malformado,
 e não está — não tem corpo. 200 mentiria dizendo que finalizou agora. `409
 Conflict` é literalmente "o estado atual do recurso não permite essa operação",
 que é o caso. O front trata isso no Passo 11 recarregando a tela em vez de
@@ -687,7 +689,7 @@ export async function finalizarTreino(req: AuthenticateRequest, res: Response) {
 }
 ```
 
-- [ ] **Nada de `duracao_total` no corpo da requisição** (D12). Se um dia
+- [x] **Nada de `duracao_total` no corpo da requisição** (D12). Se um dia
 alguém quiser deixar o usuário corrigir a duração na mão, isso é um `PATCH`
 separado com validação própria — não este endpoint.
 
@@ -710,16 +712,16 @@ export async function treinoDeHoje(req: AuthenticateRequest, res: Response) {
     const diaSemana = new Date().getDay(); // 0 = domingo
 
     const divisoes = await divisionModel.buscarDivisaoPorUsuario(fkUsuario);
-    const divisao = divisoes.find((d) => d.dia_semana === diaSemana) ?? null;
+    const divisaoHoje = divisoes.find((d) => d.dia_semana === diaSemana) ?? null;
 
-    const exercicios = divisao ? await divisionModel.buscarExerciciosDoDia(divisao.id_divisao) : [];
+    const exercicios = divisaoHoje ? await divisionModel.buscarExerciciosDoDia(divisaoHoje.id_divisao) : [];
 
     const treino = await sessionModel.buscarTreinoAberto(fkUsuario);
     const series = treino ? await sessionModel.buscarSeries(treino.id_treino) : [];
 
-    //REPARO 5: tipar a resposta faz o TS travar se o nome da chave divergir do
-    //contrato de novo (era 'divisaoHoje' aqui e 'divisao' no tipo)
-    const hoje: TreinoDeHoje = { dia_semana: diaSemana, divisao, treino, exercicios, series };
+    //REPARO 5: a chave e 'divisaoHoje' em todo lugar. tipar a resposta faz o TS
+    //travar se ela divergir do contrato de novo
+    const hoje: TreinoDeHoje = { dia_semana: diaSemana, divisaoHoje, treino, exercicios, series };
     return res.status(200).json({ hoje });
 }
 
@@ -1523,8 +1525,8 @@ mundo — só `fetch`, que é global. Se ele começar a importar de `views/` ou
 `components/`, a dependência está invertida.
 
 - [ ] **Três mudanças pequenas e duas funções novas.** As mudanças: `Treino`
-ganha `duracao_total`, e `TreinoDeHoje.divisaoHoje` vira `divisao` (Reparo 5 —
-o front é quem se ajusta ao contrato do backend).
+ganha `duracao_total`. O nome `divisaoHoje` **fica como está** (Reparo 5): o
+front já estava certo, quem se ajustou foi o teste.
 
 - [ ] **`finalizarTreino` não manda corpo** (D12). O `apiFetch` já trata isso:
 `body: opcoes.body ? JSON.stringify(...) : undefined`.
@@ -1692,7 +1694,7 @@ export interface Serie {
 
 export interface TreinoDeHoje {
     dia_semana: number;
-    divisao: Divisao | null; //REPARO 5: era divisaoHoje; o contrato do backend e 'divisao'
+    divisaoHoje: Divisao | null; //o backend devolve a chave com esse nome (Reparo 5)
     treino: Treino | null;
     exercicios: ExercicioDoDia[];
     series: Serie[];
@@ -1993,10 +1995,10 @@ export function Sidebar({ tela, onNavegar }: { tela: Tela; onNavegar: (tela: Tel
 - [ ] **Imports:** entra `CheckCircleIcon` de `@mui/icons-material/CheckCircle`
 pro botão de finalizar. O `Button`, o `Stack` e o resto já vêm importados.
 
-- [ ] **Reparo 5 em dois lugares:** `hoje.divisaoHoje` vira `hoje.divisao` —
-uma vez no `if` do estado vazio e uma vez no subtítulo. É a linha que hoje
-mostra "dia de descanso" mesmo com divisão cadastrada, se o backend for
-corrigido e o front não.
+- [ ] **Reparo 5: nada muda aqui.** A tela já lê `hoje.divisaoHoje`, que é o
+nome que ficou. Não trocar por `divisao` — se o `if` do estado vazio ler uma
+chave que não existe, a tela mostra "dia de descanso" mesmo com divisão
+cadastrada.
 
 - [ ] **`finalizar` com confirmação em dois toques, não com `window.confirm`.**
 Finalizar é irreversível (o `UPDATE` do Passo 2 só roda com `completed =
@@ -2197,8 +2199,8 @@ export function TodaySessionView() {
     return <Typography>Carregando...</Typography>;
   }
 
-  //REPARO 5: era hoje.divisaoHoje
-  if (!hoje?.divisao) {
+  //Reparo 5: a chave e 'divisaoHoje', igual ao que o backend responde
+  if (!hoje?.divisaoHoje) {
     return (
       <Card variant="outlined">
         <CardContent>
@@ -2221,7 +2223,7 @@ export function TodaySessionView() {
           Treino de Hoje
         </Typography>
         <Typography color="text.secondary" gutterBottom>
-          {DIAS[hoje.dia_semana]} — {hoje.divisao.nome}
+          {DIAS[hoje.dia_semana]} — {hoje.divisaoHoje.nome}
         </Typography>
 
         <FeedbackAlert erro={erro} />
@@ -2554,7 +2556,7 @@ GROUP BY g.nome;
 7. [ ] Testar no celular ou no DevTools em modo mobile (RNF01): o painel de
    volume tem que caber em uma coluna, sem rolagem horizontal.
 8. [ ] Rodar `npm run build` nos dois lados — sem erro de tipo. No front,
-   atenção especial: se sobrou algum `divisaoHoje`, é aqui que aparece.
+   atenção especial: se sobrou algum `hoje.divisao` solto, é aqui que aparece.
 9. [ ] Print do painel de volume com o limiar visível — é a **Fig. 3** das 5 do
    documento (RF04 + [Schoenfeld], ver seção 5 do `PLANEJAMENTO.md`). Vale um
    provisório agora pra garantir que a tela fecha o critério; a versão final sai
@@ -2626,6 +2628,7 @@ GROUP BY g.nome;
 - **Esconder grupamento zerado no painel.** É o dado mais útil da tela — é ele
   que responde "o que eu não treinei essa semana", que é a pergunta que a S7 vai
   fazer pro Gemini.
-- **Deixar o `divisaoHoje` sobreviver em algum canto do front.** O `npm run
-  build` pega, mas só se você rodar. Um `grep -r divisaoHoje client/src` custa
-  dois segundos.
+- **Trocar `divisaoHoje` por `divisao` em algum canto por hábito.** A chave que
+  ficou é `divisaoHoje`, nos quatro lugares (tipo, controller, `api.ts` e a
+  tela) — só o teste mudou. O `npm run build` pega, mas só se você rodar. Um
+  `grep -rn hoje.divisaoHoje server/src client/src` custa dois segundos.

@@ -1,8 +1,10 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import * as sessionModel from '../models/sessionModel';
 import * as divisionModel from '../models/divisionModel';
 import { AuthenticateRequest } from '../middlewares/auth';
-import { Treino, TipoSerie, SerieTreino, SerieComExercicio, SerieTreinoInput, NovaSerieTreino, TreinoDeHoje } from '../types/indexTypes';
+import { TipoSerie, SerieTreinoInput, NovaSerieTreino, TreinoDeHoje} from '../types/indexTypes';
+
+
 
 
 //monta a tela inteira numa requisição: descobre dia da semana, divisao daquele dia,
@@ -19,9 +21,8 @@ export async function treinoDeHoje(req: AuthenticateRequest, res: Response) {
     const treino = await sessionModel.buscarTreinoAberto(fkUsuario);
     const series = treino ? await sessionModel.buscarSeries(treino.id_treino) : [];
 
-    return res.status(200).json({
-        hoje: { dia_semana: diaSemana, divisaoHoje, treino, exercicios, series },
-    });
+    const hoje: TreinoDeHoje = { dia_semana: diaSemana, divisaoHoje, treino, exercicios, series };
+    return res.status(200).json( {hoje });
 }
 
 
@@ -149,6 +150,23 @@ export async function apagarSerie(req: AuthenticateRequest, res: Response){
         return res.status(404).json({ erro: 'serie nao encontrada'});
     }
     return res.status(204).send();
+}
+
+
+
+export async function finalizarTreino (req: AuthenticateRequest, res: Response) {
+    const idTreino = req.params.id as string;
+
+    const treino = await sessionModel.buscarPorId(idTreino, req.userId as string);
+    if (!treino) {
+        return res.status(404).json({ erro: 'Treino não encontrado' });
+    }
+    if (treino.completed){
+        return res.status(409).json({ erro: 'Treino já foi finalizado' });
+    }
+
+    const finalizado = await sessionModel.finalizarTreino(idTreino, req.userId as string);
+    return res.status(200).json({ treino: finalizado });
 }
 
 

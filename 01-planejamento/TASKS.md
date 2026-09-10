@@ -109,7 +109,7 @@
   - [ ] `divisionController`: `buscarPorUsuario` → `buscarDivisaoPorUsuario`
   - [ ] `validarSerie`: `!== null` → `!= null` (aquecimento sem nota toma 400 hoje)
   - [ ] `sessionController`: `req.params.idSeries` → `idSerie` (o DELETE nunca funcionou)
-  - [ ] Padronizar a chave da resposta como `divisao` (hoje o controller devolve `divisaoHoje`)
+  - [ ] Padronizar a chave da resposta como `divisaoHoje` (ajustar `session.test.ts`, que lê `hoje.divisao`)
   - [ ] `npm run test` verde nos 28 testes antes de começar o Passo 1
 - [ ] 🎯 **ENTREGÁVEL S6 — Volume semanal calculado no backend (RF04)** (entrega dom 13/09) — [card](https://trello.com/c/bbqr5pdi)
   - [ ] Finalizar sessão grava data + duração (fecha RF03)
