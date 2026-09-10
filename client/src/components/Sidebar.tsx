@@ -6,28 +6,29 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import InsightsIcon from '@mui/icons-material/Insights';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import { useAuth } from '../context/AuthContext';
+import type { Tela } from '../App';
 
 //Sidebar lateral fixa, com animação de expansão suave (Frame Motion) e itens de navegação.
 //icone only quando colapsada (76px)
 
+//item sem 'tela' é item que ainda nao existe: fica cinza e nao clica
 interface NavItem {
   label: string;
   icon: ReactNode;
-  ativo?: boolean;
-  disponivel?: boolean;
+  tela?: Tela;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Minha divisão', icon: <CalendarViewWeekIcon fontSize="small" />, ativo: true },
-  { label: 'Treino de hoje', icon: <FitnessCenterIcon fontSize="small" />, disponivel: false },
-  { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" />, disponivel: false },
-  { label: 'Histórico', icon: <TimelineIcon fontSize="small" />, disponivel: false },
+  { label: 'Minha divisão', icon: <CalendarViewWeekIcon fontSize="small" />, tela: 'divisao' },
+  { label: 'Treino de hoje', icon: <FitnessCenterIcon fontSize="small" />, tela: 'treino' },
+  { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" /> },
+  { label: 'Histórico', icon: <TimelineIcon fontSize="small" /> },
 ];
 
 const COLLAPSED = 76;
 const EXPANDED = 244;
 
-export function Sidebar() {
+export function Sidebar({ tela, onNavegar }: { tela: Tela; onNavegar: (tela: Tela) => void }) {
   const [aberta, setAberta] = useState(false);
   const { usuario, logout } = useAuth();
 
@@ -80,36 +81,44 @@ export function Sidebar() {
       </Stack>
 
       <Stack spacing={0.5} sx={{ flex: 1 }}>
-        {NAV_ITEMS.map((item) => (
-          <Stack
-            key={item.label}
-            direction="row"
-            spacing={1.75}
-            alignItems="center"
-            sx={{
-              px: 1.75,
-              py: 1.25,
-              borderRadius: '999px',
-              cursor: item.disponivel === false ? 'default' : 'pointer',
-              opacity: item.disponivel === false ? 0.45 : 1,
-              bgcolor: item.ativo ? 'primary.main' : 'transparent',
-              color: item.ativo ? '#F3F6F4' : 'inherit',
-              '&:hover': item.disponivel === false ? undefined : { bgcolor: item.ativo ? 'primary.main' : 'rgba(255,255,255,0.07)' },
-            }}
-          >
-            {item.icon}
-            {aberta && (
-              <Typography
-                component={motion.span}
-                initial={{ opacity: 0, x: -6 }}
-                animate={{ opacity: 1, x: 0 }}
-                sx={{ fontSize: 14, fontWeight: 600, whiteSpace: 'nowrap' }}
-              >
-                {item.label}
-              </Typography>
-            )}
-          </Stack>
-        ))}
+        {NAV_ITEMS.map((item) => {
+          const disponivel = Boolean(item.tela);
+          const ativo = item.tela === tela;
+
+          return (
+            <Stack
+              key={item.label}
+              direction="row"
+              spacing={1.75}
+              alignItems="center"
+              onClick={() => item.tela && onNavegar(item.tela)}
+              sx={{
+                px: 1.75,
+                py: 1.25,
+                borderRadius: '999px',
+                cursor: disponivel ? 'pointer' : 'default',
+                opacity: disponivel ? 1 : 0.45,
+                bgcolor: ativo ? 'primary.main' : 'transparent',
+                color: ativo ? '#F3F6F4' : 'inherit',
+                '&:hover': disponivel
+                  ? { bgcolor: ativo ? 'primary.main' : 'rgba(255,255,255,0.07)' }
+                  : undefined,
+              }}
+            >
+              {item.icon}
+              {aberta && (
+                <Typography
+                  component={motion.span}
+                  initial={{ opacity: 0, x: -6 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  sx={{ fontSize: 14, fontWeight: 600, whiteSpace: 'nowrap' }}
+                >
+                  {item.label}
+                </Typography>
+              )}
+            </Stack>
+          );
+        })}
       </Stack>
 
       <Stack

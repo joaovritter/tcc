@@ -560,7 +560,7 @@ nenhum dos dois → 400; `work` com `rir: 5` (fora da faixa nova) → 400;
 
 ## Passo 4 — Testes de unidade (matriz RF03)
 
-- [ ] Arquivo novo `server/src/__tests__/session.test.ts`, mesmo runner das
+- [X] Arquivo novo `server/src/__tests__/session.test.ts`, mesmo runner das
 S2/S3/S4. O helper precisa ir mais longe que o da S4: registra, loga, cria
 divisão **no dia de hoje** (senão `GET /sessions/today` não acha nada) e
 pluga um exercício nela.
@@ -703,7 +703,7 @@ test('mandar rir e rpe juntos é recusado — a pessoa escolhe um dos dois', asy
 });
 ```
 
-- [ ] **Os testes da D9** — o que garante que aquecimento/feeder não
+- [X] **Os testes da D9** — o que garante que aquecimento/feeder não
 carregam nota, e o que garante que série válida não passa sem nenhuma nota.
 Sem esse par, a regra do Passo 2 é a única coisa que segura, e ninguém
 percebe se ela se perder num refactor:
@@ -768,7 +768,7 @@ test('registrar série no treino de outro usuário retorna 404', async () => {
 });
 ```
 
-- [ ] Os helpers `registrarELogar`/`registrarComDivisao` já estão duplicados em
+- [X] Os helpers `registrarELogar`/`registrarComDivisao` já estão duplicados em
 `division.test.ts` e `exercise.test.ts`. Com o terceiro arquivo, vale extrair
 pra `server/src/__tests__/testHelpers.ts` agora (era só uma sugestão na S4) —
 `registrarELogar` fica lá e cada arquivo mantém só o helper específico dele.
@@ -777,7 +777,7 @@ pra `server/src/__tests__/testHelpers.ts` agora (era só uma sugestão na S4) �
 
 ## Passo 5 — Front: `client/src/services/api.ts` (acrescentar)
 
-- [ ] Bloco novo `//====== treino ======`, seguindo a divisão por comentários
+- [X] Bloco novo `//====== treino ======`, seguindo a divisão por comentários
 já usada no arquivo. `carga` entra como `number` na chamada e volta como
 `string` na resposta — a assimetria é real (é o `NUMERIC` do Postgres), então
 os tipos refletem isso em vez de mentir.
@@ -865,7 +865,7 @@ export function apagarSerie(idTreino: string, idSerie: number) {
 
 ## Passo 6 — Front: navegação entre telas
 
-- [ ] Até a S4 o `App.tsx` renderizava `DivisionView` e ponto. Com a segunda
+- [x] Até a S4 o `App.tsx` renderizava `DivisionView` e ponto. Com a segunda
 tela logada, precisa de alguma navegação — e o `react-router` continua adiado
 (decisão da S3, reafirmada na S4). Caminho mais barato: um estado de tela no
 `App.tsx` e a `Sidebar` recebendo qual está ativa + o que fazer no clique.
@@ -889,7 +889,7 @@ function App() {
 }
 ```
 
-- [ ] `AppShell` só repassa as duas props pra `Sidebar` (segue sendo casca,
+- [x] `AppShell` só repassa as duas props pra `Sidebar` (segue sendo casca,
 não ganha lógica). Na `Sidebar`, o `NAV_ITEMS` deixa de ter `ativo` fixo e
 `disponivel: false` no "Treino de hoje": cada item ganha uma chave `tela`,
 e `ativo` passa a ser comparação com a prop.
@@ -923,19 +923,19 @@ const disponivel = item.tela !== undefined;
 
 ## Passo 7 — Front: `client/src/views/TodaySessionView.tsx`
 
-- [ ] **Mobile-first de verdade (RNF01).** Essa é a única tela usada *dentro*
+- [x] **Mobile-first de verdade (RNF01).** Essa é a única tela usada *dentro*
 da academia, de pé, com o celular numa mão. Consequências de design que valem
 mais que estética: campos numéricos com `inputMode="decimal"` (abre o teclado
 numérico no celular), botão de registrar série grande e sempre visível,
 uma coluna só (`Stack`), e nada de tabela larga com rolagem horizontal.
 
-- [ ] **Fluxo da tela:** carrega `GET /sessions/today` → se não há divisão no
+- [x] **Fluxo da tela:** carrega `GET /sessions/today` → se não há divisão no
 dia, mostra estado vazio ("Hoje é dia de descanso") → se há, lista os
 exercícios da rotina → botão "Começar treino" cria o `Treino` → a partir daí
 cada exercício abre um formulário curto (tipo/carga/reps/nota de esforço) e
 as séries já registradas aparecem embaixo dele.
 
-- [ ] **Um toggle RIR/RPE, uma vez só na tela — não por exercício.** A
+- [x] **Um toggle RIR/RPE, uma vez só na tela — não por exercício.** A
 escolha da régua (Passo 0) é uma preferência da sessão de treino, não do
 exercício: reportar em RIR num exercício e RPE no outro não faz sentido pro
 usuário. Um `ToggleButtonGroup` (RIR/RPE) fica perto do topo, junto com
@@ -956,7 +956,7 @@ function lerModoNotaSalvo(): 'rir' | 'rpe' {
 }
 ```
 
-- [ ] **Estado do formulário por exercício, não global.** Um `formulario`
+- [x] **Estado do formulário por exercício, não global.** Um `formulario`
 único quebra assim que a pessoa alterna entre dois exercícios (perde o que
 digitou). Guardar num objeto indexado por `fk_exercicio`:
 
@@ -977,7 +977,7 @@ function atualizarRascunho(fk: number, campo: keyof Rascunho, valor: string) {
 }
 ```
 
-- [ ] **Um único campo de nota, cujo rótulo troca com o `modoNota`.**
+- [x] **Um único campo de nota, cujo rótulo troca com o `modoNota`.**
 Renderização condicional pelo `rascunho.tipo` — não `disabled`, e sim fora do
 DOM: campo desabilitado ainda ocupa espaço numa tela de celular e sugere que
 existe alguma forma de preencher.
@@ -991,7 +991,7 @@ existe alguma forma de preencher.
 )}
 ```
 
-- [ ] **Campo fica como `string` no estado, vira `number` só no envio.** Se o
+- [x] **Campo fica como `string` no estado, vira `number` só no envio.** Se o
 `useState` for `number`, apagar o campo pra digitar de novo dá `NaN` e o
 input trava. `Number(rascunho.nota)` no `registrar()` resolve, e vai pro
 `rir` ou pro `rpe` do request dependendo de `modoNota` — nunca os dois, nunca
@@ -1020,7 +1020,7 @@ async function registrar(fkExercicio: number) {
 }
 ```
 
-- [ ] **Recarregar do servidor depois de gravar, em vez de empurrar no array
+- [x] **Recarregar do servidor depois de gravar, em vez de empurrar no array
 local.** Uma série a mais na lista local é fácil, mas o dado que vale é o do
 banco (é ele que a S6 vai contar) — e ver a série voltando do servidor é a
 confirmação visual de que persistiu. O custo é um GET por série registrada,
@@ -1032,30 +1032,30 @@ O arquivo completo está no anexo, no fim deste roteiro.
 
 ## Passo 8 — Fechar a semana
 
-1. [ ] Testar pela interface, **no celular ou no DevTools em modo mobile**:
+1. [x] Testar pela interface, **no celular ou no DevTools em modo mobile**:
    entrar → "Treino de hoje" → dia sem divisão mostra o estado vazio → montar
    uma divisão pra hoje na outra tela → voltar → "Começar treino" → registrar
    3-4 séries (uma de aquecimento, o resto `work` com nota) → apagar uma →
    recarregar a página: as séries continuam lá.
-2. [ ] Conferir a D9 na tela: escolher "Aquecimento" **faz o campo de nota
+2. [x] Conferir a D9 na tela: escolher "Aquecimento" **faz o campo de nota
    sumir**; digitar 9 no modo RPE, trocar pra "Aquecimento" e salvar grava a
    série **sem** nota (não 0, não 9).
-3. [ ] Conferir o toggle RIR/RPE: registrar uma série em RIR (ex.: `2`),
+3. [x] Conferir o toggle RIR/RPE: registrar uma série em RIR (ex.: `2`),
    trocar o toggle pra RPE e registrar outra (ex.: `8`) — as duas voltam com
    `rpe: 8` e `rir: 2` no histórico, mesmo tendo sido digitadas em régua
    diferente. Recarregar a página e conferir que o toggle mantém a escolha
    (leu do `localStorage`).
-4. [ ] Tentar RIR 5 (fora da faixa nova) e confirmar 400; tentar registrar
+4. [x] Tentar RIR 5 (fora da faixa nova) e confirmar 400; tentar registrar
    sem preencher a nota em série `work` e confirmar que o botão fica
    desabilitado antes mesmo de chamar a API.
-5. [ ] Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 + S5).
-6. [ ] Rodar `npm run build` nos dois lados — sem erro de tipo.
-7. [ ] Print da tela de treino no celular com séries registradas — é a
+5. [x] Rodar `npm run test` no server — suíte verde (S2 + S3 + S4 + S5).
+6. [x] Rodar `npm run build` nos dois lados — sem erro de tipo.
+7. [x] Print da tela de treino no celular com séries registradas — é a
    **Fig. 2** das 5 do documento (RF03 + RNF01, ver seção 5 do
    `PLANEJAMENTO.md`). Vale tirar um provisório agora pra garantir que a tela
    fecha o critério; a versão final sai depois do code freeze, com os mesmos
    dados das outras figuras.
-8. [ ] Commit + push. Sugestão: um commit de backend (model + controller +
+8. [x] Commit + push. Sugestão: um commit de backend (model + controller +
    rotas + testes) e outro de frontend (navegação + `TodaySessionView`).
 
 ---

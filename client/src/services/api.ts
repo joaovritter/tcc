@@ -22,11 +22,12 @@ async function apiFetch(caminho: string, opcoes: OpcoesFetch = {}) {
         },
         body: opcoes.body ? JSON.stringify(opcoes.body) : undefined,
     })
-    const dados = await resposta.json();
 
+    const dados = resposta.status === 204 ? null : await resposta.json();
     if (!resposta.ok) {
-        throw new Error(dados.erro ?? 'Erro na requisição');
+        throw new Error(dados?.erro ?? 'Erro na requisição');
     }
+    
     return dados;
 }
 
@@ -84,15 +85,15 @@ export function salvarDivisoes(divisoes: { dia_semana: number; nome: string }[])
 //============================exercicio===================================
 
 export interface Exercicio {
-    id_exercicio: string;
+    id_exercicio: number;
     nome_exercicio: string;
-    fk_grupamento: string;
+    fk_grupamento: number;
     nome_grupamento: string;
 }
 
 export interface ExercicioDoDia {
-    id_divisao_exercicio: string;
-    fk_exercicio: string;
+    id_divisao_exercicio: number;
+    fk_exercicio: number;
     ordem: number;
     nome_exercicio: string;
     nome_grupamento: string;
@@ -109,7 +110,7 @@ export function buscarExerciciosDivisao(idDivisao: string) {
     }>;
 }
 
-export function salvarExerciciosDivisao(idDivisao: string, exercicios: { fk_exercicio: string }[]) {
+export function salvarExerciciosDivisao(idDivisao: string, exercicios: { fk_exercicio: number }[]) {
     return apiFetch(`/divisions/${idDivisao}/exercises`, {
         method: 'PUT',
         body: { exercicios },
@@ -121,4 +122,68 @@ export function buscarResumoMusculos() {
     return apiFetch('/divisions/muscle-summary') as Promise<{
         resumo: { dia_semana: number; grupamentos: string[] }[];
     }>;
+}
+
+
+//============================treino===================================
+
+export type TipoSerie = 'aquecimento' | 'feeder' | 'work';
+
+export interface Treino {
+    id_treino: string;
+    fk_divisao: string | null;
+    completed: boolean;
+    data: string;
+}
+
+export interface Serie {
+    id_serie: number;
+    fk_exercicio: number;
+    tipo: TipoSerie;
+    carga: string; //numeric do postgres chega como string
+    repeticoes: number;
+    rpe: number | null;
+    rir: number | null;
+    nome_exercicio: string;
+}
+
+export interface TreinoDeHoje {
+    dia_semana: number;
+    divisaoHoje: Divisao | null; //o backend devolve a chave com esse nome
+    treino: Treino | null;
+    exercicios: ExercicioDoDia[];
+    series: Serie[];
+}
+
+export function buscarTreinoDeHoje() {
+    return apiFetch('/sessions/today') as Promise<{ hoje: TreinoDeHoje }>;
+}
+
+export function comecarTreino() {
+    return apiFetch('/sessions/start', { method: 'POST' }) as Promise<{ treino: Treino }>;
+}
+
+export function registrarSerie(
+    idTreino: string,
+    serie: {
+        fk_exercicio: number;
+        tipo: TipoSerie;
+        carga: number;
+        repeticoes: number;
+        // manda SÓ UM dos dois em série válida. se for aquecimento/feeder, manda nenhum dos dois.
+        rir?: number | null;
+        rpe?: number | null;
+    }
+) {
+    return apiFetch(`/sessions/${idTreino}/sets`, {
+        method: 'POST',
+        body: serie,
+    }) as Promise<{ serie: Serie }>;
+}
+
+
+export function apagarSerie(idTreino: string, idSerie: number) {
+    return apiFetch(`/sessions/${idTreino}/sets/${idSerie}`, {
+        method: 'DELETE'
+    });
 }
