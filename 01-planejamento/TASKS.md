@@ -82,19 +82,35 @@
 > feeder | work` como está no `schema.sql`; quem se ajusta é o texto do TCC.
 > Redação sugerida em D9 no [`PLANEJAMENTO.md`](./PLANEJAMENTO.md) — [card](https://trello.com/c/TtU2bmBR).
 
-- [ ] 🎯 **ENTREGÁVEL S5 — Treino do dia registrado no banco (RF03)** (entrega dom 06/09) — [card](https://trello.com/c/HLKbI7u9)
-  - [ ] GET /sessions/today monta o treino a partir da divisão
-  - [ ] Registro de série com tipo (aquecimento|feeder|work), carga, reps e nota de esforço (RIR **ou** RPE — usuário escolhe, D9)
-  - [ ] Validações de faixa no backend: RIR 0–4 / RPE 6–10 (RNF03), convertidas pro par completo antes de gravar
-  - [ ] Tela usável no celular durante o treino (RNF01)
-  - [ ] Campos persistidos corretamente + teste de unidade (matriz RF03)
-- [ ] Sessão A — Backend F3a: sessionController + SetLogModel — [card](https://trello.com/c/oVROzoSE)
+- [x] 🎯 **ENTREGÁVEL S5 — Treino do dia registrado no banco (RF03)** (entrega dom 06/09) — [card](https://trello.com/c/HLKbI7u9)
+  - [x] GET /sessions/today monta o treino a partir da divisão
+  - [x] Registro de série com tipo (aquecimento|feeder|work), carga, reps e nota de esforço (RIR **ou** RPE — usuário escolhe, D9)
+  - [x] Validações de faixa no backend: RIR 0–4 / RPE 6–10 (RNF03), convertidas pro par completo antes de gravar
+  - [x] Tela usável no celular durante o treino (RNF01)
+  - [x] Campos persistidos corretamente + teste de unidade (matriz RF03)
+- [x] Sessão A — Backend F3a: sessionController + SetLogModel — [card](https://trello.com/c/oVROzoSE)
   - Arquivos: `schema.sql` (ajustar `SerieTreino`: `rir` canônico + `rpe` coluna gerada, ver D9), `types/indexTypes.ts` (acrescentar), `models/sessionModel.ts`, `controllers/sessionController.ts`, `routes/sessionRoutes.ts`, `app.ts` (registrar rota), `__tests__/session.test.ts`
-- [ ] Sessão B — Frontend F3a: tela "Treino de Hoje" (mobile-first) — [card](https://trello.com/c/W2qkDGiE)
+- [x] Sessão B — Frontend F3a: tela "Treino de Hoje" (mobile-first) — [card](https://trello.com/c/W2qkDGiE)
   - Arquivos: `services/api.ts` (acrescentar + tratar 204 no `apiFetch`), `views/TodaySessionView.tsx`, `App.tsx` (estado de tela), `components/AppShell.tsx` (repassar props), `components/Sidebar.tsx` (navegação entre telas, sem react-router)
 
 ## S6 · 07–13/09 · F3b Finalizar + F4 Volume Semanal (RF04)
 
+> Roteiro da semana: [`SEMANA6.md`](./SEMANA6.md).
+> ⚠️ **Passo 0 obrigatório:** a suíte da S5 está com 8 testes vermelhos e o
+> banco em uso ainda não é o do `schema.sql` (o `rpe` não é coluna gerada
+> porque o `npm run db:reset` não chegou a rodar). Os reparos estão listados
+> no Passo 0 do `SEMANA6.md` e são pré-requisito do volume.
+> Decisões novas: **D10** (semana de referência = segunda a domingo),
+> **D11** (volume conta série registrada, treino finalizado ou não) e
+> **D12** (duração calculada no backend) — ver [`PLANEJAMENTO.md`](./PLANEJAMENTO.md).
+
+- [ ] ⚠️ **Passo 0 — Reparos pendentes da S5** (pré-requisito do volume) — [card](https://trello.com/c/7PueUHX2)
+  - [ ] `npm run db:reset` (a coluna `rpe` no banco em uso ainda não é `GENERATED`)
+  - [ ] `divisionController`: `buscarPorUsuario` → `buscarDivisaoPorUsuario`
+  - [ ] `validarSerie`: `!== null` → `!= null` (aquecimento sem nota toma 400 hoje)
+  - [ ] `sessionController`: `req.params.idSeries` → `idSerie` (o DELETE nunca funcionou)
+  - [ ] Padronizar a chave da resposta como `divisao` (hoje o controller devolve `divisaoHoje`)
+  - [ ] `npm run test` verde nos 28 testes antes de começar o Passo 1
 - [ ] 🎯 **ENTREGÁVEL S6 — Volume semanal calculado no backend (RF04)** (entrega dom 13/09) — [card](https://trello.com/c/bbqr5pdi)
   - [ ] Finalizar sessão grava data + duração (fecha RF03)
   - [ ] GET /metrics/weekly-volume conta só séries válidas (type=work) por grupamento

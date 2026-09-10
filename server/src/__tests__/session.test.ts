@@ -13,7 +13,7 @@ test('GET /sessions/today monta o treino a partir da divisão do dia', async () 
     .set('Authorization', `Bearer ${token}`);
 
   assert.equal(resposta.status, 200);
-  assert.equal(resposta.body.hoje.divisao.dia_semana, new Date().getDay());
+  assert.equal(resposta.body.hoje.divisaoHoje.dia_semana, new Date().getDay());
   assert.equal(resposta.body.hoje.exercicios[0].fk_exercicio, exercicio.id_exercicio);
   assert.equal(resposta.body.hoje.treino, null); // GET não cria treino
 });

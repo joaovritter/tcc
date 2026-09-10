@@ -6,7 +6,7 @@ import { DivisaoExercicioInput, DivisaoInput } from "../types/indexTypes";
 
 
 export async function listarDivisoes(req: AuthenticateRequest, res: Response) {
-    const divisoes = await divisionModel.buscarPorUsuario(req.userId as string);
+    const divisoes = await divisionModel.buscarDivisaoPorUsuario(req.userId as string);
     return res.status(200).json({ divisoes });
 }
 
@@ -48,7 +48,7 @@ export async function salvarDivisoes(req: AuthenticateRequest, res: Response) {
 
 //confirma o dono antes de divisaoExercicio, confere que id_divisao da URL pertence ao usuario do token
 async function confirmarDonoDivisao(idDivisao: string, fkUsuario: string) {
-    const divisoes = await divisionModel.buscarPorUsuario(fkUsuario);
+    const divisoes = await divisionModel.buscarDivisaoPorUsuario(fkUsuario);
     return divisoes.some((d) => d.id_divisao === idDivisao);
 }
 

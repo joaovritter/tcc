@@ -75,7 +75,7 @@ function validarSerie(
 
     //só serie valida leva nota.
     if (serie.tipo !== 'work') {
-        if (serie.rir !== null || serie.rpe !== null) {
+        if (serie.rir != null || serie.rpe != null) {
             return { erro: 'Séries de aquecimento e feeder não recebem rir/rpe' };
         }
         return { valor: { ...base, rir: null } };
@@ -133,7 +133,7 @@ export async function registrarSerie(req: AuthenticateRequest, res: Response) {
 // Number() + Number.isNaN antes de ir pro banco evita mandar NaN pro Postgres
 export async function apagarSerie(req: AuthenticateRequest, res: Response){
     const idTreino = req.params.id as string;
-    const idSerie = Number(req.params.idSeries);
+    const idSerie = Number(req.params.idSerie);
 
     if (Number.isNaN(idSerie)){
         return res.status(400).json({ erro: 'id da serie invalido'});

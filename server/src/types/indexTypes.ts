@@ -126,7 +126,7 @@ export interface SerieComExercicio extends SerieTreino {
 
 export interface TreinoDeHoje {
   dia_semana: number;
-  divisao: Divisao | null;
+  divisaoHoje: Divisao | null;
   treino: Treino | null;
   exercicios: ExercicioDoDia[];
   series: SerieComExercicio[];
