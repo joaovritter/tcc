@@ -124,6 +124,10 @@
 
 ## S7 · 14–20/09 · F5a Diagnóstico IA Gemini (RF05/06)
 
+> Roteiro da semana: [`SEMANA7.md`](./SEMANA7.md).
+> Decisões novas: **D13** (fórmula do `score_geral` = (Pv+Pi)/2) e **D14**
+> (diagnóstico é histórico, sem singleton por semana) — ver [`PLANEJAMENTO.md`](./PLANEJAMENTO.md).
+
 - [ ] 🎯 **ENTREGÁVEL S7 — Diagnóstico semanal gerado e persistido (RF05/RF06)** (entrega dom 20/09) — [card](https://trello.com/c/JJLbz4Jl)
   - [ ] Prompt com os 5 blocos da Tabela V: persona, contexto, dados, diretrizes, formato (RNF04)
   - [ ] Retorno JSON com diagnostico_exercicios, analise_grupamentos, recomendacoes_proxima_sessao (RNF05)
