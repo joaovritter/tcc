@@ -47,3 +47,14 @@ export async function registrarComRotinaDeHoje() {
 
   return { token, idDivisao, exercicio };
 }
+
+
+export async function registrarComTreinoAberto() {
+  const base = await registrarComRotinaDeHoje();
+
+  const inicio = await request(app)
+    .post('/sessions/start')
+    .set('Authorization', `Bearer ${base.token}`);
+
+  return { ...base, idTreino: inicio.body.treino.id_treino as string };
+}

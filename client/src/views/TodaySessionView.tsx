@@ -4,6 +4,7 @@ import {
   IconButton, MenuItem, Divider, ToggleButton, ToggleButtonGroup,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import * as api from '../services/api';
 import { FeedbackAlert } from '../components/FeedbackAlert';
 
@@ -48,7 +49,9 @@ export function TodaySessionView() {
   const [rascunhos, setRascunhos] = useState<Record<number, Rascunho>>({});
   const [modoNota, setModoNota] = useState<'rir' | 'rpe'>(lerModoNotaSalvo);
   const [carregando, setCarregando] = useState(true);
+  const [confirmandoFim, setConfirmandoFim] = useState(false);
   const [erro, setErro] = useState('');
+  const [sucesso, setSucesso] = useState('');
 
   async function recarregar() {
     const { hoje } = await api.buscarTreinoDeHoje();
@@ -81,7 +84,7 @@ export function TodaySessionView() {
   function atualizarRascunho(fk: number, campo: keyof Rascunho, valor: string) {
     setRascunhos((atual) => {
       const novo = { ...RASCUNHO_VAZIO, ...atual[fk], [campo]: valor };
-      //D9: trocar pra aquecimento/feeder limpa a nota - o campo some da tela, mas o
+      //trocar pra aquecimento/feeder limpa a nota. o campo some da tela, mas o
       //que ja foi digitado continuaria no estado e iria junto no POST, tomando 400
       if (campo === 'tipo' && valor !== 'work') {
         novo.nota = '';
@@ -134,6 +137,34 @@ export function TodaySessionView() {
     }
   }
 
+  //depois do finish o GET /sessions/today
+  //nao devolve mais esse treino (so traz completed = false), entao a tela volta
+  //sozinha pro botao "Comecar treino"
+  async function finalizar() {
+    if (!hoje?.treino) return;
+
+    if (!confirmandoFim) {
+      setConfirmandoFim(true);
+      return;
+    }
+
+    setErro('');
+    try {
+      const { treino } = await api.finalizarTreino(hoje.treino.id_treino);
+      setSucesso(`Treino finalizado — ${treino.duracao_total} min registrados.`);
+    } catch (erro) {
+      const mensagem = erro instanceof Error ? erro.message : 'Erro ao finalizar treino';
+      //409 do backend: ja estava finalizado (dois toques rapidos, ou outro
+      //aparelho). o estado desejado foi alcancado
+      if (!mensagem.includes('já foi finalizado')) {
+        setErro(mensagem);
+      }
+    } finally {
+      setConfirmandoFim(false);
+      await recarregar();
+    }
+  }
+
   if (carregando) {
     return <Typography>Carregando...</Typography>;
   }
@@ -145,6 +176,7 @@ export function TodaySessionView() {
           <Typography variant="h2" gutterBottom>
             Treino de Hoje
           </Typography>
+          <FeedbackAlert sucesso={sucesso} />
           <Typography color="text.secondary">
             {DIAS[hoje?.dia_semana ?? new Date().getDay()]} não tem divisão cadastrada — dia de descanso.
           </Typography>
@@ -164,6 +196,7 @@ export function TodaySessionView() {
         </Typography>
 
         <FeedbackAlert erro={erro} />
+        <FeedbackAlert sucesso={sucesso} />
 
         {!hoje.treino ? (
           <Button variant="contained" size="large" fullWidth onClick={comecar} sx={{ mt: 2 }}>
@@ -171,8 +204,7 @@ export function TodaySessionView() {
           </Button>
         ) : (
           <Stack spacing={3} sx={{ mt: 2 }}>
-            {/* toggle unico pra sessao inteira, nao por exercicio - reportar em regua
-                diferente por serie nao faz sentido pro usuario (D9) */}
+            {/* toggle unico pra sessao inteira, nao por exercicio */}
             <Stack direction="row" spacing={1} alignItems="center">
               <Typography variant="body2" color="text.secondary">
                 Reportar esforço em:
@@ -223,7 +255,7 @@ export function TodaySessionView() {
                     </Stack>
                   ))}
 
-                  {/* uma coluna no celular, linha no desktop: nada de tabela larga com rolagem */}
+                  {/* uma coluna no celular, linha no desktop */}
                   <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1}>
                     <TextField
                       select
@@ -241,7 +273,7 @@ export function TodaySessionView() {
                         </MenuItem>
                       ))}
                     </TextField>
-                    {/* inputMode decimal/numeric abre o teclado numerico no celular (RNF01) */}
+                    {/* inputMode decimal/numeric abre o teclado numerico no celular*/}
                     <TextField
                       label="Carga (kg)"
                       size="small"
@@ -260,9 +292,7 @@ export function TodaySessionView() {
                         atualizarRascunho(exercicio.fk_exercicio, 'repeticoes', e.target.value)
                       }
                     />
-                    {/* D9: nota de esforco so existe em serie valida - fora do DOM,
-                        nao apenas disabled (campo morto ocupa espaco na tela do celular).
-                        UM SO campo - o rotulo troca conforme o toggle RIR/RPE do topo */}
+                    {/* nota de esforco so existe em serie valida*/}
                     {rascunho.tipo === 'work' && (
                       <TextField
                         label={modoNota === 'rir' ? 'RIR (reps na reserva)' : 'RPE (esforço 6–10)'}
@@ -282,7 +312,7 @@ export function TodaySessionView() {
                     disabled={
                       !rascunho.carga ||
                       !rascunho.repeticoes ||
-                      //serie valida so fecha com a nota preenchida (D9)
+                      //serie valida so fecha com a nota preenchida 
                       (rascunho.tipo === 'work' && !rascunho.nota)
                     }
                   >
@@ -293,6 +323,20 @@ export function TodaySessionView() {
                 </Stack>
               );
             })}
+
+            {/* no fim da lista de proposito: no topo, perto do polegar, vira
+                toque acidental no meio do treino */}
+            <Button
+              variant={confirmandoFim ? 'contained' : 'outlined'}
+              color={confirmandoFim ? 'error' : 'primary'}
+              size="large"
+              fullWidth
+              startIcon={<CheckCircleIcon />}
+              onClick={finalizar}
+              onBlur={() => setConfirmandoFim(false)}
+            >
+              {confirmandoFim ? 'Confirmar: encerrar o treino' : 'Finalizar treino'}
+            </Button>
           </Stack>
         )}
       </CardContent>

@@ -880,17 +880,17 @@ export async function finalizarTreino(req: AuthenticateRequest, res: Response) {
 
 ## Passo 4 — `server/src/routes/sessionRoutes.ts`
 
-- [ ] **Imports:** acrescentar `finalizarTreino` à lista que já vem do
+- [X] **Imports:** acrescentar `finalizarTreino` à lista que já vem do
 controller. Nada mais muda.
 
-- [ ] **Uma linha nova.** `POST /sessions/:id/finish`. `POST` e não `PUT`
+- [X] **Uma linha nova.** `POST /sessions/:id/finish`. `POST` e não `PUT`
 porque não é substituição de recurso, é uma ação que muda estado uma vez só —
 o mesmo raciocínio do `/sessions/start`.
 
-- [ ] **Conferir o `:idSerie` do `DELETE`** contra o que o controller lê
+- [X] **Conferir o `:idSerie` do `DELETE`** contra o que o controller lê
 (Reparo 4). Os dois nomes têm que ser idênticos, letra por letra.
 
-- [ ] **Rota nova vai depois das de `sets`?** Tanto faz aqui — `finish` e
+- [X] **Rota nova vai depois das de `sets`?** Tanto faz aqui — `finish` e
 `sets` não colidem, são segmentos literais diferentes. Ordem só importaria se
 uma delas fosse um parâmetro (`/sessions/:id/:acao`), que é justamente o que
 não se deve fazer.
@@ -923,7 +923,7 @@ export default router;
 
 ## Passo 5 — `server/src/services/volumeService.ts`
 
-- [ ] **Imports.** Arquivo e pasta novos — `server/src/services/` estreia aqui.
+- [X] **Imports.** Arquivo e pasta novos — `server/src/services/` estreia aqui.
 Importa o `pool` e os dois tipos do Passo 1, nada mais. Um service **não**
 importa `express`: ele não sabe que existe HTTP, e é isso que o torna testável
 e reaproveitável pelo `geminiService` da S7.
@@ -933,19 +933,19 @@ import { pool } from '../config/db';
 import { VolumeGrupamento, VolumeSemanal } from '../types/indexTypes';
 ```
 
-- [ ] **Por que o SQL mora no service e não num model.** A regra da arquitetura
+- [X] **Por que o SQL mora no service e não num model.** A regra da arquitetura
 (seção 3 do `PLANEJAMENTO.md`) é model = SQL de **entidade**, service =
 **regra**. Volume não é entidade: não tem tabela, não tem `id`, não se insere
 nem se apaga — é uma pergunta feita ao banco. Espalhar isso num `metricsModel`
 só pra cumprir a forma criaria um model de uma função que nunca vai crescer.
 Fica no service, junto da regra do limiar que dá sentido ao número.
 
-- [ ] **`LIMIAR_SERIES` é constante exportada, não literal.** A S7 vai precisar
+- [X] **`LIMIAR_SERIES` é constante exportada, não literal.** A S7 vai precisar
 do mesmo 10 pra montar o bloco 4 do prompt (diretrizes científicas) e pro
 cálculo do `Pv` da Equação 1. Duas cópias do número é o começo de duas
 respostas diferentes pra mesma pergunta.
 
-- [ ] **`inicioDaSemana` — o `to_char` não é enfeite.** `date_trunc('week',
+- [X] **`inicioDaSemana` — o `to_char` não é enfeite.** `date_trunc('week',
 CURRENT_DATE)` já resolve a D10 (o Postgres usa a semana ISO, que começa na
 segunda). Mas o driver `pg` converte `DATE` numa `Date` do JavaScript à
 meia-noite **local**, e essa `Date` serializada em JSON vira UTC — em Brasília
@@ -962,7 +962,7 @@ export async function inicioDaSemana(): Promise<string> {
 }
 ```
 
-- [ ] **A consulta do volume, e por que ela usa subconsulta.** O caminho é
+- [X] **A consulta do volume, e por que ela usa subconsulta.** O caminho é
 `SerieTreino → Exercicio → GrupamentoMuscular`, filtrando por `tipo = 'work'`
 (D9), pelo dono e pela semana. Mas a lista precisa sair com **os 7 grupamentos
 sempre**, inclusive os que ficaram em zero — grupamento não treinado é o achado
@@ -988,7 +988,7 @@ GROUP BY g.id_grupamento, g.nome
 ORDER BY g.nome
 ```
 
-- [ ] **A versão sem subconsulta está errada, e erra silenciosamente.** É
+- [X] **A versão sem subconsulta está errada, e erra silenciosamente.** É
 tentador encadear quatro `LEFT JOIN` direto e jogar as condições do `Treino` no
 `ON`. O problema: as séries de **outros usuários** ainda casam no `LEFT JOIN
 SerieTreino`, só falham no join com `Treino` — e `COUNT(s.id_serie)` conta elas
@@ -996,17 +996,17 @@ do mesmo jeito, porque `s.id_serie` não é nulo. O painel mostraria o volume do
 banco inteiro. Filtrar tudo dentro de uma subconsulta e só depois pendurá-la no
 catálogo de grupamentos torna esse erro impossível.
 
-- [ ] **`COUNT(sv.id_serie)`, nunca `COUNT(*)`.** Em `LEFT JOIN` sem casamento
+- [X] **`COUNT(sv.id_serie)`, nunca `COUNT(*)`.** Em `LEFT JOIN` sem casamento
 o Postgres devolve **uma linha** com colunas nulas, e `COUNT(*)` conta linhas —
 grupamento sem série nenhuma sairia com `1`. `COUNT(coluna)` ignora nulos, que
 é exatamente o que se quer.
 
-- [ ] **`>= $2 AND < $2 + 7 dias`, não `BETWEEN`.** `data` é `TIMESTAMP`:
+- [X] **`>= $2 AND < $2 + 7 dias`, não `BETWEEN`.** `data` é `TIMESTAMP`:
 `BETWEEN` com duas datas incluiria o domingo só até `00:00:00`, jogando fora o
 treino de domingo à tarde. Meio-aberto no fim é o único jeito que não perde
 nem duplica dia.
 
-- [ ] **`atingiu_limiar` é calculado aqui**, depois da consulta, em JS. Poderia
+- [X] **`atingiu_limiar` é calculado aqui**, depois da consulta, em JS. Poderia
 sair de um `CASE` no SQL, mas a regra científica fica mais legível — e mais
 citável no TCC — como uma linha ao lado da constante que ela usa.
 
@@ -1086,7 +1086,7 @@ export async function calcularVolumeSemanal(
 
 ## Passo 6 — `server/src/controllers/metricsController.ts`
 
-- [ ] **Imports.** Arquivo novo, três linhas. Repare no que **não** está aqui:
+- [X] **Imports.** Arquivo novo, três linhas. Repare no que **não** está aqui:
 nenhum `pool`, nenhum SQL. Controller de métrica não fala com o banco — ele
 pega o usuário do token, chama o service e responde.
 
@@ -1096,11 +1096,11 @@ import { AuthenticateRequest } from '../middlewares/auth';
 import * as volumeService from '../services/volumeService';
 ```
 
-- [ ] **Uma função, e ela é curta de propósito.** Se este controller crescer,
+- [X] **Uma função, e ela é curta de propósito.** Se este controller crescer,
 é sinal de que uma regra vazou do service pra cá. A S8 vai acrescentar
 histórico ao lado; o formato se mantém.
 
-- [ ] **`try/catch` aqui, e não no service.** O service estoura a exceção do
+- [X] **`try/catch` aqui, e não no service.** O service estoura a exceção do
 `pg`; quem sabe traduzir isso em código HTTP é o controller. Sem o `catch`, uma
 falha de banco derruba a resposta com o stack do Postgres.
 
@@ -1130,16 +1130,16 @@ export async function volumeSemanal(req: AuthenticateRequest, res: Response) {
 
 ## Passo 7 — `server/src/routes/metricsRoutes.ts` + `server/src/app.ts`
 
-- [ ] **Imports das rotas:** `Router`, o `autenticar` e o controller do Passo 6.
+- [X] **Imports das rotas:** `Router`, o `autenticar` e o controller do Passo 6.
 Mesmo formato das outras quatro rotas do projeto — rota fina, só URL →
 controller, sem `if` nenhum no meio.
 
-- [ ] **`/metrics/weekly-volume` com `autenticar`.** Sem o middleware,
+- [X] **`/metrics/weekly-volume` com `autenticar`.** Sem o middleware,
 `req.userId` é `undefined`, o `$1` da consulta vira `null` e o endpoint devolve
 sete zeros em vez de 401 — falha silenciosa, a pior espécie. O Passo 8 tem um
 teste só pra isso.
 
-- [ ] **Registrar no `app.ts`:** um `import` e um `app.use`. Esquecer essa
+- [X] **Registrar no `app.ts`:** um `import` e um `app.use`. Esquecer essa
 segunda linha é o erro clássico — a rota existe, o arquivo compila, e o
 `GET` responde 404 sem explicação.
 
@@ -1194,12 +1194,12 @@ export default app;
 
 ## Passo 8 — Testes: `server/src/__tests__/testHelpers.ts` + `volume.test.ts`
 
-- [ ] **Imports do helper:** nada novo — `supertest` e o `app` já estão lá. Só
+- [X] **Imports do helper:** nada novo — `supertest` e o `app` já estão lá. Só
 entra uma função, que encurta as cinco linhas de setup que **todo** teste desta
 semana precisaria repetir (registrar → divisão de hoje → exercício → começar
 treino).
 
-- [ ] **Imports do teste:** `node:test`, `node:assert/strict`, `supertest`, o
+- [X] **Imports do teste:** `node:test`, `node:assert/strict`, `supertest`, o
 `app` e os helpers. Mesma abertura dos outros quatro arquivos de teste.
 
 ```ts
@@ -1210,22 +1210,22 @@ import app from '../app';
 import { registrarELogar, registrarComTreinoAberto } from './testHelpers';
 ```
 
-- [ ] **O teste que a matriz RF04 exige é o "igual ao cálculo manual".** Não
+- [x] **O teste que a matriz RF04 exige é o "igual ao cálculo manual".** Não
 basta o endpoint responder: o número tem que bater com a contagem feita à mão.
 O jeito honesto de escrever isso é registrar uma quantidade **conhecida** de
 séries de cada tipo e conferir o total — se o teste calculasse o esperado com a
 mesma lógica do service, ele passaria mesmo com a lógica errada.
 
-- [ ] **Cobrir os três jeitos de a conta sair errada**, que são exatamente as
+- [x] **Cobrir os três jeitos de a conta sair errada**, que são exatamente as
 armadilhas do Passo 5: contar aquecimento/feeder junto, perder o grupamento
 zerado, e vazar série de outro usuário.
 
-- [ ] **O `DELETE` de série entra aqui.** A S5 não testou, e por isso o Reparo
+- [x] **O `DELETE` de série entra aqui.** A S5 não testou, e por isso o Reparo
 4 passou meses invisível. O teste faz o caminho inteiro: registra, confere no
 volume, apaga, confere que o volume caiu — assim ele valida a rota e a conta
 de uma vez.
 
-- [ ] **Um teste só pro 401.** Endpoint de métrica sem `autenticar` não quebra:
+- [x] **Um teste só pro 401.** Endpoint de métrica sem `autenticar` não quebra:
 responde 200 com zeros. É o tipo de bug que nenhum teste "de caminho feliz"
 pega.
 
@@ -1512,7 +1512,7 @@ test('séries de treino finalizado continuam contando no volume (D11)', async ()
 });
 ```
 
-- [ ] Rodar `npm run test` no `server`: **28 testes antigos + 11 novos**, todos
+- [x] Rodar `npm run test` no `server`: **28 testes antigos + 11 novos**, todos
 verdes. Se o "soma igual à contagem manual" falhar por 1 ou 2, o suspeito é
 sempre o mesmo — alguma série de aquecimento entrando na conta.
 
@@ -1520,24 +1520,24 @@ sempre o mesmo — alguma série de aquecimento entrando na conta.
 
 ## Passo 9 — Front: `client/src/services/api.ts`
 
-- [ ] **Imports: nenhum, de novo.** O `api.ts` é a fronteira do front com o
+- [x] **Imports: nenhum, de novo.** O `api.ts` é a fronteira do front com o
 mundo — só `fetch`, que é global. Se ele começar a importar de `views/` ou
 `components/`, a dependência está invertida.
 
-- [ ] **Três mudanças pequenas e duas funções novas.** As mudanças: `Treino`
+- [x] **Três mudanças pequenas e duas funções novas.** As mudanças: `Treino`
 ganha `duracao_total`. O nome `divisaoHoje` **fica como está** (Reparo 5): o
 front já estava certo, quem se ajustou foi o teste.
 
-- [ ] **`finalizarTreino` não manda corpo** (D12). O `apiFetch` já trata isso:
+- [x] **`finalizarTreino` não manda corpo** (D12). O `apiFetch` já trata isso:
 `body: opcoes.body ? JSON.stringify(...) : undefined`.
 
-- [ ] **Os tipos de volume são cópia dos do backend, de propósito.** O projeto
+- [x] **Os tipos de volume são cópia dos do backend, de propósito.** O projeto
 não compartilha tipos entre `server/` e `client/` (são dois `tsconfig`
 separados, sem workspace). A duplicação é consciente e vale a pena: se o
 backend mudar o formato, o TS do front não avisa — quem avisa é o teste da
 tela. É a mesma escolha já feita pra `Divisao` e `Serie`.
 
-- [ ] **Nenhuma conta aqui.** `atingiu_limiar` chega pronto do backend (RNF03);
+- [x] **Nenhuma conta aqui.** `atingiu_limiar` chega pronto do backend (RNF03);
 o `api.ts` só repassa.
 
 ### `client/src/services/api.ts` (completo)
@@ -1767,21 +1767,21 @@ export function buscarVolumeSemanal() {
 
 ## Passo 10 — Front: navegação (`App.tsx` + `Sidebar.tsx`)
 
-- [ ] **Imports do `App.tsx`:** entra a `WeeklyVolumeView` do Passo 12. O resto
+- [x] **Imports do `App.tsx`:** entra a `WeeklyVolumeView` do Passo 12. O resto
 já está lá.
 
-- [ ] **Imports da `Sidebar.tsx`:** entra o ícone
+- [x] **Imports da `Sidebar.tsx`:** entra o ícone
 `@mui/icons-material/BarChart`. Os outros três já estão importados.
 
-- [ ] **`Tela` ganha um terceiro valor.** `'divisao' | 'treino' | 'volume'`. O
+- [x] **`Tela` ganha um terceiro valor.** `'divisao' | 'treino' | 'volume'`. O
 `App.tsx` alterna com um `Record`, não com ternário aninhado — com três telas o
 ternário já fica ilegível, e a S8 vai acrescentar mais duas.
 
-- [ ] **A D7 continua valendo: nada de `react-router` ainda.** Três telas
+- [x] **A D7 continua valendo: nada de `react-router` ainda.** Três telas
 continuam cabendo num `useState`. A decisão de roteamento real segue marcada
 pra S9 — trocar agora custaria refazer o mesmo trabalho duas vezes.
 
-- [ ] **O item "Volume da semana" na sidebar já existia como cinza?** Não — os
+- [x] **O item "Volume da semana" na sidebar já existia como cinza?** Não — os
 dois itens desabilitados hoje são "Diagnóstico" (S7) e "Histórico" (S8). O de
 volume é novo, e entra logo depois de "Treino de hoje", que é a ordem em que a
 pessoa usa: monta a rotina, treina, confere o volume.
@@ -1992,35 +1992,35 @@ export function Sidebar({ tela, onNavegar }: { tela: Tela; onNavegar: (tela: Tel
 
 ## Passo 11 — Front: `client/src/views/TodaySessionView.tsx`
 
-- [ ] **Imports:** entra `CheckCircleIcon` de `@mui/icons-material/CheckCircle`
+- [x] **Imports:** entra `CheckCircleIcon` de `@mui/icons-material/CheckCircle`
 pro botão de finalizar. O `Button`, o `Stack` e o resto já vêm importados.
 
-- [ ] **Reparo 5: nada muda aqui.** A tela já lê `hoje.divisaoHoje`, que é o
+- [x] **Reparo 5: nada muda aqui.** A tela já lê `hoje.divisaoHoje`, que é o
 nome que ficou. Não trocar por `divisao` — se o `if` do estado vazio ler uma
 chave que não existe, a tela mostra "dia de descanso" mesmo com divisão
 cadastrada.
 
-- [ ] **`finalizar` com confirmação em dois toques, não com `window.confirm`.**
+- [x] **`finalizar` com confirmação em dois toques, não com `window.confirm`.**
 Finalizar é irreversível (o `UPDATE` do Passo 2 só roda com `completed =
 FALSE`), então merece uma confirmação — mas um `confirm()` do navegador
 **trava** o JS e fica feio no celular. O botão troca de rótulo e de cor no
 primeiro toque e executa no segundo. Zero componente novo.
 
-- [ ] **Depois de finalizar, `recarregar()` resolve a tela sozinho.** O `GET
+- [x] **Depois de finalizar, `recarregar()` resolve a tela sozinho.** O `GET
 /sessions/today` só devolve treino com `completed = false`, então o treino some
 da resposta e a tela volta pro botão "Começar treino" naturalmente. Não é
 preciso mexer no estado local pra isso.
 
-- [ ] **Tratar o 409 como sucesso, não como erro.** Se o usuário tocar duas
+- [x] **Tratar o 409 como sucesso, não como erro.** Se o usuário tocar duas
 vezes rápido, ou finalizar num aparelho tendo finalizado no outro, o backend
 responde 409 (Passo 3). Mostrar "Treino já foi finalizado" em vermelho seria
 enganoso: o estado desejado foi alcançado. Recarregar e seguir.
 
-- [ ] **O botão fica no fim da lista, não no topo.** No celular, durante o
+- [x] **O botão fica no fim da lista, não no topo.** No celular, durante o
 treino, a pessoa rola a tela o tempo todo pra registrar série — botão de
 encerrar perto do polegar, no topo, é toque acidental garantido.
 
-- [ ] **Nada de mostrar volume aqui.** A tentação é somar as séries válidas do
+- [x] **Nada de mostrar volume aqui.** A tentação é somar as séries válidas do
 dia e exibir "5 séries" no cabeçalho. Isso é cálculo de volume no front
 (RNF03), e é a conta do Passo 5. A tela de treino registra; a do Passo 12 conta.
 
@@ -2383,7 +2383,7 @@ export function TodaySessionView() {
 
 ## Passo 12 — Front: `client/src/views/WeeklyVolumeView.tsx`
 
-- [ ] **Imports.** Arquivo novo. `LinearProgress` é o único componente do MUI
+- [x] **Imports.** Arquivo novo. `LinearProgress` é o único componente do MUI
 que ainda não aparecia no projeto; o resto é o mesmo vocabulário das outras
 telas (`Card`, `Stack`, `Chip`, `Typography`).
 
@@ -2396,26 +2396,26 @@ import * as api from '../services/api';
 import { FeedbackAlert } from '../components/FeedbackAlert';
 ```
 
-- [ ] **A tela não calcula nada** (RNF03). `series_validas` e `atingiu_limiar`
+- [x] **A tela não calcula nada** (RNF03). `series_validas` e `atingiu_limiar`
 chegam prontos; `limiar` vem junto pra não existir um `10` solto no JSX. A
 única aritmética é a **largura da barra**, que é geometria de desenho, não a
 métrica — a barra poderia ser um número puro que o dado seria o mesmo.
 
-- [ ] **`Math.min(100, ...)` na barra:** quem faz 15 séries num grupamento
+- [x] **`Math.min(100, ...)` na barra:** quem faz 15 séries num grupamento
 estoura os 100% e o MUI reclama no console. Passar do limiar não é erro, então
 a barra satura e o número ao lado (`15 / 10`) conta o resto da história.
 
-- [ ] **Formatar a data sem `new Date`.** `new Date('2026-09-07')` é
+- [x] **Formatar a data sem `new Date`.** `new Date('2026-09-07')` é
 interpretado como **UTC** pelo JS e, exibido em Brasília, volta pro dia 06 —
 o painel mostraria domingo como início da semana e a D10 pareceria quebrada. Um
 `split('-')` resolve sem biblioteca e sem armadilha de fuso.
 
-- [ ] **Grupamento zerado é conteúdo, não vazio.** Não filtrar os que estão em
+- [x] **Grupamento zerado é conteúdo, não vazio.** Não filtrar os que estão em
 0: é justamente a linha "Costas 0/10" que faz a tela valer a pena. O texto de
 apoio muda pra quem está abaixo do limiar, e é o mesmo dado que a IA vai
 comentar na S7.
 
-- [ ] **Esta é a Fig. 3** das cinco do capítulo de resultados (RF04 + limiar de
+- [x] **Esta é a Fig. 3** das cinco do capítulo de resultados (RF04 + limiar de
 [Schoenfeld]). A versão final sai depois do code freeze, com os mesmos dados
 das outras figuras — o limiar precisa aparecer visível na imagem.
 
@@ -2524,18 +2524,18 @@ export function WeeklyVolumeView() {
 
 ## Passo 13 — Fechar a semana
 
-1. [ ] Conferir que o Passo 0 continua verde: `npm run test` no `server` com a
+1. [x] Conferir que o Passo 0 continua verde: `npm run test` no `server` com a
    suíte inteira (S2 + S3 + S4 + S5 + S6). Se alguma coisa da S5 voltou a
    falhar, é regressão dos Passos 3 e 4 — resolver antes de seguir.
-2. [ ] Testar o `finish` pela interface: entrar → "Treino de hoje" → começar →
+2. [x] Testar o `finish` pela interface: entrar → "Treino de hoje" → começar →
    registrar 3-4 séries → "Finalizar treino" → confirmar. A tela tem que voltar
    pro botão "Começar treino", e a mensagem tem que trazer a duração em minutos.
-3. [ ] Recarregar a página depois de finalizar e conferir que **não** aparece o
+3. [x] Recarregar a página depois de finalizar e conferir que **não** aparece o
    treino de novo (`completed = true` sai do `GET /sessions/today`), e que
    "Começar treino" cria um treino **novo** — não reabre o finalizado.
 4. [ ] Conferir a D11 na prática: com o treino já finalizado, abrir "Volume da
    semana" e ver que as séries daquele treino continuam contadas.
-5. [ ] Conferir a conta na unha uma vez, sem confiar no teste: registrar
+5. [x] Conferir a conta na unha uma vez, sem confiar no teste: registrar
    exatamente 5 séries `work` de peito e 3 de aquecimento, e ver `5 / 10` no
    painel. Bater esse número com um `SELECT` direto no banco é o que a matriz
    RF04 chama de "igual ao cálculo manual":

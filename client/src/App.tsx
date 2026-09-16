@@ -1,13 +1,21 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useAuth } from './context/AuthContext'
 import { AuthView } from './views/AuthView'
 import { DivisionView } from './views/DivisionView'
 import { TodaySessionView } from './views/TodaySessionView'
+import { WeeklyVolumeView } from './views/WeeklyVolumeView'
 import { AppShell } from './components/AppShell'
 import { PageLayout } from './components/PageLayout'
 import { Typography } from '@mui/material'
 
-export type Tela = 'divisao' | 'treino'
+export type Tela = 'divisao' | 'treino' | 'volume'
+
+
+const TELAS: Record<Tela, ReactNode> = {
+  divisao: <DivisionView />,
+  treino: <TodaySessionView />,
+  volume: <WeeklyVolumeView />,
+}
 
 function App() {
   const { usuario, carregando } = useAuth();
@@ -27,7 +35,7 @@ function App() {
 
   return (
     <AppShell tela={tela} onNavegar={setTela}>
-      {tela === 'divisao' ? <DivisionView /> : <TodaySessionView />}
+      {TELAS[tela]}
     </AppShell>
   )
 }

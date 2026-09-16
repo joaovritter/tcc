@@ -1,4 +1,3 @@
-
 const API_URL = 'http://localhost:3000';
 
 //Estende as opções de configurações padrão do fetch (method, headers, etc.)
@@ -27,7 +26,7 @@ async function apiFetch(caminho: string, opcoes: OpcoesFetch = {}) {
     if (!resposta.ok) {
         throw new Error(dados?.erro ?? 'Erro na requisição');
     }
-    
+
     return dados;
 }
 
@@ -134,6 +133,7 @@ export interface Treino {
     fk_divisao: string | null;
     completed: boolean;
     data: string;
+    duracao_total: number | null; //minutos, calculados pelo backend ao finalizar (D12)
 }
 
 export interface Serie {
@@ -149,7 +149,7 @@ export interface Serie {
 
 export interface TreinoDeHoje {
     dia_semana: number;
-    divisaoHoje: Divisao | null; //o backend devolve a chave com esse nome
+    divisaoHoje: Divisao | null; //o backend devolve a chave com esse nome (Reparo 5)
     treino: Treino | null;
     exercicios: ExercicioDoDia[];
     series: Serie[];
@@ -186,4 +186,33 @@ export function apagarSerie(idTreino: string, idSerie: number) {
     return apiFetch(`/sessions/${idTreino}/sets/${idSerie}`, {
         method: 'DELETE'
     });
+}
+
+//S6 - fecha o treino do dia. sem corpo: a duracao e calculada pelo backend (D12)
+export function finalizarTreino(idTreino: string) {
+    return apiFetch(`/sessions/${idTreino}/finish`, {
+        method: 'POST',
+    }) as Promise<{ treino: Treino }>;
+}
+
+
+
+
+//============================metricas (RF04)===========================
+//espelho dos tipos do backend
+export interface VolumeGrupamento {
+    id_grupamento: number;
+    nome_grupamento: string;
+    series_validas: number;
+    atingiu_limiar: boolean; //vem pronto do backend - a tela NAO refaz essa conta (RNF03)
+}
+
+export interface VolumeSemanal {
+    semana_referencia: string; //'YYYY-MM-DD' da segunda-feira (D10)
+    limiar: number; //10 series [Schoenfeld]
+    grupamentos: VolumeGrupamento[];
+}
+
+export function buscarVolumeSemanal() {
+    return apiFetch('/metrics/weekly-volume') as Promise<{ volume: VolumeSemanal }>;
 }

@@ -3,6 +3,7 @@ import { Box, Stack, Typography, Avatar } from '@mui/material';
 import { motion } from 'framer-motion';
 import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import InsightsIcon from '@mui/icons-material/Insights';
 import TimelineIcon from '@mui/icons-material/Timeline';
 import { useAuth } from '../context/AuthContext';
@@ -11,16 +12,17 @@ import type { Tela } from '../App';
 //Sidebar lateral fixa, com animação de expansão suave (Frame Motion) e itens de navegação.
 //icone only quando colapsada (76px)
 
-//item sem 'tela' é item que ainda nao existe: fica cinza e nao clica
 interface NavItem {
   label: string;
   icon: ReactNode;
   tela?: Tela;
 }
 
+//ordem = ordem de uso: monta a rotina, treina, confere o volume
 const NAV_ITEMS: NavItem[] = [
   { label: 'Minha divisão', icon: <CalendarViewWeekIcon fontSize="small" />, tela: 'divisao' },
   { label: 'Treino de hoje', icon: <FitnessCenterIcon fontSize="small" />, tela: 'treino' },
+  { label: 'Volume da semana', icon: <BarChartIcon fontSize="small" />, tela: 'volume' },
   { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" /> },
   { label: 'Histórico', icon: <TimelineIcon fontSize="small" /> },
 ];
