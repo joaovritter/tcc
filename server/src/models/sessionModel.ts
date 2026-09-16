@@ -1,5 +1,6 @@
 import { pool } from '../config/db';
 import { Treino, SerieTreino, NovaSerieTreino, SerieComExercicio } from '../types/indexTypes';
+import { SerieValidaDaSemana } from '../types/indexTypes';
 
 
 //o treino de hoje é o do usuário com completed = false e data no dia corrente
@@ -110,4 +111,31 @@ export async function finalizarTreino(
     [idTreino, fkUsuario]
   );
   return resultado.rows[0] ?? null;
+}
+
+
+export async function buscarSeriesValidasDaSemana (
+  fkUsuario: string,
+  semana: string
+): Promise<SerieValidaDaSemana[]> {
+  const resultado = await pool.query<SerieValidaDaSemana>(
+    `SELECT g.id_grupamento,
+            g.nome AS nome_grupamento,
+            e.nome_exercicio,
+            s.carga,
+            s.repeticoes,
+            s.rpe,
+            s.rir
+      FRIN SerieTreino s
+      JOIN Exercicio e ON e.id_exercicio = s.fk_exercicio
+      JOIN GrupamentoMuscular g ON g.id_grupamento = e.fk_grupamento
+      JOIN Treino t ON t.id_treino = s.fk_treino
+      WHERE s.tipo = 'work'
+        AND t.fk_usuario = $1
+        AND t.data >= $2::date
+        AND t.data < $2::date + INTERVAL '7 days'
+      ORDER BY g.nome, e.nome_exercicio`,
+    [fkUsuario, semana]
+  );
+  return resultado.rows;
 }

@@ -152,3 +152,40 @@ export interface VolumeSemanal {
     limiar: number; 
     grupamentos: VolumeGrupamento[];
 }
+
+
+
+//============== diagnostico =====================================
+
+export interface SerieValidaDaSemana{
+    id_grupamento: number;
+    nome_grupamento: string;
+    nome_exercicio: string;
+    carga: string;
+    repeticoes: number;
+    rpe: number;
+    rir: number;
+}
+
+//o qua a IA devolve, parte qualitativa. score é calculado no scoreService
+export interface DiagnosticoConteudo {
+    diagnostico_exercicio: { nome_exercicio: string; comentario: string; }[];
+    analise_grupamento: { nome_grupamento: string; comentario: string; }[];
+    recomendacoes_proxima_sessao: string[];
+}
+
+// o que fica gravado em conteudo_json: o texto da IA + as duas sub-notas,
+// pra auditar depois COMO o score_geral saiu daquele número 
+export interface DiagnosticoConteudoPersistido extends DiagnosticoConteudo {
+  score_detalhe: { pv: number; pi: number };  //pi = pontuação de intensidade, pv = pontuação de volume
+}
+
+export interface DiagnosticoIA{
+    id_diagnostico: string;
+    fk_usuario: string;
+    score_geral: number;
+    semana_referencia: string;
+    data_geracao: string;
+    conteudo_json: DiagnosticoConteudoPersistido;
+}
+

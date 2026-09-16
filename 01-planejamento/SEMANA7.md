@@ -8,19 +8,16 @@
 
 ## Passo 0 — Conferir que a S6 está mesmo fechada
 
-Antes de abrir arquivo novo: `npm run test` no `server` tem que sair **39/39
-verde** (era 28 no fim da S5, mais 8 do volume + 3 do finish). Se alguma coisa
-da S6 estiver vermelha, é regressão — resolver antes de começar a S7, porque
-o diagnóstico desta semana **lê** a tabela que a S6 escreveu (`volumeService`)
-e a que a S5 escreveu (`SerieTreino.rpe`). Sem os dois em pé, não tem o que
-mandar pro Gemini.
-
-Também confirmar rapidamente:
-
-- `GET /metrics/weekly-volume` devolve os grupamentos com `series_validas` e
-  `atingiu_limiar` — é a fonte do bloco 3 do prompt e do cálculo de Pv.
-- Existe pelo menos um usuário de teste com séries `work` registradas nesta
-  semana civil (segunda a domingo corrente, D10) — sem isso, o passo 12
+- [ ] `npm run test` no `server` sai **39/39 verde** (era 28 no fim da S5,
+  mais 8 do volume + 3 do finish). Se alguma coisa da S6 estiver vermelha, é
+  regressão — resolver antes de começar a S7, porque o diagnóstico desta
+  semana **lê** a tabela que a S6 escreveu (`volumeService`) e a que a S5
+  escreveu (`SerieTreino.rpe`). Sem os dois em pé, não tem o que mandar pro
+  Gemini.
+- [ ] `GET /metrics/weekly-volume` devolve os grupamentos com `series_validas`
+  e `atingiu_limiar` — é a fonte do bloco 3 do prompt e do cálculo de Pv.
+- [ ] Existe pelo menos um usuário de teste com séries `work` registradas
+  nesta semana civil (segunda a domingo corrente, D10) — sem isso, o Passo 12
   (teste com chave real) não tem dado pra mandar.
 
 ---
@@ -49,6 +46,15 @@ Duas peças novas de domínio nascem aqui e não existem em nenhuma tabela ainda
 ## Sessão A — `geminiService`: prompt de 5 blocos + chamada à API
 
 ### Passo 1 — Tipos novos em `types/indexTypes.ts`
+
+- [x] `SerieValidaDaSemana` fica com `rpe`/`rir` como `number` (não
+  `number | null`) — a consulta do Passo 3 já filtra `tipo = 'work'`, que
+  pela D9 sempre tem nota de esforço.
+- [x] `DiagnosticoConteudo` nunca tem campo numérico de pontuação — quem
+  calcula o score é o `scoreService` (Passo 6), não o prompt.
+- [x] `DiagnosticoConteudoPersistido` guarda `score_detalhe: { pv, pi }`
+  dentro do JSONB, pra auditar depois como o `score_geral` saiu daquele
+  número (D13).
 
 ```ts
 //============== diagnóstico (RF05/RF06) =====================================
@@ -91,8 +97,12 @@ export interface DiagnosticoIA {
 
 ### Passo 2 — `config/gemini.ts`
 
-Segue o mesmo padrão do `scripts/test-gemini.ts` da S1 (já validado com
-`gemini-3.1-flash-lite`), só que exportado pra reuso e com o flag de mock:
+- [x] Segue o mesmo padrão do `scripts/test-gemini.ts` da S1 (já validado com
+  `gemini-3.1-flash-lite`), só que exportado pra reuso.
+- [x] `GEMINI_MOCK` lido do `.env` como string — `process.env.GEMINI_MOCK ===
+  'true'`, não é boolean nativo.
+- [x] `server/.env` tem `GEMINI_MOCK=true` antes de rodar a suíte — sem isso
+  o `npm run test` bate na API real (Passo 11 depende disso).
 
 ```ts
 import { GoogleGenAI } from '@google/genai';
@@ -107,16 +117,15 @@ export const GEMINI_MODEL = 'gemini-3.1-flash-lite';
 export const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 ```
 
-Conferir que `server/.env` tem `GEMINI_MOCK=true` para rodar a suíte — sem
-isso o `npm run test` bate na API real (Passo 11 depende disso).
-
 ### Passo 3 — nova consulta em `models/sessionModel.ts`
 
-O volume (S6) já sabe contar séries por grupamento; falta buscar as séries
-**com o dado de esforço**, pra virar o bloco 3 do prompt e a entrada do Pi.
-Reaproveita `inicioDaSemana()` do `volumeService` — **não** reimplementar o
-cálculo da semana aqui, senão vira duas fontes da verdade pra "semana atual"
-que podem divergir (mesmo raciocínio da D10).
+- [x] Busca as séries **com o dado de esforço** (o volume da S6 só sabe
+  contar, não sabe o RPE/RIR) — vira o bloco 3 do prompt e a entrada do Pi.
+- [x] Reaproveita `inicioDaSemana()` do `volumeService` — **não**
+  reimplementar o cálculo da semana aqui, senão vira duas fontes da verdade
+  pra "semana atual" que podem divergir (mesmo raciocínio da D10).
+- [x] Mesmo filtro `WHERE s.tipo = 'work'` do `volumeService` — é o que
+  garante `rpe`/`rir` nunca nulos no resultado (Passo 1).
 
 ```ts
 import { SerieValidaDaSemana } from '../types/indexTypes';
@@ -156,11 +165,18 @@ export async function buscarSeriesValidasDaSemana(
 > isso na S7 sem necessidade: os dois arquivos já estão testados hoje, mexer
 > neles é risco que a semana não precisa correr.
 
-### Passo 4 — o template de prompt (Tabela V)
+### Passo 4 — `services/geminiService.ts`: o template de prompt (Tabela V)
 
-Cada bloco é uma responsabilidade separada dentro da mesma função, pra ficar
-fácil de auditar contra a Tabela V do artigo na hora de escrever o capítulo
-de metodologia do TCC2.
+- [x] Cada bloco é uma responsabilidade separada dentro da mesma função, pra
+  ficar fácil de auditar contra a Tabela V do artigo na hora de escrever o
+  capítulo de metodologia do TCC2.
+- [x] Bloco 1 (persona) restringe o domínio — evita a IA responder fora do
+  escopo de fisiologia do exercício.
+- [x] Bloco 4 (diretrizes) cita os dois limiares do referencial teórico: 10
+  séries semanais [Schoenfeld] e RPE 9 = 1 RIR [Zourdos; Helms] — sem isso o
+  diagnóstico não tem embasamento científico (RNF04).
+- [x] Bloco 5 (formato) proíbe explicitamente campo numérico de pontuação na
+  resposta — é o que impede a IA de "inventar" o score.
 
 ```ts
 import { VolumeSemanal, SerieValidaDaSemana } from '../types/indexTypes';
@@ -211,12 +227,18 @@ function montarPrompt(volume: VolumeSemanal, series: SerieValidaDaSemana[]): str
 O último parágrafo do bloco 5 não é só estilo — é o que impede a IA de
 "inventar" um score que depois alguém copia pro `score_geral` por engano.
 
-### Passo 5 — schema estruturado + mock + chamada
+### Passo 5 — `services/geminiService.ts`: schema estruturado + mock + chamada
 
-O SDK (`@google/genai`, já instalado desde a S1) aceita `responseSchema` +
-`responseMimeType: 'application/json'` — usar isso em vez de confiar em o
-texto vir bem formatado sozinho é o que evita repetir o parsing frágil do
-protótipo antigo (`split('kg')`, RNF05).
+
+- [ ] `responseMimeType: 'application/json'` + `responseSchema` (SDK
+  `@google/genai`, já instalado desde a S1) no lugar de confiar em o texto
+  vir bem formatado sozinho — evita repetir o parsing frágil do protótipo
+  antigo (`split('kg')`, RNF05).
+- [ ] Mock é determinístico a partir do dado de entrada real, não lorem ipsum
+  fixo — senão o teste "score bate com o cálculo manual" (Passo 11) não
+  prova nada.
+- [ ] `JSON.parse` pode falhar mesmo com `responseSchema` — o erro sobe pro
+  controller (Passo 8) decidir o que fazer, não é tratado aqui dentro.
 
 ```ts
 import { ai, GEMINI_MOCK, GEMINI_MODEL } from '../config/gemini';
@@ -293,8 +315,12 @@ export async function gerarDiagnostico(
 
 ### Passo 6 — `services/scoreService.ts` (D13)
 
-Funções puras, sem tocar no banco — dá pra testar sem `GEMINI_MOCK` nem
-Postgres, só com números conhecidos (matriz RF05/RF06 pede exatamente isso).
+- [ ] Funções puras, sem `pool.query` — testáveis sem banco nem `GEMINI_MOCK`,
+  só com números conhecidos (matriz RF05/RF06 pede exatamente isso).
+- [ ] `calcularPv` só considera grupamentos que fazem parte da rotina da
+  semana (`grupamentosDaRotina`), não o catálogo inteiro.
+- [ ] `calcularPi` usa a régua RPE 6→0 / RPE 9 ou 10→100 (teto), baseada em
+  Zourdos/Helms.
 
 ```ts
 import { VolumeSemanal, SerieValidaDaSemana } from '../types/indexTypes';
@@ -334,7 +360,11 @@ export function calcularScoreGeral(pv: number, pi: number): number {
 
 ### Passo 7 — `models/diagnosticModel.ts` (D14)
 
-Sem upsert: cada geração é uma linha nova, igual ao `SerieTreino` da D8.
+- [ ] Sem `UNIQUE`/`ON CONFLICT` — cada `salvar` grava uma linha nova (D14,
+  mesmo padrão append-only do `SerieTreino`/D8).
+- [ ] `buscarUltimoDaSemana` ordena por `data_geracao DESC LIMIT 1` —
+  "diagnóstico atual" é sempre uma leitura ordenada, nunca um estado
+  sobrescrito.
 
 ```ts
 import { pool } from '../config/db';
@@ -373,9 +403,13 @@ export async function buscarUltimoDaSemana(
 
 ### Passo 8 — `controllers/diagnosticController.ts`
 
-O controller só orquestra: busca dado, calcula score, chama a IA, persiste.
-Nenhum SQL e nenhuma conta aqui — se crescer além disso, é sinal de regra
-vazando (mesma régua do `metricsController`).
+- [ ] Controller só orquestra: busca dado, calcula score, chama a IA,
+  persiste. Nenhum SQL e nenhuma conta aqui — se crescer além disso, é sinal
+  de regra vazando (mesma régua do `metricsController`).
+- [ ] Guard de `series.length === 0` → 400 antes de calcular qualquer coisa —
+  sem isso Pv/Pi saem `NaN`.
+- [ ] `try/catch` só em volta da chamada à IA + persistência — falha do
+  Gemini vira 502, sem tocar `Treino`/`SerieTreino` (RNF06).
 
 ```ts
 import { Response } from 'express';
@@ -436,6 +470,12 @@ export async function diagnosticoAtual(req: AuthenticateRequest, res: Response) 
 
 ### Passo 9 — rotas + `app.ts`
 
+- [ ] `POST /diagnostics/generate` e `GET /diagnostics/latest`, ambas atrás
+  de `autenticar`, mesmo padrão das outras rotas.
+- [ ] Registrar `app.use(diagnosticRoutes)` em `app.ts` — esquecer isso é o
+  erro silencioso mais comum (mesmo caso do `metricsRoutes` na S6: rota
+  existe, compila, devolve 404).
+
 ```ts
 // routes/diagnosticRoutes.ts
 import { Router } from 'express';
@@ -450,22 +490,22 @@ router.get('/diagnostics/latest', autenticar, diagnosticoAtual);
 export default router;
 ```
 
-Em `app.ts`: importar `diagnosticRoutes` e `app.use(diagnosticRoutes)`, no
-mesmo padrão das outras cinco rotas já registradas.
-
 ### Passo 10 — testar no Postman antes do automatizado
 
-Igual às semanas anteriores: `POST /diagnostics/generate` com token válido e
-pelo menos uma série `work` registrada na semana. Com `GEMINI_MOCK=true`,
-conferir que a resposta vem em menos de 1s (senão o mock não está sendo
-usado — provavelmente `.env` sem `GEMINI_MOCK=true` ou o servidor não
-recarregou a variável). Depois `GET /diagnostics/latest` e conferir que
-`score_detalhe.pv`/`pi` batem com a conta manual.
+- [ ] `POST /diagnostics/generate` com token válido e pelo menos uma série
+  `work` registrada na semana — igual às semanas anteriores.
+- [ ] Com `GEMINI_MOCK=true`, a resposta vem em menos de 1s (senão o mock não
+  está sendo usado — provavelmente `.env` sem `GEMINI_MOCK=true` ou o
+  servidor não recarregou a variável).
+- [ ] `GET /diagnostics/latest` devolve o mesmo diagnóstico gerado, com
+  `score_detalhe.pv`/`pi` batendo com a conta manual.
 
 ### Passo 11 — testes automatizados (`__tests__/diagnostic.test.ts`)
 
-Confirmar `GEMINI_MOCK=true` no ambiente antes de rodar (`npm run test` já
-carrega `.env` via `dotenv/config` nos módulos importados).
+- [ ] `GEMINI_MOCK=true` confirmado no ambiente antes de rodar (`npm run
+  test` já carrega `.env` via `dotenv/config` nos módulos importados).
+- [ ] Cobre o 400 sem série válida, o fluxo completo com score batendo com o
+  cálculo manual, e testes puros do `scoreService` sem banco nem Gemini.
 
 ```ts
 import { test } from 'node:test';
@@ -534,18 +574,18 @@ test('calcularPv: grupamento fora da rotina não entra na média', () => {
 Com `GEMINI_MOCK=false` e `GEMINI_API_KEY` válida, via Postman, três semanas
 simuladas diferentes — sem alterar a suíte automatizada, é validação manual:
 
-1. **Volume bom + RPE alto** (≥10 séries por grupamento, RPE 8–9 na maioria):
-   esperado `score_geral` alto, texto da IA reconhecendo o padrão.
-2. **Volume baixo** (poucas séries, 1–2 grupamentos abaixo de 10): esperado
-   `score_geral` mediano/baixo puxado pelo Pv, e `analise_grupamentos`
-   mencionando os grupamentos que não bateram o limiar.
-3. **RPE baixo/misto** (séries com RIR 3–4, ou seja RPE 6–7, volume ok):
-   esperado Pv alto mas Pi baixo — score no meio, e o texto da IA comentando
-   intensidade insuficiente, não volume.
-
-Conferir nos três: JSON sempre parseável (sem `try/catch` estourando), tempo
-de resposta aceitável (Gemini Flash Lite costuma ficar bem abaixo de 5s), e
-nenhum campo numérico de score vindo da IA (só texto nos três arrays).
+- [ ] **Cenário 1 — volume bom + RPE alto** (≥10 séries por grupamento, RPE
+  8–9 na maioria): esperado `score_geral` alto, texto da IA reconhecendo o
+  padrão.
+- [ ] **Cenário 2 — volume baixo** (poucas séries, 1–2 grupamentos abaixo de
+  10): esperado `score_geral` mediano/baixo puxado pelo Pv, e
+  `analise_grupamentos` mencionando os grupamentos que não bateram o limiar.
+- [ ] **Cenário 3 — RPE baixo/misto** (séries com RIR 3–4, ou seja RPE 6–7,
+  volume ok): esperado Pv alto mas Pi baixo — score no meio, e o texto da IA
+  comentando intensidade insuficiente, não volume.
+- [ ] Nos três: JSON sempre parseável (sem `try/catch` estourando), tempo de
+  resposta aceitável (Gemini Flash Lite costuma ficar bem abaixo de 5s), e
+  nenhum campo numérico de score vindo da IA (só texto nos três arrays).
 
 ---
 
