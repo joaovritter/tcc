@@ -8,15 +8,15 @@
 
 ## Passo 0 — Conferir que a S6 está mesmo fechada
 
-- [ ] `npm run test` no `server` sai **39/39 verde** (era 28 no fim da S5,
+- [x] `npm run test` no `server` sai **39/39 verde** (era 28 no fim da S5,
   mais 8 do volume + 3 do finish). Se alguma coisa da S6 estiver vermelha, é
   regressão — resolver antes de começar a S7, porque o diagnóstico desta
   semana **lê** a tabela que a S6 escreveu (`volumeService`) e a que a S5
   escreveu (`SerieTreino.rpe`). Sem os dois em pé, não tem o que mandar pro
   Gemini.
-- [ ] `GET /metrics/weekly-volume` devolve os grupamentos com `series_validas`
+- [x] `GET /metrics/weekly-volume` devolve os grupamentos com `series_validas`
   e `atingiu_limiar` — é a fonte do bloco 3 do prompt e do cálculo de Pv.
-- [ ] Existe pelo menos um usuário de teste com séries `work` registradas
+- [x] Existe pelo menos um usuário de teste com séries `work` registradas
   nesta semana civil (segunda a domingo corrente, D10) — sem isso, o Passo 12
   (teste com chave real) não tem dado pra mandar.
 
