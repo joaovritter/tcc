@@ -157,7 +157,8 @@ export interface VolumeSemanal {
 
 //============== diagnostico =====================================
 
-export interface SerieValidaDaSemana{
+//serie valida de UMA sessao de treino (fk_treino), nao da semana inteira
+export interface SerieValidaDaSessao{
     id_grupamento: number;
     nome_grupamento: string;
     nome_exercicio: string;
@@ -169,8 +170,8 @@ export interface SerieValidaDaSemana{
 
 //o qua a IA devolve, parte qualitativa. score é calculado no scoreService
 export interface DiagnosticoConteudo {
-    diagnostico_exercicio: { nome_exercicio: string; comentario: string; }[];
-    analise_grupamento: { nome_grupamento: string; comentario: string; }[];
+    diagnostico_exercicios: { nome_exercicio: string; comentario: string; }[]; 
+    analise_grupamentos: { nome_grupamento: string; comentario: string; }[];
     recomendacoes_proxima_sessao: string[];
 }
 
@@ -183,8 +184,8 @@ export interface DiagnosticoConteudoPersistido extends DiagnosticoConteudo {
 export interface DiagnosticoIA{
     id_diagnostico: string;
     fk_usuario: string;
+    fk_treino: string; // referencia é a sessão de treino do dia
     score_geral: number;
-    semana_referencia: string;
     data_geracao: string;
     conteudo_json: DiagnosticoConteudoPersistido;
 }

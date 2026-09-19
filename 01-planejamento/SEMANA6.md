@@ -45,9 +45,13 @@ Critério de aceite (card 🎯 ENTREGÁVEL S6):
 > (segunda-feira) sem configuração nenhuma. Motivo: janela móvel faz o número
 > mudar sozinho todo dia à meia-noite, e o usuário não consegue "fechar" uma
 > semana; com semana de calendário, segunda-feira zera o painel e a conta tem
-> um começo e um fim que a pessoa reconhece. A S7 vai gravar esse mesmo valor
-> em `DiagnosticoIA.semana_referencia`, então a definição precisa estar
-> resolvida aqui.
+> um começo e um fim que a pessoa reconhece.
+>
+> **Correção (17/09, D15):** a frase original aqui dizia que a S7 gravaria
+> esse valor em `DiagnosticoIA.semana_referencia` — isso mudou. O diagnóstico
+> passou a ser por sessão de treino (`fk_treino`), não por semana; ver D15 no
+> `PLANEJAMENTO.md`. Esta decisão (D10) continua valendo integralmente para o
+> **volume semanal (RF04)**, que é o que esta semana (S6) entrega.
 >
 > ⚠️ Não confundir com o `dia_semana` da `Divisao`, que é `0–6` com **domingo =
 > 0** (vem do `getDay()` do JavaScript). São duas convenções diferentes vivendo

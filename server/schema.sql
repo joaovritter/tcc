@@ -69,8 +69,8 @@ CREATE TABLE SerieTreino (
 CREATE TABLE DiagnosticoIA (
   id_diagnostico UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fk_usuario UUID NOT NULL REFERENCES Usuario(id_usuario),
+  fk_treino UUID NOT NULL REFERENCES Treino(id_treino), -- diagnostico por sessao de treino, nao por semana
   score_geral INT NOT NULL,
-  semana_referencia DATE NOT NULL,
   data_geracao TIMESTAMP DEFAULT NOW(),
   conteudo_json JSONB NOT NULL
 );

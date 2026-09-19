@@ -125,10 +125,11 @@
 ## S7 · 14–20/09 · F5a Diagnóstico IA Gemini (RF05/06)
 
 > Roteiro da semana: [`SEMANA7.md`](./SEMANA7.md).
-> Decisões novas: **D13** (fórmula do `score_geral` = (Pv+Pi)/2) e **D14**
-> (diagnóstico é histórico, sem singleton por semana) — ver [`PLANEJAMENTO.md`](./PLANEJAMENTO.md).
+> Decisões novas: **D13** (fórmula do `score_geral` = (Pv+Pi)/2), **D14**
+> (diagnóstico é histórico, sem singleton por sessão) e **D15** (diagnóstico é
+> por sessão de treino, não por corte semanal) — ver [`PLANEJAMENTO.md`](./PLANEJAMENTO.md).
 
-- [ ] 🎯 **ENTREGÁVEL S7 — Diagnóstico semanal gerado e persistido (RF05/RF06)** (entrega dom 20/09) — [card](https://trello.com/c/JJLbz4Jl)
+- [ ] 🎯 **ENTREGÁVEL S7 — Diagnóstico da sessão de treino gerado e persistido (RF05/RF06)** (entrega dom 20/09) — [card](https://trello.com/c/JJLbz4Jl)
   - [ ] Prompt com os 5 blocos da Tabela V: persona, contexto, dados, diretrizes, formato (RNF04)
   - [ ] Retorno JSON com diagnostico_exercicios, analise_grupamentos, recomendacoes_proxima_sessao (RNF05)
   - [ ] score_geral = (Pv + Pi) / 2 calculado no backend (Equação 1)
@@ -139,7 +140,7 @@
   - Arquivos: `services/geminiService.ts`, `config/gemini.ts`, `.env` (GEMINI_MOCK)
 - [ ] Sessão B — diagnosticController + score_geral no backend — [card](https://trello.com/c/WGDVaEb9)
   - Arquivos: `types/indexTypes.ts` (acrescentar), `models/diagnosticModel.ts`, `controllers/diagnosticController.ts`, `routes/diagnosticRoutes.ts`, `app.ts` (registrar rota)
-- [ ] Teste com chave real: 3 cenários de semana simulada — [card](https://trello.com/c/F0Wv7hDo)
+- [ ] Teste com chave real: 3 cenários de sessão simulada — [card](https://trello.com/c/F0Wv7hDo)
   - Arquivos: `__tests__/diagnostic.test.ts`
 
 ## S8 · 21–27/09 · F5b Tela Diagnóstico + F6 Histórico (RF07)
@@ -149,7 +150,7 @@
   - [ ] Análises por grupamento/exercício + recomendações exibidas
   - [ ] Histórico: sessões, progressão de carga, volume semanal e diagnósticos anteriores (RF07)
   - [ ] Demo ponta-a-ponta gravada (login → rotina → treino → volume → diagnóstico → histórico)
-- [ ] Sessão A — Frontend F5b: tela "Diagnóstico da Semana" — [card](https://trello.com/c/rbDxorvY)
+- [ ] Sessão A — Frontend F5b: tela "Diagnóstico da Sessão" — [card](https://trello.com/c/rbDxorvY)
   - Arquivos: `services/api.ts` (acrescentar), `views/DiagnosticView.tsx`
 - [ ] Sessão B — F6: histórico de progressão (backend + frontend) — [card](https://trello.com/c/cJsIQnv7)
   - Arquivos: `controllers/historyController.ts`, `routes/historyRoutes.ts`, `app.ts` (registrar rota), `services/api.ts` (acrescentar), `views/HistoryView.tsx`
@@ -182,7 +183,7 @@
   - [x] Fig. 1 — Minha Divisão com a semana preenchida + chips de músculos do dia (RF02, S4)
   - [ ] Fig. 2 — Treino de Hoje **no celular**, com séries registradas (RF03 + RNF01, S5)
   - [ ] Fig. 3 — Volume da Semana por grupamento, com o limiar de 10 séries (RF04, S6)
-  - [ ] Fig. 4 — Diagnóstico da Semana: score 0–100 + análises + recomendações (RF05/RF06, S7)
+  - [ ] Fig. 4 — Diagnóstico da Sessão: score 0–100 + análises + recomendações (RF05/RF06, S7)
   - [ ] Fig. 5 — Histórico: progressão de carga + diagnósticos anteriores (RF07, S8)
 - [ ] Capítulo de resultados: telas, testes e matriz preenchida (até 26/10) — [card](https://trello.com/c/VRinhHiX)
 - [ ] Revisão do orientador + ajustes finais (até 01/11) — [card](https://trello.com/c/jPsMIk8V)

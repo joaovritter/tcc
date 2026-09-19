@@ -1,10 +1,17 @@
 # Semana 7 · 14–20/09 · F5a Diagnóstico IA Gemini (RF05/RF06)
 
-> Entregável: **Diagnóstico semanal gerado e persistido**, com `score_geral` calculado
-> no backend — [card do entregável](https://trello.com/c/JJLbz4Jl). Ver S7 no
+> Entregável: **Diagnóstico da sessão de treino gerado e persistido**, com `score_geral`
+> calculado no backend — [card do entregável](https://trello.com/c/JJLbz4Jl). Ver S7 no
 > [`TASKS.md`](./TASKS.md) e a linha S7 do cronograma no [`PLANEJAMENTO.md`](./PLANEJAMENTO.md).
-> Decisões novas desta semana: **D13** (fórmula do `score_geral`) e **D14** (diagnóstico
-> é histórico, não singleton) — ver seção 2 do `PLANEJAMENTO.md`.
+> Decisões novas desta semana: **D13** (fórmula do `score_geral`), **D14** (diagnóstico
+> é histórico, não singleton) e **D15** (diagnóstico é acionado por sessão de treino
+> finalizada, não por corte semanal — ver seção 2 do `PLANEJAMENTO.md`).
+>
+> **Correção 17/09 (D15):** o roteiro abaixo foi escrito tratando o diagnóstico como um
+> corte semanal (`semana_referencia`, `VolumeSemanal` como dado central do prompt). Isso
+> contradizia a **D2** (07/08), que já definia "Diagnóstico por SESSÃO". Os passos foram
+> atualizados para refletir a D15: o diagnóstico é gerado a partir de UM `Treino`
+> (sessão) e suas próprias séries; o volume semanal (RF04) entra só como contexto.
 
 ## Passo 0 — Conferir que a S6 está mesmo fechada
 
@@ -34,9 +41,10 @@ da IA, só o texto do diagnóstico depende).
 
 Duas peças novas de domínio nascem aqui e não existem em nenhuma tabela ainda:
 
-- **Pv / Pi** — as duas sub-pontuações da Equação 1 (D13). Não vêm do banco,
-  são calculadas em memória a partir do que `volumeService` e uma nova
-  consulta de séries da semana devolvem.
+- **Pv / Pi** — as duas sub-pontuações da Equação 1 (D13, ajustada pela D15).
+  Não vêm do banco, são calculadas em memória: `Pv` a partir do que
+  `volumeService` devolve (acumulado semanal, contexto), `Pi` a partir de uma
+  nova consulta das séries **da sessão** que disparou o diagnóstico.
 - **O prompt de 5 blocos** (Tabela V do artigo) — não é código de negócio, é
   um template de string. Fica isolado em `geminiService.ts` justamente pra
   não vazar regra de negócio pro meio de um parágrafo de prompt.
@@ -47,21 +55,23 @@ Duas peças novas de domínio nascem aqui e não existem em nenhuma tabela ainda
 
 ### Passo 1 — Tipos novos em `types/indexTypes.ts`
 
-- [x] `SerieValidaDaSemana` fica com `rpe`/`rir` como `number` (não
-  `number | null`) — a consulta do Passo 3 já filtra `tipo = 'work'`, que
-  pela D9 sempre tem nota de esforço.
+- [x] `SerieValidaDaSessao` (ex-`SerieValidaDaSemana`, D15) fica com
+  `rpe`/`rir` como `number` (não `number | null`) — a consulta do Passo 3 já
+  filtra `tipo = 'work'`, que pela D9 sempre tem nota de esforço.
 - [x] `DiagnosticoConteudo` nunca tem campo numérico de pontuação — quem
   calcula o score é o `scoreService` (Passo 6), não o prompt.
 - [x] `DiagnosticoConteudoPersistido` guarda `score_detalhe: { pv, pi }`
   dentro do JSONB, pra auditar depois como o `score_geral` saiu daquele
   número (D13).
+- [x] `DiagnosticoIA` troca `semana_referencia` por `fk_treino` (D15) — o
+  diagnóstico referencia a sessão que o gerou, não um corte de semana.
 
 ```ts
 //============== diagnóstico (RF05/RF06) =====================================
 
-// uma linha da consulta "séries válidas da semana com grupamento" — é o
+// uma linha da consulta "séries válidas da SESSÃO com grupamento" (D15) — é o
 // dado cru que vira o bloco 3 do prompt e a entrada do cálculo de Pi
-export interface SerieValidaDaSemana {
+export interface SerieValidaDaSessao {
   id_grupamento: number;
   nome_grupamento: string;
   nome_exercicio: string;
@@ -88,8 +98,8 @@ export interface DiagnosticoConteudoPersistido extends DiagnosticoConteudo {
 export interface DiagnosticoIA {
   id_diagnostico: string;
   fk_usuario: string;
+  fk_treino: string; // sessão diagnosticada (D15) — não mais semana_referencia
   score_geral: number;
-  semana_referencia: string;
   data_geracao: string;
   conteudo_json: DiagnosticoConteudoPersistido;
 }
@@ -121,22 +131,25 @@ export const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 - [x] Busca as séries **com o dado de esforço** (o volume da S6 só sabe
   contar, não sabe o RPE/RIR) — vira o bloco 3 do prompt e a entrada do Pi.
-- [x] Reaproveita `inicioDaSemana()` do `volumeService` — **não**
-  reimplementar o cálculo da semana aqui, senão vira duas fontes da verdade
-  pra "semana atual" que podem divergir (mesmo raciocínio da D10).
+- [x] Filtra por `fk_treino` (a sessão avaliada, D15) em vez de janela de
+  semana — o diagnóstico não reimplementa nem depende do cálculo de semana
+  do `volumeService`; quem ainda usa `inicioDaSemana()` é o próprio
+  `volumeService`, sem mudança.
 - [x] Mesmo filtro `WHERE s.tipo = 'work'` do `volumeService` — é o que
   garante `rpe`/`rir` nunca nulos no resultado (Passo 1).
+- [x] Confere `t.fk_usuario = $2` na mesma query — evita vazar séries de um
+  treino que não é do usuário autenticado (o controller já valida dono do
+  treino no Passo 8, mas a query fica correta por si só).
 
 ```ts
-import { SerieValidaDaSemana } from '../types/indexTypes';
+import { SerieValidaDaSessao } from '../types/indexTypes';
 
-// mesma janela da semana do volumeService (D10): reusa inicioDaSemana() em
-// vez de recalcular — uma fonte só de verdade pra "semana atual"
-export async function buscarSeriesValidasDaSemana(
-  fkUsuario: string,
-  semana: string
-): Promise<SerieValidaDaSemana[]> {
-  const resultado = await pool.query<SerieValidaDaSemana>(
+// D15: série válida de UMA sessão (fk_treino), não de uma janela de semana
+export async function buscarSeriesValidasDaSessao(
+  idTreino: string,
+  fkUsuario: string
+): Promise<SerieValidaDaSessao[]> {
+  const resultado = await pool.query<SerieValidaDaSessao>(
     `SELECT g.id_grupamento,
             g.nome AS nome_grupamento,
             e.nome_exercicio,
@@ -149,21 +162,20 @@ export async function buscarSeriesValidasDaSemana(
      JOIN GrupamentoMuscular g ON g.id_grupamento = e.fk_grupamento
      JOIN Treino t ON t.id_treino = s.fk_treino
      WHERE s.tipo = 'work'
-       AND t.fk_usuario = $1
-       AND t.data >= $2::date
-       AND t.data <  $2::date + INTERVAL '7 days'
+       AND t.id_treino = $1
+       AND t.fk_usuario = $2
      ORDER BY g.nome, e.nome_exercicio`,
-    [fkUsuario, semana]
+    [idTreino, fkUsuario]
   );
   return resultado.rows;
 }
 ```
 
-> Import circular: `sessionModel` passa a depender de `volumeService` só pela
-> função `inicioDaSemana`. Se isso incomodar, mover `inicioDaSemana` pra um
-> `services/dateService.ts` neutro é um refactor válido — mas **não** fazer
-> isso na S7 sem necessidade: os dois arquivos já estão testados hoje, mexer
-> neles é risco que a semana não precisa correr.
+> `Pv` continua usando o volume semanal acumulado — quem calcula isso
+> (`volumeService.calcularVolumeSemanal`, com `inicioDaSemana()` por dentro,
+> D10) não muda nada nesta semana. É só a busca de séries do diagnóstico
+> (`Pi` + bloco 3 do prompt) que deixa de olhar pra semana e passa a olhar
+> pra sessão.
 
 ### Passo 4 — `services/geminiService.ts`: o template de prompt (Tabela V)
 
@@ -179,39 +191,40 @@ export async function buscarSeriesValidasDaSemana(
   resposta — é o que impede a IA de "inventar" o score.
 
 ```ts
-import { VolumeSemanal, SerieValidaDaSemana } from '../types/indexTypes';
+import { Treino, VolumeSemanal, SerieValidaDaSessao } from '../types/indexTypes';
 import { LIMIAR_SERIES } from './volumeService';
 
-function montarPrompt(volume: VolumeSemanal, series: SerieValidaDaSemana[]): string {
+// D15: `treino` é a sessão que disparou o diagnóstico (dado central);
+// `volume` é o acumulado semanal (RF04) só como contexto — nunca o gatilho.
+function montarPrompt(treino: Treino, volume: VolumeSemanal, series: SerieValidaDaSessao[]): string {
   // Bloco 1 — Persona: domínio restrito, sem ficar solto respondendo qualquer coisa
   const persona = `Você é um especialista em fisiologia do exercício e treinamento de força, `
     + `focado exclusivamente em analisar dados objetivos de treino de hipertrofia. `
     + `Não responda perguntas fora desse domínio.`;
 
-  // Bloco 2 — Contexto: semana de referência + grupamentos treinados
-  const grupamentosTreinados = volume.grupamentos
-    .filter((g) => g.series_validas > 0)
-    .map((g) => g.nome_grupamento);
-  const contexto = `Semana de referência: ${volume.semana_referencia} (segunda a domingo). `
-    + `Grupamentos treinados nesta semana: ${grupamentosTreinados.join(', ') || 'nenhum'}.`;
+  // Bloco 2 — Contexto: sessão de treino avaliada + grupamentos treinados nela
+  const grupamentosTreinados = [...new Set(series.map((s) => s.nome_grupamento))];
+  const contexto = `Sessão de treino avaliada: ${treino.data}. `
+    + `Grupamentos treinados nesta sessão: ${grupamentosTreinados.join(', ') || 'nenhum'}. `
+    + `(Semana de referência do volume acumulado abaixo: ${volume.semana_referencia}, segunda a domingo.)`;
 
-  // Bloco 3 — Dados de treino: volume de séries válidas + RPE/RIR por série
+  // Bloco 3 — Dados de treino: séries desta sessão + volume semanal acumulado como contexto
   const linhasVolume = volume.grupamentos
     .map((g) => `- ${g.nome_grupamento}: ${g.series_validas} séries válidas `
-      + `(limiar ${LIMIAR_SERIES}, ${g.atingiu_limiar ? 'atingido' : 'não atingido'})`)
+      + `acumuladas na semana (limiar ${LIMIAR_SERIES}, ${g.atingiu_limiar ? 'atingido' : 'não atingido'})`)
     .join('\n');
   const linhasSeries = series
     .map((s) => `- ${s.nome_exercicio} (${s.nome_grupamento}): ${s.carga}kg x `
       + `${s.repeticoes} reps, RPE ${s.rpe} (RIR ${s.rir})`)
     .join('\n');
-  const dados = `Volume semanal por grupamento:\n${linhasVolume}\n\n`
-    + `Séries válidas registradas:\n${linhasSeries}`;
+  const dados = `Séries válidas registradas nesta sessão:\n${linhasSeries}\n\n`
+    + `Volume semanal acumulado por grupamento (contexto, não é o foco da avaliação):\n${linhasVolume}`;
 
   // Bloco 4 — Diretrizes científicas: os dois limiares do referencial teórico
   const diretrizes = `Considere: (1) 10 ou mais séries semanais por grupamento é o limiar `
     + `mínimo associado a ganhos hipertróficos [Schoenfeld, Ogborn, Krieger]; grupamentos `
     + `abaixo disso estão com volume insuficiente. (2) Na escala RPE/RIR, RPE 9 (1 RIR) `
-    + `indica estímulo otimizado; quanto mais perto de RPE 6 (4 RIR) ao longo da semana, `
+    + `indica estímulo otimizado; quanto mais perto de RPE 6 (4 RIR) ao longo da sessão, `
     + `menor a intensidade relativa efetiva do treino [Zourdos; Helms].`;
 
   // Bloco 5 — Formato de saída: só JSON, sem texto fora do schema
@@ -230,19 +243,19 @@ O último parágrafo do bloco 5 não é só estilo — é o que impede a IA de
 ### Passo 5 — `services/geminiService.ts`: schema estruturado + mock + chamada
 
 
-- [ ] `responseMimeType: 'application/json'` + `responseSchema` (SDK
+- [x] `responseMimeType: 'application/json'` + `responseSchema` (SDK
   `@google/genai`, já instalado desde a S1) no lugar de confiar em o texto
   vir bem formatado sozinho — evita repetir o parsing frágil do protótipo
   antigo (`split('kg')`, RNF05).
-- [ ] Mock é determinístico a partir do dado de entrada real, não lorem ipsum
+- [x] Mock é determinístico a partir do dado de entrada real, não lorem ipsum
   fixo — senão o teste "score bate com o cálculo manual" (Passo 11) não
   prova nada.
-- [ ] `JSON.parse` pode falhar mesmo com `responseSchema` — o erro sobe pro
+- [x] `JSON.parse` pode falhar mesmo com `responseSchema` — o erro sobe pro
   controller (Passo 8) decidir o que fazer, não é tratado aqui dentro.
 
 ```ts
 import { ai, GEMINI_MOCK, GEMINI_MODEL } from '../config/gemini';
-import { VolumeSemanal, SerieValidaDaSemana, DiagnosticoConteudo } from '../types/indexTypes';
+import { Treino, VolumeSemanal, SerieValidaDaSessao, DiagnosticoConteudo } from '../types/indexTypes';
 
 const SCHEMA = {
   type: 'object',
@@ -270,7 +283,7 @@ const SCHEMA = {
 
 // resposta determinística a partir do dado real — não é lorem ipsum fixo,
 // senão o teste de "score bate com o cálculo manual" (Passo 11) não prova nada
-function mockDiagnostico(volume: VolumeSemanal, series: SerieValidaDaSemana[]): DiagnosticoConteudo {
+function mockDiagnostico(volume: VolumeSemanal, series: SerieValidaDaSessao[]): DiagnosticoConteudo {
   return {
     diagnostico_exercicios: series.slice(0, 3).map((s) => ({
       nome_exercicio: s.nome_exercicio,
@@ -287,12 +300,13 @@ function mockDiagnostico(volume: VolumeSemanal, series: SerieValidaDaSemana[]): 
 }
 
 export async function gerarDiagnostico(
+  treino: Treino,
   volume: VolumeSemanal,
-  series: SerieValidaDaSemana[]
+  series: SerieValidaDaSessao[]
 ): Promise<DiagnosticoConteudo> {
   if (GEMINI_MOCK) return mockDiagnostico(volume, series);
 
-  const prompt = montarPrompt(volume, series);
+  const prompt = montarPrompt(treino, volume, series);
   const resposta = await ai.models.generateContent({
     model: GEMINI_MODEL,
     contents: prompt,
@@ -315,20 +329,24 @@ export async function gerarDiagnostico(
 
 ### Passo 6 — `services/scoreService.ts` (D13)
 
-- [ ] Funções puras, sem `pool.query` — testáveis sem banco nem `GEMINI_MOCK`,
+- [x] Funções puras, sem `pool.query` — testáveis sem banco nem `GEMINI_MOCK`,
   só com números conhecidos (matriz RF05/RF06 pede exatamente isso).
-- [ ] `calcularPv` só considera grupamentos que fazem parte da rotina da
-  semana (`grupamentosDaRotina`), não o catálogo inteiro.
-- [ ] `calcularPi` usa a régua RPE 6→0 / RPE 9 ou 10→100 (teto), baseada em
-  Zourdos/Helms.
+- [x] `calcularPv` só considera grupamentos que fazem parte da rotina da
+  semana (`grupamentosDaRotina`), não o catálogo inteiro. Continua usando o
+  volume semanal acumulado (RF04) — a D15 não muda `Pv`, só `Pi`.
+- [x] `calcularPi` usa a régua RPE 6→0 / RPE 9 ou 10→100 (teto), baseada em
+  Zourdos/Helms, agora sobre as séries **da sessão diagnosticada** (D15), não
+  mais da semana inteira.
 
 ```ts
-import { VolumeSemanal, SerieValidaDaSemana } from '../types/indexTypes';
+import { VolumeSemanal, SerieValidaDaSessao } from '../types/indexTypes';
 import { LIMIAR_SERIES } from './volumeService';
 
 // Pv: média, só sobre os grupamentos que fazem parte da rotina da semana
 // (não o catálogo inteiro — quem treina push/pull/legs não deve ser
-// penalizado por não treinar um grupamento que nem está no seu plano)
+// penalizado por não treinar um grupamento que nem está no seu plano).
+// Continua usando o volume semanal acumulado (RF04) como contexto — D15 não
+// muda Pv, só Pi (que passa a ser por sessão).
 export function calcularPv(volume: VolumeSemanal, grupamentosDaRotina: Set<number>): number {
   const relevantes = volume.grupamentos.filter((g) => grupamentosDaRotina.has(g.id_grupamento));
   if (relevantes.length === 0) return 0;
@@ -340,10 +358,11 @@ export function calcularPv(volume: VolumeSemanal, grupamentosDaRotina: Set<numbe
   return soma / relevantes.length;
 }
 
-// Pi: média sobre todas as séries válidas da semana. RPE 6 (menor valor
-// possível no schema) vale 0; RPE 9 ou 10 vale 100 (teto) — a régua linear
-// entre eles reflete Zourdos/Helms (RPE 9 = 1 RIR = estímulo otimizado)
-export function calcularPi(series: SerieValidaDaSemana[]): number {
+// Pi: média sobre as séries válidas DA SESSÃO diagnosticada (D15, não mais
+// "da semana"). RPE 6 (menor valor possível no schema) vale 0; RPE 9 ou 10
+// vale 100 (teto) — a régua linear entre eles reflete Zourdos/Helms (RPE 9 =
+// 1 RIR = estímulo otimizado)
+export function calcularPi(series: SerieValidaDaSessao[]): number {
   if (series.length === 0) return 0;
 
   const soma = series.reduce(
@@ -358,13 +377,14 @@ export function calcularScoreGeral(pv: number, pi: number): number {
 }
 ```
 
-### Passo 7 — `models/diagnosticModel.ts` (D14)
+### Passo 7 — `models/diagnosticModel.ts` (D14, ajustado pela D15)
 
-- [ ] Sem `UNIQUE`/`ON CONFLICT` — cada `salvar` grava uma linha nova (D14,
-  mesmo padrão append-only do `SerieTreino`/D8).
-- [ ] `buscarUltimoDaSemana` ordena por `data_geracao DESC LIMIT 1` —
-  "diagnóstico atual" é sempre uma leitura ordenada, nunca um estado
-  sobrescrito.
+- [x] Sem `UNIQUE`/`ON CONFLICT` — cada `salvar` grava uma linha nova (D14,
+  mesmo padrão append-only do `SerieTreino`/D8), agora referenciando
+  `fk_treino` em vez de `semana_referencia`.
+- [x] `buscarUltimoDoUsuario` ordena por `data_geracao DESC LIMIT 1` —
+  "diagnóstico atual" é sempre uma leitura ordenada por data, sem filtro de
+  semana; é o diagnóstico mais recente do usuário, de qualquer sessão.
 
 ```ts
 import { pool } from '../config/db';
@@ -372,43 +392,42 @@ import { DiagnosticoIA, DiagnosticoConteudoPersistido } from '../types/indexType
 
 export async function salvar(
   fkUsuario: string,
+  idTreino: string,
   scoreGeral: number,
-  semanaReferencia: string,
   conteudo: DiagnosticoConteudoPersistido
 ): Promise<DiagnosticoIA> {
   const resultado = await pool.query<DiagnosticoIA>(
-    `INSERT INTO DiagnosticoIA (fk_usuario, score_geral, semana_referencia, conteudo_json)
+    `INSERT INTO DiagnosticoIA (fk_usuario, fk_treino, score_geral, conteudo_json)
      VALUES ($1, $2, $3, $4)
      RETURNING *`,
-    [fkUsuario, scoreGeral, semanaReferencia, conteudo]
+    [fkUsuario, idTreino, scoreGeral, conteudo]
   );
   return resultado.rows[0];
 }
 
-// "diagnóstico atual" = o mais recente dentro da semana corrente (D14)
-export async function buscarUltimoDaSemana(
-  fkUsuario: string,
-  semanaReferencia: string
-): Promise<DiagnosticoIA | null> {
+// "diagnóstico atual" = o mais recente do usuário (D14 + D15, sem filtro de semana)
+export async function buscarUltimoDoUsuario(fkUsuario: string): Promise<DiagnosticoIA | null> {
   const resultado = await pool.query<DiagnosticoIA>(
     `SELECT * FROM DiagnosticoIA
-     WHERE fk_usuario = $1 AND semana_referencia = $2
+     WHERE fk_usuario = $1
      ORDER BY data_geracao DESC
      LIMIT 1`,
-    [fkUsuario, semanaReferencia]
+    [fkUsuario]
   );
   return resultado.rows[0] ?? null;
 }
 ```
 
-### Passo 8 — `controllers/diagnosticController.ts`
+### Passo 8 — `controllers/diagnosticController.ts` (D15)
 
-- [ ] Controller só orquestra: busca dado, calcula score, chama a IA,
-  persiste. Nenhum SQL e nenhuma conta aqui — se crescer além disso, é sinal
-  de regra vazando (mesma régua do `metricsController`).
-- [ ] Guard de `series.length === 0` → 400 antes de calcular qualquer coisa —
+- [x] Controller só orquestra: busca o treino (dono + existência), calcula
+  score, chama a IA, persiste. Nenhum SQL e nenhuma conta aqui — se crescer
+  além disso, é sinal de regra vazando (mesma régua do `metricsController`).
+- [x] `id_treino` vem da rota (`POST /sessions/:id/diagnostics/generate`, D15
+  — segue o mesmo padrão aninhado de `/sessions/:id/sets`), não do corpo.
+- [x] Guard de `series.length === 0` → 400 antes de calcular qualquer coisa —
   sem isso Pv/Pi saem `NaN`.
-- [ ] `try/catch` só em volta da chamada à IA + persistência — falha do
+- [x] `try/catch` só em volta da chamada à IA + persistência — falha do
   Gemini vira 502, sem tocar `Treino`/`SerieTreino` (RNF06).
 
 ```ts
@@ -422,22 +441,29 @@ import { calcularPv, calcularPi, calcularScoreGeral } from '../services/scoreSer
 
 export async function gerarDiagnostico(req: AuthenticateRequest, res: Response) {
   const fkUsuario = req.userId as string;
+  const idTreino = req.params.id;
 
-  const volume = await volumeService.calcularVolumeSemanal(fkUsuario);
-  const series = await sessionModel.buscarSeriesValidasDaSemana(fkUsuario, volume.semana_referencia);
-
-  if (series.length === 0) {
-    return res.status(400).json({ erro: 'Nenhuma série válida registrada nesta semana ainda' });
+  const treino = await sessionModel.buscarTreinoDoUsuario(idTreino, fkUsuario); // 404 se não existir/não for do usuário
+  if (!treino) {
+    return res.status(404).json({ erro: 'Treino não encontrado' });
   }
 
+  const series = await sessionModel.buscarSeriesValidasDaSessao(idTreino, fkUsuario);
+  if (series.length === 0) {
+    return res.status(400).json({ erro: 'Nenhuma série válida registrada nesta sessão ainda' });
+  }
+
+  // Pv usa o volume semanal acumulado (RF04) só como contexto (D15) — não é
+  // recorte da sessão, é "onde a semana está" no momento deste treino
+  const volume = await volumeService.calcularVolumeSemanal(fkUsuario);
   const grupamentosDaRotina = new Set(series.map((s) => s.id_grupamento));
   const pv = calcularPv(volume, grupamentosDaRotina);
   const pi = calcularPi(series);
   const scoreGeral = calcularScoreGeral(pv, pi);
 
   try {
-    const conteudo = await geminiService.gerarDiagnostico(volume, series);
-    const diagnostico = await diagnosticModel.salvar(fkUsuario, scoreGeral, volume.semana_referencia, {
+    const conteudo = await geminiService.gerarDiagnostico(treino, volume, series);
+    const diagnostico = await diagnosticModel.salvar(fkUsuario, idTreino, scoreGeral, {
       ...conteudo,
       score_detalhe: { pv, pi },
     });
@@ -452,27 +478,25 @@ export async function gerarDiagnostico(req: AuthenticateRequest, res: Response) 
 
 export async function diagnosticoAtual(req: AuthenticateRequest, res: Response) {
   const fkUsuario = req.userId as string;
-  const volume = await volumeService.calcularVolumeSemanal(fkUsuario); // só pra pegar semana_referencia pronta
 
-  const diagnostico = await diagnosticModel.buscarUltimoDaSemana(fkUsuario, volume.semana_referencia);
+  const diagnostico = await diagnosticModel.buscarUltimoDoUsuario(fkUsuario);
   if (!diagnostico) {
-    return res.status(404).json({ erro: 'Nenhum diagnóstico gerado ainda para esta semana' });
+    return res.status(404).json({ erro: 'Nenhum diagnóstico gerado ainda' });
   }
   return res.status(200).json({ diagnostico });
 }
 ```
 
-> Chamar `calcularVolumeSemanal` de novo só pra pegar `semana_referencia` no
-> `diagnosticoAtual` é levemente redundante (é uma query rápida, mas ainda
-> assim). Alternativa mais barata: exportar `inicioDaSemana()` direto do
-> `volumeService` e chamar só ela aqui. Qualquer uma resolve — decidir na
-> hora sem travar o passo.
+> `buscarTreinoDoUsuario` é só um `SELECT * FROM Treino WHERE id_treino = $1
+> AND fk_usuario = $2` — se `sessionModel` já tiver algo equivalente de uma
+> semana anterior (ex.: usado no `finish`), reusar em vez de duplicar.
 
-### Passo 9 — rotas + `app.ts`
+### Passo 9 — rotas + `app.ts` (D15)
 
-- [ ] `POST /diagnostics/generate` e `GET /diagnostics/latest`, ambas atrás
-  de `autenticar`, mesmo padrão das outras rotas.
-- [ ] Registrar `app.use(diagnosticRoutes)` em `app.ts` — esquecer isso é o
+- [x] `POST /sessions/:id/diagnostics/generate` (aninhada na sessão, D15 — era
+  `POST /diagnostics/generate` sem `id`) e `GET /diagnostics/latest`, ambas
+  atrás de `autenticar`, mesmo padrão das outras rotas.
+- [x] Registrar `app.use(diagnosticRoutes)` em `app.ts` — esquecer isso é o
   erro silencioso mais comum (mesmo caso do `metricsRoutes` na S6: rota
   existe, compila, devolve 404).
 
@@ -484,7 +508,7 @@ import { gerarDiagnostico, diagnosticoAtual } from '../controllers/diagnosticCon
 
 const router = Router();
 
-router.post('/diagnostics/generate', autenticar, gerarDiagnostico);
+router.post('/sessions/:id/diagnostics/generate', autenticar, gerarDiagnostico);
 router.get('/diagnostics/latest', autenticar, diagnosticoAtual);
 
 export default router;
@@ -492,8 +516,8 @@ export default router;
 
 ### Passo 10 — testar no Postman antes do automatizado
 
-- [ ] `POST /diagnostics/generate` com token válido e pelo menos uma série
-  `work` registrada na semana — igual às semanas anteriores.
+- [ ] `POST /sessions/:id/diagnostics/generate` com token válido, `:id` de um
+  treino do próprio usuário, e pelo menos uma série `work` registrada nele.
 - [ ] Com `GEMINI_MOCK=true`, a resposta vem em menos de 1s (senão o mock não
   está sendo usado — provavelmente `.env` sem `GEMINI_MOCK=true` ou o
   servidor não recarregou a variável).
@@ -515,10 +539,10 @@ import app from '../app';
 import { registrarComTreinoAberto } from './testHelpers';
 import { calcularPv, calcularPi, calcularScoreGeral } from '../services/scoreService';
 
-test('POST /diagnostics/generate sem série válida retorna 400', async () => {
-  const { token } = await registrarComTreinoAberto(); // treino aberto, zero séries
+test('POST /sessions/:id/diagnostics/generate sem série válida retorna 400', async () => {
+  const { token, idTreino } = await registrarComTreinoAberto(); // treino aberto, zero séries
   const resposta = await request(app)
-    .post('/diagnostics/generate')
+    .post(`/sessions/${idTreino}/diagnostics/generate`)
     .set('Authorization', `Bearer ${token}`);
   assert.equal(resposta.status, 400);
 });
@@ -532,7 +556,7 @@ test('fluxo completo: registra série work, gera diagnóstico, score bate com o 
     .send({ fk_exercicio: exercicio.id_exercicio, tipo: 'work', carga: 80, repeticoes: 8, rir: 1 }); // RPE 9
 
   const geracao = await request(app)
-    .post('/diagnostics/generate')
+    .post(`/sessions/${idTreino}/diagnostics/generate`)
     .set('Authorization', `Bearer ${token}`);
   assert.equal(geracao.status, 201);
 
@@ -571,18 +595,20 @@ test('calcularPv: grupamento fora da rotina não entra na média', () => {
 
 ### Passo 12 — teste com chave real: 3 cenários (item do TASKS.md)
 
-Com `GEMINI_MOCK=false` e `GEMINI_API_KEY` válida, via Postman, três semanas
-simuladas diferentes — sem alterar a suíte automatizada, é validação manual:
+Com `GEMINI_MOCK=false` e `GEMINI_API_KEY` válida, via Postman, três sessões
+simuladas diferentes (cada uma um `Treino` com séries próprias) — sem alterar
+a suíte automatizada, é validação manual:
 
-- [ ] **Cenário 1 — volume bom + RPE alto** (≥10 séries por grupamento, RPE
-  8–9 na maioria): esperado `score_geral` alto, texto da IA reconhecendo o
-  padrão.
-- [ ] **Cenário 2 — volume baixo** (poucas séries, 1–2 grupamentos abaixo de
-  10): esperado `score_geral` mediano/baixo puxado pelo Pv, e
-  `analise_grupamentos` mencionando os grupamentos que não bateram o limiar.
-- [ ] **Cenário 3 — RPE baixo/misto** (séries com RIR 3–4, ou seja RPE 6–7,
-  volume ok): esperado Pv alto mas Pi baixo — score no meio, e o texto da IA
-  comentando intensidade insuficiente, não volume.
+- [ ] **Cenário 1 — volume semanal (contexto) bom + RPE alto na sessão** (o
+  grupamento já tem ≥10 séries acumuladas na semana, sessão com RPE 8–9 na
+  maioria): esperado `score_geral` alto, texto da IA reconhecendo o padrão.
+- [ ] **Cenário 2 — volume semanal (contexto) baixo** (poucas séries
+  acumuladas, 1–2 grupamentos abaixo de 10): esperado `score_geral`
+  mediano/baixo puxado pelo Pv, e `analise_grupamentos` mencionando os
+  grupamentos que não bateram o limiar.
+- [ ] **Cenário 3 — RPE baixo/misto na sessão** (séries com RIR 3–4, ou seja
+  RPE 6–7, volume semanal ok): esperado Pv alto mas Pi baixo — score no meio,
+  e o texto da IA comentando intensidade insuficiente, não volume.
 - [ ] Nos três: JSON sempre parseável (sem `try/catch` estourando), tempo de
   resposta aceitável (Gemini Flash Lite costuma ficar bem abaixo de 5s), e
   nenhum campo numérico de score vindo da IA (só texto nos três arrays).
@@ -595,10 +621,10 @@ simuladas diferentes — sem alterar a suíte automatizada, é validação manua
    diagnóstico).
 2. [ ] `npm run build` sem erro de tipo.
 3. [ ] Os 3 cenários do Passo 12 rodados com chave real e conferidos à mão.
-4. [ ] Conferir a D14 na prática: gerar o diagnóstico duas vezes na mesma
-   semana e ver duas linhas em `DiagnosticoIA` (`SELECT COUNT(*) ... WHERE
-   fk_usuario = ... AND semana_referencia = ...`), e que `GET
-   /diagnostics/latest` devolve sempre a mais recente.
+4. [ ] Conferir a D14 na prática: gerar o diagnóstico duas vezes pro mesmo
+   treino e ver duas linhas em `DiagnosticoIA` (`SELECT COUNT(*) ... WHERE
+   fk_usuario = ... AND fk_treino = ...`), e que `GET /diagnostics/latest`
+   devolve sempre a mais recente.
 5. [ ] Commit + push. Sugestão: um commit de `geminiService` + `scoreService`
    (Sessão A + o cálculo puro), outro de `diagnosticController` +
    `diagnosticModel` + rotas + testes (Sessão B).
@@ -634,9 +660,14 @@ simuladas diferentes — sem alterar a suíte automatizada, é validação manua
 - **Calcular Pv sobre todos os grupamentos do catálogo**, e não só os da
   rotina da semana. Penaliza quem treina uma divisão que legitimamente não
   cobre todo grupamento toda semana (ex.: push/pull/legs sem antebraço).
+- **Calcular Pi sobre a semana inteira em vez da sessão** (D15). O `Pi` mudou
+  de escopo nesta revisão — usar `SerieValidaDaSessao` filtrado por
+  `fk_treino`, não a consulta antiga de janela semanal.
 - **Reimplementar a janela da semana em `sessionModel` na mão** em vez de
   reusar `inicioDaSemana()` do `volumeService` — duas fontes da verdade pra
-  "semana atual" que podem divergir se uma mudar e a outra não (D10).
+  "semana atual" que podem divergir se uma mudar e a outra não (D10). Isso
+  só se aplica ao `Pv`/`volumeService`; a busca de séries da sessão (Passo 3)
+  não usa semana nenhuma.
 - **Rodar a suíte sem `GEMINI_MOCK=true`.** Os testes tentam bater na API
   real, ficam lentos, dependem de rede e gastam cota — e num CI sem chave
   configurada, simplesmente falham.
@@ -652,10 +683,14 @@ simuladas diferentes — sem alterar a suíte automatizada, é validação manua
   prompt, mas não pra qualquer conta numérica que usar esse campo.
 - **Esquecer o `app.use(diagnosticRoutes)`.** Mesmo erro silencioso da S6 com
   `metricsRoutes` — rota existe, compila, devolve 404.
-- **Gerar diagnóstico sem nenhuma série válida na semana.** Sem o guard do
-  Passo 8 (`series.length === 0` → 400), o Pv e o Pi saem `0/0` (`NaN`) e um
-  `NaN` vai silenciosamente pro `INSERT` como `score_geral`.
+- **Gerar diagnóstico sem nenhuma série válida na sessão.** Sem o guard do
+  Passo 8 (`series.length === 0` → 400), o Pi sai `0/0` (`NaN`) e um `NaN`
+  vai silenciosamente pro `INSERT` como `score_geral`.
 - **Achar que "diagnóstico atual" precisa de `UNIQUE` + `ON CONFLICT`.** A
   D14 decidiu o contrário de propósito: histórico por padrão, "atual" é só
   uma leitura ordenada por `data_geracao`. Não adicionar constraint que a
   decisão já descartou.
+- **Deixar `DiagnosticoIA.semana_referencia` no schema/tipos por hábito.** A
+  D15 trocou esse campo por `fk_treino` — se aparecer `semana_referencia` em
+  algum arquivo novo desta sessão, é sinal de que o código antigo (pré-D15)
+  foi copiado sem revisar.
