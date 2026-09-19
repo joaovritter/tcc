@@ -32,7 +32,7 @@ test('Fluxo completo: registrar work set, gera diagnóstico, score bate com o c�
     const { score_geral, conteudo_json } = geracao.body.diagnostico;
     //com 1 serie com RPE=9 em 1 grupamento fora do limiar: pv baixo, pi = 100
     const piEsperado = calcularPi([{ rpe: 9 } as any]);
-    assert.equal(conteudo_json.score_detalhes.pi, piEsperado);
+    assert.equal(conteudo_json.score_detalhe.pi, piEsperado);
     assert.equal(score_geral, calcularScoreGeral(conteudo_json.score_detalhe.pv, piEsperado));
 
     const atual = await request(app)
@@ -41,3 +41,25 @@ test('Fluxo completo: registrar work set, gera diagnóstico, score bate com o c�
     assert.equal(atual.status, 200);
     assert.equal(atual.body.diagnostico.id_diagnostico, geracao.body.diagnostico.id_diagnostico);
 });
+
+
+//testes puros de ScoreService, não toca no banco nem gemini
+
+test('calcularPi: RPE 6 vale 0, RPE 9 vale 100', () => {
+    assert.equal(calcularPi([{ rpe: 6 } as any]), 0)
+    assert.equal(calcularPi([{ rpe: 9 } as any]), 100)
+});
+
+
+test('calcularPi: grupamento fora da rotina não entra na média', () => {
+    const volume = {
+        semana_referencia: '2026-09-14',
+        limiar: 10,
+        grupamentos: [
+            { id_grupamento: 1, nome_grupamento: 'Peito', series_validas: 10, atingiu_limiar: true },
+            { id_grupamento: 2, nome_grupamento: 'Panturrilha', series_validas: 0, atingiu_limiar: false },
+        ],
+    };
+    // só o grupamento 1 está na rotina: Pv = 100, não (100+0)/2 = 50
+    assert.equal(calcularPv(volume as any, new Set([1])), 100);
+})

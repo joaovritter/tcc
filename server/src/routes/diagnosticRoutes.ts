@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { autenticar } from '../middlewares/auth';
-import { gerarDiagnostico, diagnosticoAtual } from '../controllers/diagnosticoController';
+import { gerarDiagnostico, diagnosticoAtual } from '../controllers/diagnosticController';
 
 const router = Router();
 

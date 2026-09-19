@@ -526,7 +526,7 @@ export default router;
 
 ### Passo 11 — testes automatizados (`__tests__/diagnostic.test.ts`)
 
-- [ ] `GEMINI_MOCK=true` confirmado no ambiente antes de rodar (`npm run
+- [x] `GEMINI_MOCK=true` confirmado no ambiente antes de rodar (`npm run
   test` já carrega `.env` via `dotenv/config` nos módulos importados).
 - [ ] Cobre o 400 sem série válida, o fluxo completo com score batendo com o
   cálculo manual, e testes puros do `scoreService` sem banco nem Gemini.
