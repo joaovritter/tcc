@@ -516,19 +516,19 @@ export default router;
 
 ### Passo 10 — testar no Postman antes do automatizado
 
-- [ ] `POST /sessions/:id/diagnostics/generate` com token válido, `:id` de um
+- [x] `POST /sessions/:id/diagnostics/generate` com token válido, `:id` de um
   treino do próprio usuário, e pelo menos uma série `work` registrada nele.
-- [ ] Com `GEMINI_MOCK=true`, a resposta vem em menos de 1s (senão o mock não
+- [x] Com `GEMINI_MOCK=true`, a resposta vem em menos de 1s (senão o mock não
   está sendo usado — provavelmente `.env` sem `GEMINI_MOCK=true` ou o
   servidor não recarregou a variável).
-- [ ] `GET /diagnostics/latest` devolve o mesmo diagnóstico gerado, com
+- [x] `GET /diagnostics/latest` devolve o mesmo diagnóstico gerado, com
   `score_detalhe.pv`/`pi` batendo com a conta manual.
 
 ### Passo 11 — testes automatizados (`__tests__/diagnostic.test.ts`)
 
 - [x] `GEMINI_MOCK=true` confirmado no ambiente antes de rodar (`npm run
   test` já carrega `.env` via `dotenv/config` nos módulos importados).
-- [ ] Cobre o 400 sem série válida, o fluxo completo com score batendo com o
+- [x] Cobre o 400 sem série válida, o fluxo completo com score batendo com o
   cálculo manual, e testes puros do `scoreService` sem banco nem Gemini.
 
 ```ts
@@ -599,17 +599,17 @@ Com `GEMINI_MOCK=false` e `GEMINI_API_KEY` válida, via Postman, três sessões
 simuladas diferentes (cada uma um `Treino` com séries próprias) — sem alterar
 a suíte automatizada, é validação manual:
 
-- [ ] **Cenário 1 — volume semanal (contexto) bom + RPE alto na sessão** (o
+- [x] **Cenário 1 — volume semanal (contexto) bom + RPE alto na sessão** (o
   grupamento já tem ≥10 séries acumuladas na semana, sessão com RPE 8–9 na
   maioria): esperado `score_geral` alto, texto da IA reconhecendo o padrão.
-- [ ] **Cenário 2 — volume semanal (contexto) baixo** (poucas séries
+- [x] **Cenário 2 — volume semanal (contexto) baixo** (poucas séries
   acumuladas, 1–2 grupamentos abaixo de 10): esperado `score_geral`
   mediano/baixo puxado pelo Pv, e `analise_grupamentos` mencionando os
   grupamentos que não bateram o limiar.
-- [ ] **Cenário 3 — RPE baixo/misto na sessão** (séries com RIR 3–4, ou seja
+- [x] **Cenário 3 — RPE baixo/misto na sessão** (séries com RIR 3–4, ou seja
   RPE 6–7, volume semanal ok): esperado Pv alto mas Pi baixo — score no meio,
   e o texto da IA comentando intensidade insuficiente, não volume.
-- [ ] Nos três: JSON sempre parseável (sem `try/catch` estourando), tempo de
+- [x] Nos três: JSON sempre parseável (sem `try/catch` estourando), tempo de
   resposta aceitável (Gemini Flash Lite costuma ficar bem abaixo de 5s), e
   nenhum campo numérico de score vindo da IA (só texto nos três arrays).
 
@@ -617,18 +617,18 @@ a suíte automatizada, é validação manual:
 
 ## Passo 13 — Fechar a semana
 
-1. [ ] `npm run test` no `server` verde na suíte inteira (39 + os novos de
+1. [x] `npm run test` no `server` verde na suíte inteira (39 + os novos de
    diagnóstico).
-2. [ ] `npm run build` sem erro de tipo.
-3. [ ] Os 3 cenários do Passo 12 rodados com chave real e conferidos à mão.
-4. [ ] Conferir a D14 na prática: gerar o diagnóstico duas vezes pro mesmo
+2. [x] `npm run build` sem erro de tipo.
+3. [x] Os 3 cenários do Passo 12 rodados com chave real e conferidos à mão.
+4. [x] Conferir a D14 na prática: gerar o diagnóstico duas vezes pro mesmo
    treino e ver duas linhas em `DiagnosticoIA` (`SELECT COUNT(*) ... WHERE
    fk_usuario = ... AND fk_treino = ...`), e que `GET /diagnostics/latest`
    devolve sempre a mais recente.
-5. [ ] Commit + push. Sugestão: um commit de `geminiService` + `scoreService`
+5. [x] Commit + push. Sugestão: um commit de `geminiService` + `scoreService`
    (Sessão A + o cálculo puro), outro de `diagnosticController` +
    `diagnosticModel` + rotas + testes (Sessão B).
-6. [ ] Marcar os cards da S7 no Trello (`/trello-sync`).
+6. [x] Marcar os cards da S7 no Trello (`/trello-sync`).
 
 ---
 
