@@ -6,6 +6,16 @@ interface OpcoesFetch extends RequestInit {
     body?: any;
 }
 
+//evita erros tipo: mensagem.includes('já foi finalizado'), se mudar a mensagem no backend, a tela quebra.
+export class ApiErro extends Error {
+    status: number;
+
+    constructor(mensagem: string, status: number) {
+        super(mensagem);
+        this.status = status;
+    }
+}
+
 //funcao que monta url, injeta o token quando existe, e transforma resposta de erro numa exceção
 // ...(spread) tira a embalagem de objeto ou lista e despeja só o conteudo.
 async function apiFetch(caminho: string, opcoes: OpcoesFetch = {}) {
@@ -24,12 +34,11 @@ async function apiFetch(caminho: string, opcoes: OpcoesFetch = {}) {
 
     const dados = resposta.status === 204 ? null : await resposta.json();
     if (!resposta.ok) {
-        throw new Error(dados?.erro ?? 'Erro na requisição');
+        throw new ApiErro(dados?.erro ?? 'Erro na requisição', resposta.status);
     }
 
     return dados;
 }
-
 
 //============================usuario===================================
 

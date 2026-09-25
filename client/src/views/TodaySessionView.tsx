@@ -153,11 +153,10 @@ export function TodaySessionView() {
       const { treino } = await api.finalizarTreino(hoje.treino.id_treino);
       setSucesso(`Treino finalizado — ${treino.duracao_total} min registrados.`);
     } catch (erro) {
-      const mensagem = erro instanceof Error ? erro.message : 'Erro ao finalizar treino';
       //409 do backend: ja estava finalizado (dois toques rapidos, ou outro
       //aparelho). o estado desejado foi alcancado
-      if (!mensagem.includes('já foi finalizado')) {
-        setErro(mensagem);
+      if (!(erro instanceof api.ApiErro && erro.status === 409)) {
+        setErro(erro instanceof Error ? erro.message : 'Erro ao finalizar treino');
       }
     } finally {
       setConfirmandoFim(false);

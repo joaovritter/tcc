@@ -167,3 +167,18 @@ test('registrar série no treino de outro usuário retorna 404', async () => {
 
   assert.equal(resposta.status, 404);
 });
+
+
+test('id de treino que não é UUID retorna 404, não 500', async () => {
+  const { token } = await registrarELogar();
+
+  const finish = await request(app)
+    .post('/sessions/abc/finish')
+    .set('Authorization', `Bearer ${token}`);
+  const diagnostico = await request(app)
+    .post('/sessions/abc/diagnostics/generate')
+    .set('Authorization', `Bearer ${token}`);
+
+  assert.equal(finish.status, 404);
+  assert.equal(diagnostico.status, 404);
+});

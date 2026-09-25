@@ -190,3 +190,8 @@ export interface DiagnosticoIA{
     conteudo_json: DiagnosticoConteudoPersistido;
 }
 
+// diagnostico + data da sessao que o gerou (JOIN Treino) - a tela mostra
+export interface DiagnosticoComTreino extends DiagnosticoIA {
+    data_treino: string;
+}
+

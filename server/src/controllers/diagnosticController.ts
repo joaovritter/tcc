@@ -17,6 +17,11 @@ export async function gerarDiagnostico(req: AuthenticateRequest, res: Response) 
     return res.status(404).json({ erro: 'Treino não encontrado' });
   }
 
+  //diagnostico é da sessão finalizada
+  if (!treino.completed) {
+    return res.status(409).json({ erro: 'Finalize o treino antes de gerar o diagnóstico' });
+  }
+
   const series = await sessionModel.buscarSeriesValidasDaSessao(idTreino, fkUsuario);
   if (series.length === 0) {
     return res.status(400).json({ erro: 'Nenhuma série válida registrada nesta sessão ainda' });

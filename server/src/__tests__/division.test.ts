@@ -121,3 +121,10 @@ test('id_divisao é preservado ao editar um dia que já existia', async () => {
 });
 
 
+test('id de divisão que não é UUID retorna 404, não 500', async () => {
+  const { token } = await registrarELogar();
+  const resposta = await request(app)
+    .get('/divisions/abc/exercises')
+    .set('Authorization', `Bearer ${token}`);
+  assert.equal(resposta.status, 404);
+});
