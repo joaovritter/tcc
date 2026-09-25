@@ -134,17 +134,17 @@ semana. Nenhum destes passos cria feature: eles deixam o chão firme para a Part
 
 ## Passo 0 — Conferir que a S7 está mesmo fechada
 
-- [ ] `npm run test` no `server` sai **42/42 verde** (8 auth + 7 divisão + 3
+- [x] `npm run test` no `server` sai **42/42 verde** (8 auth + 7 divisão + 3
   exercício + 9 sessão + 11 volume + 4 diagnóstico). A S8 lê as tabelas que a
   S5, a S6 e a S7 escreveram — se alguma estiver vermelha, resolver antes.
-- [ ] `server/.env` com `GEMINI_MOCK=true` enquanto desenvolve e roda a suíte. A
+- [x] `server/.env` com `GEMINI_MOCK=true` enquanto desenvolve e roda a suíte. A
   chave real só volta pra gravar a demo (Passo 22).
 
 ---
 
 ## Passo 1 — Correção (S7): diagnóstico só de treino finalizado + `data_treino`
 
-- [ ] Duas mudanças pequenas no que a S7 entregou, feitas **antes** da tela
+- [x] Duas mudanças pequenas no que a S7 entregou, feitas **antes** da tela
   porque a tela depende delas: (1) o guard de `completed` no
   `gerarDiagnostico` (409), e (2) o `GET /diagnostics/latest` passa a trazer a
   data do treino (`data_treino`) — a tela precisa dizer *de qual sessão* é o
@@ -153,7 +153,7 @@ semana. Nenhum destes passos cria feature: eles deixam o chão firme para a Part
 
 ### `server/src/types/indexTypes.ts` (acrescentar no bloco de diagnóstico)
 
-- [ ] Tipo novo `DiagnosticoComTreino` — é o diagnóstico com a data da sessão
+- [x] Tipo novo `DiagnosticoComTreino` — é o diagnóstico com a data da sessão
   vinda de um `JOIN Treino`. Usado no `latest`.
 
 ```ts
@@ -166,8 +166,8 @@ export interface DiagnosticoComTreino extends DiagnosticoIA {
 
 ### `server/src/models/diagnosticModel.ts` (substituir `buscarUltimoDoUsuario`)
 
-- [ ] Import muda: `DiagnosticoComTreino` entra ao lado dos outros tipos.
-- [ ] `d.*` + `t.data AS data_treino` — continua devolvendo todos os campos de
+- [x] Import muda: `DiagnosticoComTreino` entra ao lado dos outros tipos.
+- [x] `d.*` + `t.data AS data_treino` — continua devolvendo todos os campos de
   antes, então o teste da S7 (`id_diagnostico` igual) segue passando.
 
 ```ts
@@ -190,7 +190,7 @@ export async function buscarUltimoDoUsuario(fkUsuario: string): Promise<Diagnost
 
 ### `server/src/controllers/diagnosticController.ts` (acrescentar o guard)
 
-- [ ] Logo depois do 404 do treino, **antes** de buscar séries. A ordem dos
+- [x] Logo depois do 404 do treino, **antes** de buscar séries. A ordem dos
   guards importa: 404 (não existe/não é seu) → 409 (existe mas está aberto) →
   400 (fechado mas sem série válida).
 
@@ -211,12 +211,12 @@ export async function buscarUltimoDoUsuario(fkUsuario: string): Promise<Diagnost
 
 ### `server/src/__tests__/diagnostic.test.ts` (completo)
 
-- [ ] Os dois testes que geravam diagnóstico em treino aberto agora finalizam
+- [x] Os dois testes que geravam diagnóstico em treino aberto agora finalizam
   antes — sem isso eles tomam 409 e ficam vermelhos (é o guard funcionando, não
   bug).
-- [ ] Teste novo: treino aberto → 409.
-- [ ] O fluxo completo passa a conferir `data_treino` no `latest`.
-- [ ] Limpeza: sai o `import { response } from 'express'` que não era usado, e o
+- [x] Teste novo: treino aberto → 409.
+- [x] O fluxo completo passa a conferir `data_treino` no `latest`.
+- [x] Limpeza: sai o `import { response } from 'express'` que não era usado, e o
   último teste tinha o nome errado (`calcularPi` testando `calcularPv`).
 
 ```ts
@@ -311,22 +311,22 @@ test('calcularPv: grupamento fora da rotina não entra na média', () => {
 });
 ```
 
-- [ ] `npm run test` → **44/44** (43 da S7 + o 409).
+- [x] `npm run test` → **43/43** (42 + o 409).
 
 ---
 
 ## Passo 2 — Correção (S3–S7): id que não é UUID na URL devolve 500
 
-- [ ] O problema: `POST /sessions/abc/finish`, `…/sessions/abc/sets`,
+- [x] O problema: `POST /sessions/abc/finish`, `…/sessions/abc/sets`,
   `…/sessions/abc/diagnostics/generate` e `GET /divisions/abc/exercises`
   respondem **500**. O Postgres recusa `'abc'` como UUID (erro `22P02`) antes de
   o `WHERE` rodar, a exceção sobe sem tratamento e o Express devolve o 500
   padrão. O correto é **404** — o recurso não existe, igual a um UUID válido que
   não é do usuário.
-- [ ] A correção é um middleware só, reusado em toda rota com `:id` UUID, em vez
+- [x] A correção é um middleware só, reusado em toda rota com `:id` UUID, em vez
   de repetir o `if` em cada controller. Roda **depois** do `autenticar` (sem
   token continua sendo 401, como antes).
-- [ ] 404 e não 400, de propósito: mesma resposta do "treino de outro usuário" —
+- [x] 404 e não 400, de propósito: mesma resposta do "treino de outro usuário" —
   a API não diferencia "não existe" de "id malformado" pra quem está sondando.
 
 ### `server/src/middlewares/validarUuid.ts` (novo)
@@ -390,7 +390,7 @@ export default router;
 
 ### `server/src/routes/divisionRoutes.ts` (só as duas rotas com `:id`)
 
-- [ ] `/divisions/muscle-summary` não muda — é outro caminho, não passa pelo
+- [x] `/divisions/muscle-summary` não muda — é outro caminho, não passa pelo
   `:id`.
 
 ```ts
@@ -402,7 +402,7 @@ router.put('/divisions/:id/exercises', autenticar, validarUuid('id'), salvarExer
 
 ### Testes (acrescentar)
 
-- [ ] No fim do `server/src/__tests__/session.test.ts` (o `registrarELogar` já
+- [x] No fim do `server/src/__tests__/session.test.ts` (o `registrarELogar` já
   está no import):
 
 ```ts
@@ -421,7 +421,7 @@ test('id de treino que não é UUID retorna 404, não 500', async () => {
 });
 ```
 
-- [ ] No fim do `server/src/__tests__/division.test.ts` — esse arquivo **não**
+- [x] No fim do `server/src/__tests__/division.test.ts` — esse arquivo **não**
   importa o helper ainda; acrescentar `import { registrarELogar } from
   './testHelpers';` no topo:
 
@@ -435,23 +435,23 @@ test('id de divisão que não é UUID retorna 404, não 500', async () => {
 });
 ```
 
-- [ ] `npm run test` → **46/46** (44 + 2).
+- [x] `npm run test` → **45/45** (43 + 2).
 
 ---
 
 ## Passo 3 — Correção (S6): front decide fluxo comparando texto de erro
 
-- [ ] O problema: o `finalizar` da `TodaySessionView` (S6) ignora o 409 fazendo
+- [x] O problema: o `finalizar` da `TodaySessionView` (S6) ignora o 409 fazendo
   `mensagem.includes('já foi finalizado')`. Qualquer ajuste de redação no
   backend (tirar o acento, trocar a frase) quebra isso em silêncio — o erro
   volta a aparecer na tela e ninguém sabe por quê. O `apiFetch` joga só a
   mensagem; o **status HTTP se perde** no caminho.
-- [ ] A correção: um `ApiErro` que carrega o `status`. Continua sendo `Error`,
+- [x] A correção: um `ApiErro` que carrega o `status`. Continua sendo `Error`,
   então todo `catch` existente que faz `erro instanceof Error ? erro.message :
   …` segue funcionando sem mudança. A Parte 2 usa o mesmo `ApiErro` pra separar
   o 404 "ainda não tem diagnóstico" (Passo 8) e o 400/502 do botão único
   (Passo 9).
-- [ ] Classe com campo declarado (não `constructor(public status: number)`) —
+- [x] Classe com campo declarado (não `constructor(public status: number)`) —
   o `tsconfig.app.json` tem `erasableSyntaxOnly`, que proíbe parameter
   properties.
 
@@ -488,9 +488,9 @@ export class ApiErro extends Error {
     } finally {
 ```
 
-- [ ] Conferir pela tela: finalizar um treino, e no DevTools (aba Network)
+- [x] Conferir pela tela: finalizar um treino, e no DevTools (aba Network)
   reenviar o `POST …/finish` → nenhum alerta vermelho aparece.
-- [ ] `npm run build` no `client` sem erro.
+- [x] `npm run build` no `client` sem erro.
 
 ---
 
@@ -875,7 +875,7 @@ Esperado: o mesmo objeto do 5.11 + `"data_treino": "2026-09-23T21:58:02.114Z"`.
 
 # Parte 2 — Implementação da S8
 
-Só começar com a Parte 1 verde: **46/46** no `npm run test` e o Passo 5 do
+Só começar com a Parte 1 verde: **45/45** no `npm run test` e o Passo 5 do
 Postman todo passando.
 
 ## Sessão A — Frontend F5b: tela "Diagnóstico da Sessão"
@@ -2337,7 +2337,7 @@ ORDER BY t.data;
   que o próprio backend devolveu (`sessao.dia.slice(0, 7)`) e pede esse mês
   explicitamente. Nunca calcula o mês com `new Date()` no teste, porque perto
   da meia-noite do dia 1 o teste e o banco podem discordar.
-- [ ] São 16 testes. `npm run test` → **62/62** (46 da Parte 1 + 16 deste
+- [ ] São 16 testes. `npm run test` → **61/61** (45 da Parte 1 + 16 deste
   arquivo), com `GEMINI_MOCK=true` (o teste de D14 gera diagnóstico).
 
 Código completo:
@@ -2650,7 +2650,7 @@ test('volume histórico: semanas fora de 1–26 retorna 400', async () => {
 });
 ```
 
-- [ ] `npm run test` → **62/62**.
+- [ ] `npm run test` → **61/61**.
 
 ### Passo 19 — `client/src/services/api.ts` (acrescentar no fim)
 
@@ -3592,7 +3592,7 @@ export type Tela = 'divisao' | 'treino' | 'volume' | 'diagnostico' | 'historico'
 
 ## Passo 22 — Fechar a semana
 
-1. [ ] `npm run test` no `server` verde na suíte inteira: **62/62** (43 da S7
+1. [ ] `npm run test` no `server` verde na suíte inteira: **61/61** (42 da S7
    + 1 do Passo 1 + 2 do Passo 2 + 16 do Passo 18), com `GEMINI_MOCK=true`.
 2. [ ] `npm run build` nos **dois** lados sem erro de tipo. No front, o
    `noUnusedLocals` pega import sobrando (ex.: o `InsightsIcon` se o Passo 9
