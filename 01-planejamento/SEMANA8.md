@@ -571,8 +571,28 @@ sozinhos. O mesmo ambiente serve pro Passo 17 (histórico) e pra S9.
   /divisions` do 5.4 **substitui a semana inteira** (padrão apaga-e-reinsere da
   S3) — rodar ele com o seu usuário de uso real apaga a sua rotina.
 
-> Os scripts abaixo vão na aba **Scripts → Post-response** (nas versões antigas
-> do Postman, aba **Tests**). O que está em **Pre-request** roda antes de enviar.
+> **Já tem uma coleção das semanas anteriores?** Pode reaproveitar, desde que
+> confira quatro coisas: (1) os nomes das variáveis são os da tabela do 5.1
+> (`baseUrl`, `token`, `idTreino`…), sem URL ou UUID escrito à mão; (2) a
+> coleção tem **Bearer `{{token}}`** e cada requisição está em **Inherit auth
+> from parent** (register e login em **No Auth**), sem token colado à mão; (3) o
+> login tem o script do 5.3 em **After response**; (4) register e login usam o
+> `postman.s8@teste.com`, nunca o seu usuário real (o 5.4 apaga a semana). As
+> requisições que faltarem (por exemplo as do Passo 17) entram na mesma coleção.
+
+> **Onde vão os scripts:** na **requisição** (não na coleção), aba **Scripts**,
+> logo abaixo da URL. Ela tem duas sub-abas, e o nome muda conforme a versão
+> do Postman:
+>
+> | Neste roteiro | Postman novo | Postman antigo | Quando roda |
+> |---|---|---|---|
+> | **Post-response** | **After response** | aba **Tests** | depois que a resposta chega |
+> | **Pre-request** | **Before request** | aba **Pre-request Script** | antes de enviar |
+>
+> Os `pm.test(...)` aparecem na resposta, na aba **Test Results**. Os
+> `pm.environment.set(...)` só gravam se o ambiente `TCC local` estiver
+> selecionado no canto superior direito. Para conferir, use o ícone de olho ao
+> lado dele.
 
 ### 5.3 — Registrar e logar
 
