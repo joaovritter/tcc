@@ -559,26 +559,17 @@ sozinhos. O mesmo ambiente serve pro Passo 17 (histórico) e pra S9.
 
 ### 5.2 — Coleção `TCC — S8` com auth herdada
 
-- [ ] **Collections** → **+** → `TCC — S8`. Na coleção (não na requisição), aba
+- [x] **Collections** → **+** → `TCC — S8`. Na coleção (não na requisição), aba
   **Authorization** → Type **Bearer Token** → Token `{{token}}`. Toda
   requisição criada dentro dela fica com **Auth Type: Inherit auth from parent**
   e manda `Authorization: Bearer <token>` sozinha.
-- [ ] Nas duas de autenticação (register e login), trocar pra **No Auth**.
-- [ ] Body sempre em **raw → JSON**: com isso o Postman já põe o
+- [x] Nas duas de autenticação (register e login), trocar pra **No Auth**.
+- [x] Body sempre em **raw → JSON**: com isso o Postman já põe o
   `Content-Type: application/json`, que é o que o `express.json()` exige. Body
   em `form-data` chega vazio no controller e tudo vira 400.
-- [ ] ⚠️ **Usar um usuário só pro Postman** (`postman.s8@teste.com`). O `PUT
+- [x] ⚠️ **Usar um usuário só pro Postman** (`postman.s8@teste.com`). O `PUT
   /divisions` do 5.4 **substitui a semana inteira** (padrão apaga-e-reinsere da
   S3) — rodar ele com o seu usuário de uso real apaga a sua rotina.
-
-> **Já tem uma coleção das semanas anteriores?** Pode reaproveitar, desde que
-> confira quatro coisas: (1) os nomes das variáveis são os da tabela do 5.1
-> (`baseUrl`, `token`, `idTreino`…), sem URL ou UUID escrito à mão; (2) a
-> coleção tem **Bearer `{{token}}`** e cada requisição está em **Inherit auth
-> from parent** (register e login em **No Auth**), sem token colado à mão; (3) o
-> login tem o script do 5.3 em **After response**; (4) register e login usam o
-> `postman.s8@teste.com`, nunca o seu usuário real (o 5.4 apaga a semana). As
-> requisições que faltarem (por exemplo as do Passo 17) entram na mesma coleção.
 
 > **Onde vão os scripts:** na **requisição** (não na coleção), aba **Scripts**,
 > logo abaixo da URL. Ela tem duas sub-abas, e o nome muda conforme a versão
@@ -596,10 +587,10 @@ sozinhos. O mesmo ambiente serve pro Passo 17 (histórico) e pra S9.
 
 ### 5.3 — Registrar e logar
 
-- [ ] **`GET {{baseUrl}}/health`** (No Auth) → `200 { "status": "ok" }`. Se der
+- [x] **`GET {{baseUrl}}/health`** (No Auth) → `200 { "status": "ok" }`. Se der
   `ECONNREFUSED`, o `npm run dev` do server não está de pé.
 
-- [ ] **`POST {{baseUrl}}/auth/register`** (No Auth)
+- [x] **`POST {{baseUrl}}/auth/register`** (No Auth)
 
 ```json
 {
@@ -613,7 +604,7 @@ Esperado: `201` com `{ "usuario": { "id_usuario": "...", "nome": "Postman S8", "
 Da segunda vez em diante: `400 { "erro": "Email ja cadastrao" }` — normal, é só
 pular pro login.
 
-- [ ] **`POST {{baseUrl}}/auth/login`** (No Auth)
+- [x] **`POST {{baseUrl}}/auth/login`** (No Auth)
 
 ```json
 {
@@ -634,7 +625,7 @@ ambiente (ícone do olho) que `token` foi preenchido.
 
 ### 5.4 — Divisão de hoje
 
-- [ ] **`PUT {{baseUrl}}/divisions`**
+- [x] **`PUT {{baseUrl}}/divisions`**
 
 Pre-request (calcula o dia de hoje do mesmo jeito que o backend: `getDay()`,
 domingo = 0):
@@ -668,7 +659,7 @@ Esperado: `200 { "divisoes": [ { "id_divisao": "…", "fk_usuario": "…", "dia_
 
 ### 5.5 — Escolher o exercício
 
-- [ ] **`GET {{baseUrl}}/exercises?grupamento=1`** (1 = Peito no seed; sem o
+- [x] **`GET {{baseUrl}}/exercises?grupamento=1`** (1 = Peito no seed; sem o
   `?grupamento` vem o catálogo inteiro)
 
 Post-response:
@@ -684,7 +675,7 @@ Não assumir que o id é 1 — o script procura pelo nome.
 
 ### 5.6 — Pôr o exercício na divisão
 
-- [ ] **`PUT {{baseUrl}}/divisions/{{idDivisao}}/exercises`**
+- [x] **`PUT {{baseUrl}}/divisions/{{idDivisao}}/exercises`**
 
 ```json
 {
@@ -698,7 +689,7 @@ Esperado: `200 { "exercicios": [ { "id_divisao_exercicio": …, "fk_exercicio": 
 
 ### 5.7 — Começar o treino
 
-- [ ] **`POST {{baseUrl}}/sessions/start`** — **sem body** (aba Body em
+- [x] **`POST {{baseUrl}}/sessions/start`** — **sem body** (aba Body em
   *none*).
 
 Post-response:
@@ -714,7 +705,7 @@ Mandar de novo com o treino aberto devolve `200` com **o mesmo** `id_treino`
 
 ### 5.8 — Registrar séries (4 bodies, um de cada caso)
 
-- [ ] **`POST {{baseUrl}}/sessions/{{idTreino}}/sets`** — mandar os quatro
+- [x] **`POST {{baseUrl}}/sessions/{{idTreino}}/sets`** — mandar os quatro
   bodies abaixo, um de cada vez, **nesta ordem**. Os números do Passo 5.11
   dependem deles.
 
@@ -758,7 +749,7 @@ Esperado (a última): `201 { "serie": { "id_serie": 57, "fk_treino": "…", "fk_
 — `carga` volta **string** (`NUMERIC` no driver `pg`) e o `rir: 2` foi o
 backend que converteu do `rpe: 8`.
 
-- [ ] Casos negativos (devem dar **400** e **não** gravar nada):
+- [x] Casos negativos (devem dar **400** e **não** gravar nada):
 
 | Body | Resposta |
 |---|---|
@@ -769,7 +760,7 @@ backend que converteu do `rpe: 8`.
 
 ### 5.9 — Tentar diagnosticar o treino aberto (valida a correção do Passo 1)
 
-- [ ] **`POST {{baseUrl}}/sessions/{{idTreino}}/diagnostics/generate`** — sem
+- [x] **`POST {{baseUrl}}/sessions/{{idTreino}}/diagnostics/generate`** — sem
   body.
 
 Esperado: `409 { "erro": "Finalize o treino antes de gerar o diagnóstico" }`.
@@ -778,7 +769,7 @@ recarregou).
 
 ### 5.10 — Finalizar
 
-- [ ] **`POST {{baseUrl}}/sessions/{{idTreino}}/finish`** — sem body (D12: a
+- [x] **`POST {{baseUrl}}/sessions/{{idTreino}}/finish`** — sem body (D12: a
   duração é o servidor que calcula).
 
 ```js
@@ -795,7 +786,7 @@ Mandar de novo: `409 { "erro": "Treino já foi finalizado" }`.
 
 ### 5.11 — Gerar o diagnóstico
 
-- [ ] **`POST {{baseUrl}}/sessions/{{idTreino}}/diagnostics/generate`** — sem
+- [x] **`POST {{baseUrl}}/sessions/{{idTreino}}/diagnostics/generate`** — sem
   body, agora com o treino finalizado.
 
 Post-response:
@@ -847,7 +838,7 @@ está ligado):
 
 (`analise_grupamentos` vem com os 7 grupamentos — cortado acima.)
 
-- [ ] **Conferir a conta na mão** — é isso que a matriz chama de "resultado
+- [x] **Conferir a conta na mão** — é isso que a matriz chama de "resultado
   igual ao cálculo manual":
   - Só as 2 séries `work` contam (aquecimento e feeder ficam de fora).
   - `Pi` = média de `((rpe − 6) / 3) × 100` → RPE 9 = 100, RPE 8 = 66,67 →
@@ -861,7 +852,7 @@ está ligado):
 
 ### 5.12 — Ler o diagnóstico atual
 
-- [ ] **`GET {{baseUrl}}/diagnostics/latest`**
+- [x] **`GET {{baseUrl}}/diagnostics/latest`**
 
 ```js
 pm.test('latest 200', () => pm.response.to.have.status(200));
@@ -874,18 +865,18 @@ Esperado: o mesmo objeto do 5.11 + `"data_treino": "2026-09-23T21:58:02.114Z"`.
 
 ### 5.13 — Casos negativos do diagnóstico
 
-- [ ] Sem token: na requisição, aba Authorization → **No Auth** → `401 {
+- [x] Sem token: na requisição, aba Authorization → **No Auth** → `401 {
   "erro": "Token nao informado" }`.
-- [ ] Treino inexistente: `POST
+- [x] Treino inexistente: `POST
   {{baseUrl}}/sessions/00000000-0000-0000-0000-000000000000/diagnostics/generate`
   → `404 { "erro": "Treino não encontrado" }`.
-- [ ] Treino de **outro** usuário: registrar/logar um segundo usuário, copiar o
+- [x] Treino de **outro** usuário: registrar/logar um segundo usuário, copiar o
   token dele e mandar com o `{{idTreino}}` do primeiro → `404` (não `403`: não
   confirma nem que o treino existe).
-- [ ] Treino finalizado **sem série `work`**: `POST /sessions/start` → só um
+- [x] Treino finalizado **sem série `work`**: `POST /sessions/start` → só um
   aquecimento → `finish` → `generate` → `400 { "erro": "Nenhuma série válida
   registrada nesta sessão ainda" }`.
-- [ ] Id que nem é UUID (valida a correção do Passo 2): `POST
+- [x] Id que nem é UUID (valida a correção do Passo 2): `POST
   {{baseUrl}}/sessions/abc/diagnostics/generate` e `POST
   {{baseUrl}}/sessions/abc/finish` → `404 { "erro": "Recurso não encontrado" }`.
   Antes do Passo 2 isso dava **500**. Sem token, continua `401` (o `autenticar`
