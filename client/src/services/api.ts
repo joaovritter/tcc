@@ -225,3 +225,38 @@ export interface VolumeSemanal {
 export function buscarVolumeSemanal() {
     return apiFetch('/metrics/weekly-volume') as Promise<{ volume: VolumeSemanal }>;
 }
+
+
+
+
+//============================diagnostico (RF05/RF06)===========================
+
+export interface DiagnosticoConteudo {
+    diagnostico_exercicios: { nome_exercicio: string; comentario: string }[];
+    analise_grupamentos: { nome_grupamento: string; comentario: string }[];
+    recomendacoes_proxima_sessao: string[];
+    score_detalhe: { pv: number; pi: number }; //sub-notas do scoreService (D13), nao da IA
+}
+
+export interface DiagnosticoIA {
+    id_diagnostico: string;
+    fk_treino: string;
+    score_geral: number; //0-100, calculado no backend - a tela so desenha
+    data_geracao: string;
+    conteudo_json: DiagnosticoConteudo;
+}
+
+export interface DiagnosticoComTreino extends DiagnosticoIA {
+    data_treino: string; //quando a pessoa treinou (JOIN Treino)
+}
+
+//so funciona com treino finalizado - aberto volta 409
+export function gerarDiagnostico(idTreino: string) {
+    return apiFetch(`/sessions/${idTreino}/diagnostics/generate`, {
+        method: 'POST',
+    }) as Promise<{ diagnostico: DiagnosticoIA }>;
+}
+
+export function buscarDiagnosticoAtual() {
+    return apiFetch('/diagnostics/latest') as Promise<{ diagnostico: DiagnosticoComTreino }>;
+}

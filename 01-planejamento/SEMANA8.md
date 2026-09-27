@@ -893,7 +893,7 @@ Postman todo passando.
 
 ### Passo 6 — `client/src/services/api.ts`
 
-- [ ] O `ApiErro` já existe desde o Passo 3 (Parte 1) — aqui entram só os tipos
+- [x] O `ApiErro` já existe desde o Passo 3 (Parte 1) — aqui entram só os tipos
   e as funções do diagnóstico, no fim do arquivo. Espelho dos tipos do backend.
   `score_detalhe` fica dentro de `conteudo_json`, igual está gravado no JSONB.
 
@@ -933,15 +933,15 @@ export function buscarDiagnosticoAtual() {
 
 ### Passo 7 — `client/src/components/DiagnosticContent.tsx` (novo)
 
-- [ ] Componente separado da view porque ele aparece **duas vezes**: na tela
+- [x] Componente separado da view porque ele aparece **duas vezes**: na tela
   "Diagnóstico" (o atual) e no detalhe de cada sessão do calendário do
   histórico (`SessionDetail`, Passo 20). Escrever uma vez só.
-- [ ] O `corDoScore` é **exportado**: o calendário (Passo 20) pinta o ponto do
+- [x] O `corDoScore` é **exportado**: o calendário (Passo 20) pinta o ponto do
   dia e o selo do card com a mesma faixa do círculo. Uma fonte só.
-- [ ] O círculo é um `CircularProgress` determinado (0–100) sobre outro cinza de
+- [x] O círculo é um `CircularProgress` determinado (0–100) sobre outro cinza de
   fundo, com o número no meio — o "score visual" do critério de aceite, sem
   biblioteca nova.
-- [ ] A cor por faixa (≥70 verde, ≥40 amarelo, abaixo vermelho) é
+- [x] A cor por faixa (≥70 verde, ≥40 amarelo, abaixo vermelho) é
   **apresentação**, não métrica: o número já veio pronto do `scoreService`. O
   `Math.round` do Pv/Pi também é só formatação — o JSONB guarda o valor cheio.
 
@@ -1051,12 +1051,12 @@ export function DiagnosticContent({ diagnostico }: { diagnostico: DiagnosticoIA 
 
 ### Passo 8 — `client/src/views/DiagnosticView.tsx` (novo)
 
-- [ ] Carrega o `GET /diagnostics/latest` ao abrir. **404 não é erro** — é o
+- [x] Carrega o `GET /diagnostics/latest` ao abrir. **404 não é erro** — é o
   estado "ainda não gerou nenhum", com instrução de como gerar.
-- [ ] Mostra de qual sessão é (`data_treino`) e quando foi gerado
+- [x] Mostra de qual sessão é (`data_treino`) e quando foi gerado
   (`data_geracao`) — são coisas diferentes quando o diagnóstico é refeito dias
   depois pelo histórico.
-- [ ] Datas com `new Date(...).toLocaleString('pt-BR')`: o timestamp vem em UTC
+- [x] Datas com `new Date(...).toLocaleString('pt-BR')`: o timestamp vem em UTC
   (`…Z`), e o `new Date` é o que converte pro fuso local. Cortar a string
   (`slice(0, 10)`) mostraria o dia **seguinte** pra treino depois das 21h.
 
@@ -1138,20 +1138,20 @@ export function DiagnosticView() {
 
 ### Passo 9 — `client/src/views/TodaySessionView.tsx`: botão "Finalizar e avaliar treino" (D16)
 
-- [ ] O botão "Finalizar treino" da S6 vira **"Finalizar e avaliar treino"**.
+- [x] O botão "Finalizar treino" da S6 vira **"Finalizar e avaliar treino"**.
   Continua com o toque duplo de confirmação da S6 (o primeiro toque só arma; o
   segundo, "Confirmar: encerrar e avaliar", executa).
-- [ ] Por baixo, **duas chamadas em sequência**: `finalizarTreino` e, só se ela
+- [x] Por baixo, **duas chamadas em sequência**: `finalizarTreino` e, só se ela
   der certo (ou der 409 = já estava finalizado), `gerarDiagnostico`. Se o finish
   falhar por outro motivo, **não** chama a IA: o backend recusaria com 409
   mesmo (Passo 1).
-- [ ] Depois do finish, o `GET /sessions/today` não devolve mais o treino
+- [x] Depois do finish, o `GET /sessions/today` não devolve mais o treino
   (`completed = true`), então a tela perde o `id_treino`. Por isso ele é
   guardado numa variável **antes** da primeira chamada e passado adiante.
-- [ ] Enquanto roda, um bloco de status mostra a etapa ("Salvando o treino…" →
+- [x] Enquanto roda, um bloco de status mostra a etapa ("Salvando o treino…" →
   "Analisando a sessão com a IA…") — com a chave real, a segunda etapa leva
   alguns segundos e a tela não pode parecer travada.
-- [ ] Resultados possíveis da segunda chamada:
+- [x] Resultados possíveis da segunda chamada:
   - **201** → leva a pessoa pra aba "Diagnóstico" (callback `onVerDiagnostico`,
     que o `App` injeta no Passo 10).
   - **400** (sessão sem série válida) → mensagem "treino salvo, sem séries
@@ -1159,11 +1159,11 @@ export function DiagnosticView() {
   - **502/rede** (IA fora) → mensagem de erro + botão **"Tentar avaliar de
     novo"**, que refaz **só** o `gerarDiagnostico`. O treino já está fechado
     (RNF06).
-- [ ] Se a pessoa sair da tela antes de tentar de novo, o estado se perde — sem
+- [x] Se a pessoa sair da tela antes de tentar de novo, o estado se perde — sem
   problema: o detalhe da sessão no calendário do histórico (Passo 20) tem o
   botão "Avaliar treino" para qualquer sessão finalizada, com série válida e sem
   diagnóstico.
-- [ ] Este passo **substitui a função `finalizar` inteira**, inclusive o `catch`
+- [x] Este passo **substitui a função `finalizar` inteira**, inclusive o `catch`
   que o Passo 3 corrigiu (a lógica do 409 por status continua, agora dentro da
   função nova).
 
@@ -1285,7 +1285,7 @@ some:
         )}
 ```
 
-- [ ] No botão "Começar treino", acrescentar `disabled={etapa !== null}` — sem
+- [x] No botão "Começar treino", acrescentar `disabled={etapa !== null}` — sem
   isso dá pra abrir um treino novo enquanto a IA ainda avalia o anterior.
 
 O botão do fim da lista (o da S6) fica assim:
@@ -1309,7 +1309,7 @@ O botão do fim da lista (o da S6) fica assim:
 
 ### Passo 10 — `App.tsx` + `Sidebar.tsx`: tela "diagnostico"
 
-- [ ] `Tela` ganha `'diagnostico'`. O mapa de telas sai de constante de módulo
+- [x] `Tela` ganha `'diagnostico'`. O mapa de telas sai de constante de módulo
   pra dentro do `App`, porque o `TodaySessionView` agora precisa do `setTela`
   (D7: navegação continua por estado, sem router).
 
@@ -1377,13 +1377,13 @@ const NAV_ITEMS: NavItem[] = [
 ];
 ```
 
-- [ ] Testar pela interface (com `GEMINI_MOCK=true`): Treino de hoje → começar →
+- [x] Testar pela interface (com `GEMINI_MOCK=true`): Treino de hoje → começar →
   2 séries válidas → "Finalizar e avaliar treino" → "Confirmar: encerrar e
   avaliar" → aparece "Salvando…" e depois "Analisando…" → cai na aba Diagnóstico
   com o círculo e os três blocos de texto.
-- [ ] Sessão sem série válida (só aquecimento) → mesmo botão → mensagem "Treino
+- [x] Sessão sem série válida (só aquecimento) → mesmo botão → mensagem "Treino
   salvo. Sem séries válidas…", sem botão de nova tentativa.
-- [ ] Forçar o 502 uma vez: `GEMINI_MOCK=false` e `GEMINI_API_KEY=invalida` no
+- [x] Forçar o 502 uma vez: `GEMINI_MOCK=false` e `GEMINI_API_KEY=invalida` no
   `.env`, reiniciar o server, finalizar e avaliar → "Treino salvo, mas a
   avaliação falhou…" + botão "Tentar avaliar de novo". O treino **continua
   finalizado** no volume (RNF06). Voltar o `.env`, reiniciar o server, tocar em
@@ -1395,24 +1395,24 @@ const NAV_ITEMS: NavItem[] = [
 
 ### Passo 11 — `server/src/types/indexTypes.ts` (acrescentar no fim)
 
-- [ ] O volume histórico **não** ganha tipo novo: cada semana é um
+- [x] O volume histórico **não** ganha tipo novo: cada semana é um
   `VolumeSemanal`, o mesmo formato do `GET /metrics/weekly-volume`. A tela
   reaproveita a leitura, e o teste compara os dois direto (Passo 18).
-- [ ] `SessaoHistorico` ganha o campo `dia` (`'YYYY-MM-DD'`, vindo do
+- [x] `SessaoHistorico` ganha o campo `dia` (`'YYYY-MM-DD'`, vindo do
   `to_char` no banco). É ele que posiciona a sessão no calendário (D18). A
   `data` (timestamp) continua existindo, só para mostrar a hora.
-- [ ] `SessoesDoMes` é a resposta do calendário: as sessões do mês +
+- [x] `SessoesDoMes` é a resposta do calendário: as sessões do mês +
   `primeira_sessao` (o dia do treino finalizado mais antigo), que trava a seta
   ‹ no mês em que tudo começou.
-- [ ] `ResumoSeriesValidas` é a D17 ampliada: carga máxima, reps dessa carga,
+- [x] `ResumoSeriesValidas` é a D17 ampliada: carga máxima, reps dessa carga,
   séries válidas e tonelagem. **Um tipo só** para o ponto do gráfico
   (`PontoProgressaoCarga` estende ele) e para o resumo de cada exercício no
   detalhe. São os mesmos números, então é o mesmo tipo.
-- [ ] `ExercicioDaSessao.resumo` é `null` quando o exercício só teve
+- [x] `ExercicioDaSessao.resumo` é `null` quando o exercício só teve
   preparação (aquecimento/feeder): não existe "carga máxima válida" de nada.
-- [ ] `DetalheSessao` é a resposta do `GET /history/sessions/:id`: a sessão,
+- [x] `DetalheSessao` é a resposta do `GET /history/sessions/:id`: a sessão,
   os exercícios com as séries e o diagnóstico mais novo (ou `null`).
-- [ ] Os campos numéricos saem da query com `::float`/`::int`. Sem isso, o
+- [x] Os campos numéricos saem da query com `::float`/`::int`. Sem isso, o
   `NUMERIC` volta como string (`"80"`), a mesma armadilha do `COUNT` na S6.
 
 Código completo do bloco (colar no fim do arquivo):

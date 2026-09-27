@@ -23,7 +23,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Minha divisão', icon: <CalendarViewWeekIcon fontSize="small" />, tela: 'divisao' },
   { label: 'Treino de hoje', icon: <FitnessCenterIcon fontSize="small" />, tela: 'treino' },
   { label: 'Volume da semana', icon: <BarChartIcon fontSize="small" />, tela: 'volume' },
-  { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" /> },
+  { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" />, tela: 'diagnostico' },
   { label: 'Histórico', icon: <TimelineIcon fontSize="small" /> },
 ];
 

@@ -195,3 +195,71 @@ export interface DiagnosticoComTreino extends DiagnosticoIA {
     data_treino: string;
 }
 
+
+
+
+//============== histórico (RF07) =====================================
+
+//uma sessao finalizada (D18) com o resumo do que aconteceu nela
+export interface SessaoHistorico {
+    id_treino: string;
+    data: string; // timestamp - a tela usa so pra mostrar a hora
+    dia: string; // 'YYYY-MM-DD' (to_char no banco) - posiciona a sessao no calendario
+    duracao_total: number | null;
+    nome_divisao: string | null; // fk_divisao é nullable no schema
+    series_validas: number; // COUNT(...)::int
+    id_diagnostico: string | null; // o mais recente da sessao (D14); null se nunca gerou
+    score_geral: number | null;
+}
+
+//resposta do calendario: GET /history/sessions?mes=AAAA-MM (D18)
+export interface SessoesDoMes {
+    primeira_sessao: string | null; // 'YYYY-MM-DD' do treino finalizado mais antigo; null se nunca finalizou
+    sessoes: SessaoHistorico[];
+}
+
+//exercicios com pelo menos uma serie work - popula o seletor da aba Cargas
+export interface ExercicioTreinado {
+    id_exercicio: number;
+    nome_exercicio: string;
+    nome_grupamento: string;
+}
+
+//D17: o resumo das series work de UM exercicio em UMA sessao.
+//mesmo tipo no grafico de progressao e no detalhe da sessao - sao os mesmos numeros
+export interface ResumoSeriesValidas {
+    series_validas: number;
+    carga_maxima: number; // ::float na query - NUMERIC voltaria string
+    reps_carga_maxima: number; // reps da serie mais pesada (empate de carga: a de mais reps)
+    tonelagem: number; // soma de carga x reps. NAO e "volume" - volume e contagem de series (RF04)
+}
+
+//um ponto do grafico de progressao: uma sessao (D17)
+export interface PontoProgressaoCarga extends ResumoSeriesValidas {
+    id_treino: string;
+    data: string;
+}
+
+//uma serie como aparece no detalhe - valida ou de preparacao
+export interface SerieDaSessao {
+    id_serie: number;
+    tipo: TipoSerie;
+    carga: number;
+    repeticoes: number;
+    rir: number | null; // null em aquecimento/feeder (D9)
+}
+
+export interface ExercicioDaSessao {
+    id_exercicio: number;
+    nome_exercicio: string;
+    nome_grupamento: string;
+    resumo: ResumoSeriesValidas | null; // null = o exercicio so teve preparacao
+    series: SerieDaSessao[]; // na ordem em que foram registradas
+}
+
+//resposta do GET /history/sessions/:id - o que abre ao tocar no treino do dia
+export interface DetalheSessao {
+    sessao: SessaoHistorico;
+    exercicios: ExercicioDaSessao[];
+    diagnostico: DiagnosticoIA | null; // o mais novo da sessao (D14)
+}

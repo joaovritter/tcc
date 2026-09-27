@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
   Card, CardContent, Typography, TextField, Button, Stack, Chip,
-  IconButton, MenuItem, Divider, ToggleButton, ToggleButtonGroup,
+  IconButton, MenuItem, Divider, ToggleButton, ToggleButtonGroup, CircularProgress,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import InsightsIcon from '@mui/icons-material/Insights';
 import * as api from '../services/api';
 import { FeedbackAlert } from '../components/FeedbackAlert';
 
@@ -44,7 +45,7 @@ const RASCUNHO_VAZIO: Rascunho = {
   nota: '',
 };
 
-export function TodaySessionView() {
+export function TodaySessionView({ onVerDiagnostico }: { onVerDiagnostico: () => void }) {
   const [hoje, setHoje] = useState<api.TreinoDeHoje | null>(null);
   const [rascunhos, setRascunhos] = useState<Record<number, Rascunho>>({});
   const [modoNota, setModoNota] = useState<'rir' | 'rpe'>(lerModoNotaSalvo);
@@ -52,6 +53,8 @@ export function TodaySessionView() {
   const [confirmandoFim, setConfirmandoFim] = useState(false);
   const [erro, setErro] = useState('');
   const [sucesso, setSucesso] = useState('');
+  const [etapa, setEtapa] = useState<'finalizando' | 'avaliando' | null>(null); //mostra o que esta acontecendo e trava cliques repetidos
+  const [pendenteAvaliacao, setPendenteAvaliacao] = useState<string | null>(null);//treino fechado que avaliacao falhou (502), e o id que o "Tentar avaliar de novo" usa
 
   async function recarregar() {
     const { hoje } = await api.buscarTreinoDeHoje();
@@ -137,10 +140,9 @@ export function TodaySessionView() {
     }
   }
 
-  //depois do finish o GET /sessions/today
-  //nao devolve mais esse treino (so traz completed = false), entao a tela volta
-  //sozinha pro botao "Comecar treino"
-  async function finalizar() {
+  //D16: um botao, duas chamadas em sequencia. o finish grava e fecha o treino
+  //ANTES de a IA ser chamada - se o Gemini falhar, nada do treino se perde (RNF06)
+  async function finalizarEAvaliar() {
     if (!hoje?.treino) return;
 
     if (!confirmandoFim) {
@@ -148,19 +150,52 @@ export function TodaySessionView() {
       return;
     }
 
+    //guarda o id antes: depois do finish o GET /sessions/today nao devolve mais o treino
+    const idTreino = hoje.treino.id_treino;
     setErro('');
+    setSucesso('');
+    setConfirmandoFim(false);
+
+    //1a chamada: fechar o treino
+    setEtapa('finalizando');
     try {
-      const { treino } = await api.finalizarTreino(hoje.treino.id_treino);
+      const { treino } = await api.finalizarTreino(idTreino);
       setSucesso(`Treino finalizado — ${treino.duracao_total} min registrados.`);
     } catch (erro) {
-      //409 do backend: ja estava finalizado (dois toques rapidos, ou outro
-      //aparelho). o estado desejado foi alcancado
+      //409 = ja estava finalizado (toque duplo, outro aparelho): segue pra avaliacao
       if (!(erro instanceof api.ApiErro && erro.status === 409)) {
         setErro(erro instanceof Error ? erro.message : 'Erro ao finalizar treino');
+        setEtapa(null);
+        return; //sem finish nao tem avaliacao - o backend recusaria com 409
+      }
+    }
+    await recarregar(); //a tela volta pro "Comecar treino"
+
+    //2a chamada: avaliar
+    await avaliar(idTreino);
+  }
+
+  //separada do finish: e ela que o "Tentar avaliar de novo" chama sozinha
+  async function avaliar(idTreino: string) {
+    setErro('');
+    setEtapa('avaliando');
+    try {
+      await api.gerarDiagnostico(idTreino);
+      setPendenteAvaliacao(null);
+      onVerDiagnostico();
+    } catch (erro) {
+      if (erro instanceof api.ApiErro && erro.status === 400) {
+        //sem serie valida: treino salvo, nada a avaliar - nao oferece nova tentativa
+        setSucesso('Treino salvo. Sem séries válidas nesta sessão, então não há o que avaliar.');
+        setPendenteAvaliacao(null);
+      } else {
+        //502 (IA fora) ou rede: o treino ja esta fechado, so a avaliacao ficou pra tras
+        const mensagem = erro instanceof Error ? erro.message : 'erro desconhecido';
+        setErro(`Treino salvo, mas a avaliação falhou: ${mensagem}`);
+        setPendenteAvaliacao(idTreino);
       }
     } finally {
-      setConfirmandoFim(false);
-      await recarregar();
+      setEtapa(null);
     }
   }
 
@@ -197,8 +232,41 @@ export function TodaySessionView() {
         <FeedbackAlert erro={erro} />
         <FeedbackAlert sucesso={sucesso} />
 
+        {etapa && (
+          <Stack
+            direction="row"
+            spacing={1.5}
+            alignItems="center"
+            sx={{ mt: 2, p: 2, borderRadius: 3, bgcolor: 'action.hover' }}
+          >
+            <CircularProgress size={20} />
+            <Typography>
+              {etapa === 'finalizando' ? 'Salvando o treino…' : 'Analisando a sessão com a IA…'}
+            </Typography>
+          </Stack>
+        )}
+
+        {pendenteAvaliacao && !etapa && (
+          <Button
+            variant="contained"
+            fullWidth
+            startIcon={<InsightsIcon />}
+            onClick={() => avaliar(pendenteAvaliacao)}
+            sx={{ mt: 2 }}
+          >
+            Tentar avaliar de novo
+          </Button>
+        )}
+
         {!hoje.treino ? (
-          <Button variant="contained" size="large" fullWidth onClick={comecar} sx={{ mt: 2 }}>
+          <Button
+            variant="contained"
+            size="large"
+            fullWidth
+            onClick={comecar}
+            disabled={etapa !== null}
+            sx={{ mt: 2 }}
+          >
             Começar treino
           </Button>
         ) : (
@@ -331,10 +399,11 @@ export function TodaySessionView() {
               size="large"
               fullWidth
               startIcon={<CheckCircleIcon />}
-              onClick={finalizar}
+              onClick={finalizarEAvaliar}
               onBlur={() => setConfirmandoFim(false)}
+              disabled={etapa !== null}
             >
-              {confirmandoFim ? 'Confirmar: encerrar o treino' : 'Finalizar treino'}
+              {confirmandoFim ? 'Confirmar: encerrar e avaliar' : 'Finalizar e avaliar treino'}
             </Button>
           </Stack>
         )}
