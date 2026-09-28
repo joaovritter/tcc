@@ -2226,14 +2226,14 @@ Esperado:
 }
 ```
 
-- [ ] Conta à mão da primeira: `70×10 + 70×9 = 700 + 630 = 1330`.
-- [ ] A sessão só de aquecimento do 17.4 **não** vira ponto, e o aquecimento
+- [x] Conta à mão da primeira: `70×10 + 70×9 = 700 + 630 = 1330`.
+- [x] A sessão só de aquecimento do 17.4 **não** vira ponto, e o aquecimento
   de 40 kg e o feeder de 60 kg de hoje não mexem no máximo. Para ver a D17 de
   verdade, registre num treino aberto um **aquecimento de 100 kg** e confira
   que o ponto de hoje continua 80.
-- [ ] O último ponto tem que ser **idêntico** ao `resumo` do 17.4 (tirando
+- [x] O último ponto tem que ser **idêntico** ao `resumo` do 17.4 (tirando
   `id_treino` e `data`). É a mesma subconsulta (`RESUMO_SERIES_WORK`).
-- [ ] Negativos: `…/history/exercises/abc/load-progression` → `400 { "erro":
+- [x] Negativos: `…/history/exercises/abc/load-progression` → `400 { "erro":
   "id do exercicio invalido" }`; `…/history/exercises/999/load-progression` →
   `200 { "progressao": [] }`.
 
@@ -2268,10 +2268,10 @@ Esperado (cortado; são 8 semanas × 7 grupamentos):
 }
 ```
 
-- [ ] `semana_referencia` é sempre **segunda-feira** (D10), em texto
+- [x] `semana_referencia` é sempre **segunda-feira** (D10), em texto
   `YYYY-MM-DD`, nunca com `T…Z`. (O calendário começa no domingo, mas isso é
   só a grade visual. A semana do volume continua de segunda a domingo.)
-- [ ] Variações do parâmetro:
+- [x] Variações do parâmetro:
 
 | URL | Resposta |
 |---|---|
@@ -2281,24 +2281,24 @@ Esperado (cortado; são 8 semanas × 7 grupamentos):
 | `{{baseUrl}}/history/weekly-volume?semanas=27` | `400` |
 | `{{baseUrl}}/history/weekly-volume?semanas=abc` | `400` |
 
-- [ ] Compare o `historico[0]` com o `volume` de `GET
+- [x] Compare o `historico[0]` com o `volume` de `GET
   {{baseUrl}}/metrics/weekly-volume`: têm que ser **idênticos**, campo a campo.
 
 ### 17.8 — D14 na prática (diagnóstico refeito)
 
-- [ ] `POST {{baseUrl}}/sessions/{{idSessaoHoje}}/diagnostics/generate` de novo
+- [x] `POST {{baseUrl}}/sessions/{{idSessaoHoje}}/diagnostics/generate` de novo
   (atenção: o `{{idTreino}}` agora é o da sessão só de aquecimento, por isso o
   id vem do `idSessaoHoje` que o 17.2 guardou).
-- [ ] `GET {{baseUrl}}/history/sessions?mes={{mesAtual}}`: a sessão de hoje
+- [x] `GET {{baseUrl}}/history/sessions?mes={{mesAtual}}`: a sessão de hoje
   aparece **uma vez só** (o `LATERAL … LIMIT 1` não duplica), com o
   `id_diagnostico` do **novo**.
-- [ ] `GET {{baseUrl}}/history/sessions/{{idSessaoHoje}}`: o `diagnostico` é o
+- [x] `GET {{baseUrl}}/history/sessions/{{idSessaoHoje}}`: o `diagnostico` é o
   novo. O antigo continua gravado no banco (`SELECT COUNT(*) FROM DiagnosticoIA
   WHERE fk_treino = '…'` → 2), só não é o que a tela mostra.
 
 ### 17.9 — Isolamento entre usuários
 
-- [ ] Registre e logue um segundo usuário (`postman.outro@teste.com`). Com o
+- [x] Registre e logue um segundo usuário (`postman.outro@teste.com`). Com o
   token dele:
   - `GET …/history/sessions` → `200 { "primeira_sessao": null, "sessoes": [] }`
   - `GET …/history/sessions/{{idSessaoHoje}}` → `404` (a sessão existe, mas
@@ -2310,7 +2310,7 @@ Esperado (cortado; são 8 semanas × 7 grupamentos):
 
 ### 17.10 — Conferir no banco (cálculo manual)
 
-- [ ] Pegue o UUID do usuário com `GET {{baseUrl}}/me` e confira a progressão
+- [x] Pegue o UUID do usuário com `GET {{baseUrl}}/me` e confira a progressão
   inteira, com a mesma conta do `RESUMO_SERIES_WORK`:
 
 ```sql
@@ -2334,21 +2334,21 @@ ORDER BY t.data;
 
 ### Passo 18 — `server/src/__tests__/history.test.ts` (novo)
 
-- [ ] Não mexe no `testHelpers.ts`: o `registrarComTreinoAberto` já dá usuário
+- [x] Não mexe no `testHelpers.ts`: o `registrarComTreinoAberto` já dá usuário
   novo + divisão de hoje + exercício + treino aberto. Cada teste cria o próprio
   usuário, então um não interfere no outro.
-- [ ] O helper `registrarSerie` local recebe `repeticoes` (padrão 8), porque os
+- [x] O helper `registrarSerie` local recebe `repeticoes` (padrão 8), porque os
   testes da D17 precisam de reps diferentes para testar o desempate e a
   tonelagem.
-- [ ] Os testes que mais valem são os de **duas consultas para a mesma regra**:
+- [x] Os testes que mais valem são os de **duas consultas para a mesma regra**:
   (1) semana atual do histórico == `/metrics/weekly-volume`; (2) ponto da
   progressão == resumo do detalhe. São eles que acusam quando uma consulta
   muda e a outra não.
-- [ ] O mês é testado **sem depender da data de hoje**: o teste pega o `dia`
+- [x] O mês é testado **sem depender da data de hoje**: o teste pega o `dia`
   que o próprio backend devolveu (`sessao.dia.slice(0, 7)`) e pede esse mês
   explicitamente. Nunca calcula o mês com `new Date()` no teste, porque perto
   da meia-noite do dia 1 o teste e o banco podem discordar.
-- [ ] São 16 testes. `npm run test` → **61/61** (45 da Parte 1 + 16 deste
+- [x] São 16 testes. `npm run test` → **61/61** (45 da Parte 1 + 16 deste
   arquivo), com `GEMINI_MOCK=true` (o teste de D14 gera diagnóstico).
 
 Código completo:
@@ -2661,7 +2661,7 @@ test('volume histórico: semanas fora de 1–26 retorna 400', async () => {
 });
 ```
 
-- [ ] `npm run test` → **61/61**.
+- [x] `npm run test` → **61/61**.
 
 ### Passo 19 — `client/src/services/api.ts` (acrescentar no fim)
 

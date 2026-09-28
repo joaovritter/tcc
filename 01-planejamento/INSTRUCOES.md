@@ -47,6 +47,101 @@ checkbox. Exemplo (ver SEMANA4.md):
 ### `server/src/controllers/exerciseController.ts`
 ```
 
+## Requisições no Postman (coleção `TCC`)
+
+A coleção `TCC` do Postman é **uma lista única, sem pastas, que roda inteira
+no Run collection**. Todo roteiro semanal que criar ou mudar requisição segue
+a numeração dessa coleção, e não a numeração dos Passos da semana. O Passo do
+roteiro diz onde a requisição entra na coleção.
+
+### Como cada requisição aparece no roteiro
+
+Toda requisição nova ou alterada no `SEMANAn.md` traz, nesta ordem:
+
+1. **Nome na coleção**, com o número da sequência (ex.: `25.1 - listar metas`).
+   Variações do mesmo endpoint (erros, parâmetros diferentes) usam subnúmero:
+   `20.1`, `20.2`, `20.3`… Quando a resposta esperada é erro, o status vai no
+   nome: `(400)`, `(404)`, `(409)`.
+2. **Posição**: depois de qual requisição ela entra (ex.: "entre o 19.3 e o
+   20.1") ou "no fim da coleção".
+3. **Método + URL** sempre com `{{baseUrl}}` e variáveis, nunca
+   `http://localhost:3000` nem UUID fixo.
+4. **Auth**: `Inherit` (padrão, usa o `{{token}}` da coleção), `No Auth`, ou
+   header `Authorization: Bearer {{tokenOutro}}` para o segundo usuário. Nunca
+   colar token fixo na aba Authorization da requisição.
+5. **Body** (raw → JSON), quando tiver.
+6. **Pre-request** (*Before request*), quando tiver.
+7. **Post-response** (*After response*) com `pm.test` de status e do conteúdo.
+   Toda requisição tem pelo menos o teste de status. Resposta de erro também
+   confere a mensagem (`pm.response.json().erro`).
+8. **Variáveis**: quais ela salva (`pm.environment.set`) e quais usa.
+9. **Resultado esperado**: status + JSON (pode ser cortado com `…`).
+
+### Regras para a coleção continuar rodando de uma vez
+
+- **Dependência só para trás**: uma requisição só usa variável salva por uma
+  requisição **anterior** na lista.
+- **Usuário novo a cada execução**: o `2 - register` gera
+  `postman.<timestamp>@teste.com` no pre-request, então a coleção nunca
+  depende de dado de uma execução passada e pode rodar quantas vezes quiser.
+- **Nada de SQL no fluxo**: o Run collection não roda `UPDATE` no banco.
+  Conferência no banco (ex.: `SELECT COUNT(*)`, voltar data de treino) vai no
+  roteiro como passo manual, **fora** da coleção.
+- **Todas as sessões são de hoje**: no runner não dá pra voltar a data. Os
+  valores esperados consideram as 3 sessões com série work na semana atual
+  (Peito = 6 séries válidas; `pv` = 20 na 1ª sessão e 60 na 3ª).
+- **Mexeu no fluxo, confere tudo**: requisição nova que cria treino ou série
+  muda contagens mais adiante (16.1, 13, 20.1, 22.2…). O roteiro precisa
+  dizer quais testes seguintes mudam e o novo valor.
+- **Fechar a semana**: o Run collection passa **100% verde** com o servidor
+  local (`GEMINI_MOCK=true`) e o ambiente `TCC local` selecionado.
+
+### Variáveis do ambiente `TCC local`
+
+| Variável | Quem salva | Observação |
+|---|---|---|
+| `baseUrl` | você | `http://localhost:3000` |
+| `emailTeste` | 2 (pre-request) | e-mail único da execução |
+| `token` | 3 | usuário principal |
+| `idExercicio` | 5.2 | Supino Reto com Barra |
+| `diaHoje`, `idDivisao` | 6.1 | |
+| `idTreino` | 8.1, 9.1, 10.1, 21.1 | **sempre o último treino iniciado** |
+| `idDiagnostico` | 8.5, 14, 22.1 | último diagnóstico gerado |
+| `volumeSemana` | 13 | JSON do volume, comparado no 20.1 |
+| `mesAtual` | 16.1 (pre-request) | `AAAA-MM` |
+| `idSessaoHoje` | 16.1 | sessão principal (80 kg, com série work) |
+| `idSessao75` | 16.1 | sessão de 75 kg (sem diagnóstico) |
+| `emailOutro`, `tokenOutro` | 24.1, 24.2 | segundo usuário (isolamento) |
+
+### Sequência atual da coleção (78 requisições, S8)
+
+| # | Requisições | O que cobre |
+|---|---|---|
+| 1–4 | health, register, login, me | servidor e usuário |
+| 5.1–5.2 | listar exercícios, exercícios do grupamento | catálogo |
+| 6.1–6.5 | salvar divisão de hoje, listar divisões, salvar/listar exercícios da divisão, resumo muscular | rotina |
+| 7 | treino de hoje | tela Hoje sem treino aberto |
+| 8.1–8.5 | sessão 70 kg: iniciar, 2 séries work, finalizar, gerar diagnóstico | dado de histórico |
+| 9.1–9.4 | sessão 75 kg: iniciar, 2 séries work, finalizar (sem diagnóstico) | dado de histórico |
+| 10.1–10.10 | sessão principal 80 kg: iniciar, iniciar de novo (D8), aquecimento, feeder, work RIR, work RPE, 4 séries inválidas (400) | registro de séries |
+| 11 | diagnóstico treino aberto (409) | guard do Passo 1 da S8 |
+| 12.1–12.2 | finalizar, finalizar de novo (409) | fim do treino |
+| 13 | volume semanal | RF volume |
+| 14–15 | gerar diagnóstico, último diagnóstico | diagnóstico (D13) |
+| 16.1–16.7 | histórico do mês + variações do `?mes` | calendário |
+| 17.1–17.3 | detalhe sessão work, sessão 75 kg, id inválido | detalhe (D17) |
+| 18 | exercícios com histórico | |
+| 19.1–19.3 | progressão de carga + negativos | gráfico (D17) |
+| 20.1–20.6 | volume histórico + variações de `?semanas` | D10/D18 |
+| 21.1–21.6 | sessão só de aquecimento: iniciar, detalhe aberto (404), série, finalizar, diagnóstico (400), detalhe | D16 |
+| 22.1–22.3 | gerar diagnóstico de novo, histórico e detalhe com o novo | D14 |
+| 23.1–23.4 | diagnóstico sem token, treino inexistente, ids inválidos | negativos |
+| 24.1–24.8 | segundo usuário: register, login, histórico/detalhe/progressão/volume/diagnóstico do primeiro | isolamento |
+
+Requisição de semana nova entra **no fim** (próximo número: `25`), a menos
+que o fluxo exija que ela venha antes. Nesse caso, entra com subnúmero no
+ponto certo, e o roteiro atualiza esta tabela.
+
 ## Exemplo já registrado
 
 - **D2 — Diagnóstico por sessão vs. semanal**: o planejamento inicial propôs diagnóstico semanal consolidado (RF04+RF05), mas o autor confirmou que o TCC define feedback **por sessão**. Corrigido no PLANEJAMENTO.md; card de alerta criado no Trello para revisar a redação correspondente no texto do TCC.
