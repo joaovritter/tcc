@@ -200,7 +200,7 @@ export interface DiagnosticoComTreino extends DiagnosticoIA {
 
 //============== histórico (RF07) =====================================
 
-//uma sessao finalizada (D18) com o resumo do que aconteceu nela
+//uma sessao finalizada com o resumo do que aconteceu nela
 export interface SessaoHistorico {
     id_treino: string;
     data: string; // timestamp - a tela usa so pra mostrar a hora
@@ -208,13 +208,13 @@ export interface SessaoHistorico {
     duracao_total: number | null;
     nome_divisao: string | null; // fk_divisao é nullable no schema
     series_validas: number; // COUNT(...)::int
-    id_diagnostico: string | null; // o mais recente da sessao (D14); null se nunca gerou
+    id_diagnostico: string | null; // o mais recente da sessao, null se nunca gerou
     score_geral: number | null;
 }
 
-//resposta do calendario: GET /history/sessions?mes=AAAA-MM (D18)
+//resposta do calendario: GET /history/sessions?mes=AAAA-MM
 export interface SessoesDoMes {
-    primeira_sessao: string | null; // 'YYYY-MM-DD' do treino finalizado mais antigo; null se nunca finalizou
+    primeira_sessao: string | null; // 'YYYY-MM-DD' do treino finalizado mais antigo, null se nunca finalizou
     sessoes: SessaoHistorico[];
 }
 
@@ -225,7 +225,7 @@ export interface ExercicioTreinado {
     nome_grupamento: string;
 }
 
-//D17: o resumo das series work de UM exercicio em UMA sessao.
+//o resumo das series work de UM exercicio em UMA sessao.
 //mesmo tipo no grafico de progressao e no detalhe da sessao - sao os mesmos numeros
 export interface ResumoSeriesValidas {
     series_validas: number;
@@ -234,7 +234,7 @@ export interface ResumoSeriesValidas {
     tonelagem: number; // soma de carga x reps. NAO e "volume" - volume e contagem de series (RF04)
 }
 
-//um ponto do grafico de progressao: uma sessao (D17)
+//um ponto do grafico de progressao: uma sessao
 export interface PontoProgressaoCarga extends ResumoSeriesValidas {
     id_treino: string;
     data: string;
@@ -246,7 +246,7 @@ export interface SerieDaSessao {
     tipo: TipoSerie;
     carga: number;
     repeticoes: number;
-    rir: number | null; // null em aquecimento/feeder (D9)
+    rir: number | null; // null em aquecimento/feeder
 }
 
 export interface ExercicioDaSessao {
@@ -261,5 +261,5 @@ export interface ExercicioDaSessao {
 export interface DetalheSessao {
     sessao: SessaoHistorico;
     exercicios: ExercicioDaSessao[];
-    diagnostico: DiagnosticoIA | null; // o mais novo da sessao (D14)
+    diagnostico: DiagnosticoIA | null; // o mais novo da sessao
 }

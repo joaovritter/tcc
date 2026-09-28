@@ -1487,25 +1487,25 @@ export interface DetalheSessao {
 
 ### Passo 12 — `server/src/models/historyModel.ts` (novo)
 
-- [ ] Todas as consultas filtram por `t.fk_usuario`. O histórico é a rota que
+- [x] Todas as consultas filtram por `t.fk_usuario`. O histórico é a rota que
   vaza dado de outro usuário com mais facilidade, porque a lista do mês não tem
   id de recurso na URL para conferir o dono.
-- [ ] `SELECT_SESSAO` é a base das duas consultas de sessão (a lista do mês e
+- [x] `SELECT_SESSAO` é a base das duas consultas de sessão (a lista do mês e
   o cabeçalho do detalhe). `COUNT(...) FILTER (WHERE s.tipo = 'work')` conta só
   série válida, sem subconsulta. O `LEFT JOIN LATERAL` pega **só o diagnóstico
   mais recente** de cada sessão (D14). Um `LEFT JOIN DiagnosticoIA` comum
   duplicaria a sessão uma vez por diagnóstico e multiplicaria o `COUNT`.
-- [ ] `listarSessoesDoMes` **não tem `LIMIT`** (D18). Um mês tem poucas
+- [x] `listarSessoesDoMes` **não tem `LIMIT`** (D18). Um mês tem poucas
   sessões, e o histórico inteiro se vê navegando mês a mês. O intervalo é
   `[primeiro dia do mês, primeiro dia do mês seguinte)`. O `to_date($2,
   'YYYY-MM')` dá o dia 1, e com `$2` nulo o `COALESCE` cai no mês atual do
   banco. É a mesma régua do `date_trunc('week', current_date)` do volume.
-- [ ] `dia` sai do banco com `to_char(t.data, 'YYYY-MM-DD')`, e o calendário
+- [x] `dia` sai do banco com `to_char(t.data, 'YYYY-MM-DD')`, e o calendário
   compara texto com texto. Assim ninguém faz `new Date('2026-09-18')` no front,
   que viraria UTC e jogaria o treino para o dia anterior.
-- [ ] `buscarPrimeiraSessao`: o `MIN` sem nenhuma linha devolve **uma** linha
+- [x] `buscarPrimeiraSessao`: o `MIN` sem nenhuma linha devolve **uma** linha
   com `NULL` (não devolve zero linhas), então o `rows[0]` é seguro.
-- [ ] `RESUMO_SERIES_WORK` é a **única** definição da D17. O gráfico
+- [x] `RESUMO_SERIES_WORK` é a **única** definição da D17. O gráfico
   (`progressaoDeCarga`) e o detalhe (`listarExerciciosDaSessao`) usam a mesma
   subconsulta, então nunca mostram números diferentes para a mesma sessão. O
   teste do Passo 18 compara os dois.
@@ -1515,11 +1515,11 @@ export interface DetalheSessao {
   - `tonelagem`: `SUM(s.carga * s.repeticoes)`.
   - A subconsulta sozinha **não tem dono**: ela agrega séries de todo mundo.
     Por isso ela **sempre** vem com `JOIN Treino t` + `t.fk_usuario = $…`.
-- [ ] `listarExerciciosDaSessao` faz duas consultas em paralelo (as séries e
+- [x] `listarExerciciosDaSessao` faz duas consultas em paralelo (as séries e
   os resumos) e agrupa por exercício no JS. O `Map` preserva a ordem de
   inserção, e como as séries vêm `ORDER BY s.id_serie`, os exercícios ficam
   na ordem em que foram feitos.
-- [ ] Esse agrupamento no model é só formato de resposta, não métrica: a conta
+- [x] Esse agrupamento no model é só formato de resposta, não métrica: a conta
   (máximo, tonelagem) já veio pronta do SQL.
 
 Código completo:
@@ -1735,17 +1735,17 @@ export async function listarExerciciosDaSessao(
 
 ### Passo 13 — `server/src/services/volumeService.ts`: `calcularHistoricoVolume`
 
-- [ ] Fica no `volumeService`, não no `historyModel`: é a **mesma regra** do
+- [x] Fica no `volumeService`, não no `historyModel`: é a **mesma regra** do
   RF04 (só `work`, semana de segunda a domingo, limiar de 10) repetida pra N
   semanas. Morando no mesmo arquivo do `LIMIAR_SERIES`, a comparação
   `atingiu_limiar` continua tendo uma fonte só.
-- [ ] `generate_series` cria as N segundas-feiras; `CROSS JOIN
+- [x] `generate_series` cria as N segundas-feiras; `CROSS JOIN
   GrupamentoMuscular` garante **todas** as semanas × **todos** os grupamentos,
   mesmo zerados (D18) — sem ele, semana sem treino simplesmente sumiria.
-- [ ] O filtro de dono continua **dentro da subconsulta**, igual a S6 — as
+- [x] O filtro de dono continua **dentro da subconsulta**, igual a S6 — as
   condições de data no `ON` são seguras porque a subconsulta já só tem série
   deste usuário.
-- [ ] O teste do Passo 18 compara a semana atual daqui com o `GET
+- [x] O teste do Passo 18 compara a semana atual daqui com o `GET
   /metrics/weekly-volume` — é o que garante que as duas contas de "semana"
   (`inicioDaSemana()` e o `date_trunc` daqui) não divergem.
 
@@ -1809,16 +1809,16 @@ export async function calcularHistoricoVolume(
 
 ### Passo 14 — `server/src/models/diagnosticModel.ts`: `buscarUltimoDaSessao`
 
-- [ ] Uma função nova, que traz o diagnóstico **mais novo de uma sessão** (D14).
+- [x] Uma função nova, que traz o diagnóstico **mais novo de uma sessão** (D14).
   É o que o detalhe da sessão mostra embaixo das séries.
-- [ ] Ela **substitui** o `listarDoUsuario` da versão anterior deste roteiro (os
+- [x] Ela **substitui** o `listarDoUsuario` da versão anterior deste roteiro (os
   20 diagnósticos mais recentes, de `/history/diagnostics`). A D18-3 foi
   reescrita em 25/09: o diagnóstico antigo chega pelo calendário, por data, e
   não por uma lista com corte. Se você já tinha escrito o `listarDoUsuario`,
   apague.
-- [ ] `fk_usuario` também entra no `WHERE`. O controller já conferiu o dono da
+- [x] `fk_usuario` também entra no `WHERE`. O controller já conferiu o dono da
   sessão antes, mas a consulta não depende disso para não vazar dado.
-- [ ] Nenhum import novo: `DiagnosticoIA` já está no import do arquivo.
+- [x] Nenhum import novo: `DiagnosticoIA` já está no import do arquivo.
 
 Código (acrescentar no fim do arquivo):
 
@@ -1840,22 +1840,22 @@ export async function buscarUltimoDaSessao(idTreino: string, fkUsuario: string):
 
 ### Passo 15 — `server/src/controllers/historyController.ts` (novo)
 
-- [ ] A mesma régua do `metricsController`: nenhum SQL, nenhuma conta. Só
+- [x] A mesma régua do `metricsController`: nenhum SQL, nenhuma conta. Só
   validação de entrada e chamada de model/service.
-- [ ] `sessoesDoMes`: o `?mes` é opcional. Sem ele, vale o mês atual. Com ele,
+- [x] `sessoesDoMes`: o `?mes` é opcional. Sem ele, vale o mês atual. Com ele,
   tem que casar com `AAAA-MM` (mês de `01` a `12`). Qualquer outra coisa
   (`2026-9`, `2026-13`, `abc`, `2026-09-01`) devolve 400, sem chegar no banco.
-- [ ] `req.query.mes` pode chegar como string, array ou objeto (`?mes=a&mes=b`
+- [x] `req.query.mes` pode chegar como string, array ou objeto (`?mes=a&mes=b`
   vira array). O `typeof mes !== 'string'` barra os dois últimos.
-- [ ] A lista do mês e a `primeira_sessao` vão em paralelo (`Promise.all`): são
+- [x] A lista do mês e a `primeira_sessao` vão em paralelo (`Promise.all`): são
   duas consultas independentes.
-- [ ] `detalheSessao`: o id já chega validado pelo `validarUuid` (Passo 2) na
+- [x] `detalheSessao`: o id já chega validado pelo `validarUuid` (Passo 2) na
   rota. Treino aberto e treino de outro usuário dão **o mesmo 404**, porque o
   histórico é só de treino finalizado (D18) e a API não conta que o recurso
   existe para quem não é dono.
-- [ ] Exercício que o usuário nunca treinou dá `200` com lista vazia, não 404:
+- [x] Exercício que o usuário nunca treinou dá `200` com lista vazia, não 404:
   é um histórico vazio, não um recurso inexistente.
-- [ ] O `diagnosticosAnteriores` da versão anterior **sai** (D18-3 reescrita).
+- [x] O `diagnosticosAnteriores` da versão anterior **sai** (D18-3 reescrita).
 
 Código completo:
 
@@ -1967,15 +1967,15 @@ export async function volumeHistorico(req: AuthenticateRequest, res: Response) {
 
 ### Passo 16 — `server/src/routes/historyRoutes.ts` (novo) + `app.ts`
 
-- [ ] Todas as rotas atrás de `autenticar`, todas `GET`: o histórico não
+- [x] Todas as rotas atrás de `autenticar`, todas `GET`: o histórico não
   escreve nada.
-- [ ] A rota do detalhe leva o `validarUuid('id')` do Passo 2, **depois** do
+- [x] A rota do detalhe leva o `validarUuid('id')` do Passo 2, **depois** do
   `autenticar`. Sem ele, `/history/sessions/abc` vira erro 22P02 no Postgres e
   500.
-- [ ] `/history/sessions` e `/history/sessions/:id` não conflitam: o Express
+- [x] `/history/sessions` e `/history/sessions/:id` não conflitam: o Express
   compara o caminho inteiro, e `/history/sessions` não casa com `:id`.
-- [ ] Sai a rota `/history/diagnostics` (D18-3 reescrita).
-- [ ] `app.use(historyRoutes)` no `app.ts`. É a **terceira semana seguida** em
+- [x] Sai a rota `/history/diagnostics` (D18-3 reescrita).
+- [x] `app.use(historyRoutes)` no `app.ts`. É a **terceira semana seguida** em
   que esse é o erro silencioso candidato: a rota existe, compila e devolve 404.
 
 Código completo do `historyRoutes.ts`:
@@ -2019,9 +2019,9 @@ um `UPDATE` direto no banco. É só dado de teste: o sistema nunca faz isso.
 
 ### 17.1 — Montar os dados (continua do Passo 5, mesmo usuário e ambiente)
 
-- [ ] Ponto de partida: o treino do Passo 5 (hoje; séries válidas 80×8 e 80×7,
+- [x] Ponto de partida: o treino do Passo 5 (hoje; séries válidas 80×8 e 80×7,
   mais aquecimento e feeder; finalizado, com diagnóstico).
-- [ ] **Sessão "duas semanas atrás"**: `POST {{baseUrl}}/sessions/start` (o
+- [x] **Sessão "duas semanas atrás"**: `POST {{baseUrl}}/sessions/start` (o
   script do 5.7 atualiza o `idTreino`), depois `POST
   {{baseUrl}}/sessions/{{idTreino}}/sets` duas vezes:
 
@@ -2042,7 +2042,7 @@ UPDATE Treino SET data = data - INTERVAL '14 days'
 WHERE id_treino = '<idTreino da sessão de 70 kg>';
 ```
 
-- [ ] **Sessão "semana passada"**: o mesmo caminho, com carga **75** e **sem**
+- [x] **Sessão "semana passada"**: o mesmo caminho, com carga **75** e **sem**
   gerar diagnóstico. É ela que testa o botão "Avaliar treino" no detalhe da
   sessão.
 
@@ -2071,14 +2071,14 @@ WHERE id_treino = '<idTreino da sessão de 75 kg>';
 
 ### 17.2 — `GET {{baseUrl}}/history/sessions?mes={{mesAtual}}`
 
-- [ ] **Pre-request** (aba *Scripts → Pre-request*), que calcula o mês atual:
+- [x] **Pre-request** (aba *Scripts → Pre-request*), que calcula o mês atual:
 
 ```js
 const hoje = new Date();
 pm.environment.set('mesAtual', `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}`);
 ```
 
-- [ ] **Post-response**:
+- [x] **Post-response**:
 
 ```js
 pm.test('sessões do mês 200', () => pm.response.to.have.status(200));
@@ -2172,13 +2172,13 @@ Esperado (cortado):
 }
 ```
 
-- [ ] Conta à mão: `tonelagem = 80×8 + 80×7 = 640 + 560 = 1200`. A série mais
+- [x] Conta à mão: `tonelagem = 80×8 + 80×7 = 640 + 560 = 1200`. A série mais
   pesada empata em 80 kg, e fica a de **mais reps** (8, não 7).
-- [ ] `GET {{baseUrl}}/history/sessions/{{idSessao75}}` → `200` com
+- [x] `GET {{baseUrl}}/history/sessions/{{idSessao75}}` → `200` com
   `"diagnostico": null` e `resumo` `{ 2, 75, 8, 1200 }`.
-- [ ] `GET {{baseUrl}}/history/sessions/abc` → `404 { "erro": "Recurso não
+- [x] `GET {{baseUrl}}/history/sessions/abc` → `404 { "erro": "Recurso não
   encontrado" }` (`validarUuid`).
-- [ ] **Treino aberto não tem detalhe, e o caso da D16 na tela:** `POST
+- [x] **Treino aberto não tem detalhe, e o caso da D16 na tela:** `POST
   {{baseUrl}}/sessions/start` → `GET {{baseUrl}}/history/sessions/{{idTreino}}`
   → `404 { "erro": "Sessão não encontrada" }`. Depois registre **só** um
   aquecimento nele e finalize (sem `generate`, que daria 400):

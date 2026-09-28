@@ -31,3 +31,17 @@ export async function buscarUltimoDoUsuario(fkUsuario: string): Promise<Diagnost
   return resultado.rows[0] ?? null;
 }
 
+
+//o diagnostico mais novo de UMA sessao - aparece no detalhe da sessao,
+//embaixo das series. null = a sessao nunca foi avaliada
+export async function buscarUltimoDaSessao(idTreino: string, fkUsuario: string): Promise<DiagnosticoIA | null> {
+  const resultado = await pool.query<DiagnosticoIA>(
+    `SELECT * FROM DiagnosticoIA
+     WHERE fk_treino = $1
+       AND fk_usuario = $2
+     ORDER BY data_geracao DESC
+     LIMIT 1`,
+    [idTreino, fkUsuario]
+  );
+  return resultado.rows[0] ?? null;
+}
