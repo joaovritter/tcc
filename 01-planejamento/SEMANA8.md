@@ -2328,7 +2328,7 @@ GROUP BY t.id_treino, t.data
 ORDER BY t.data;
 ```
 
-- [ ] (Opcional) Na coleção, use **Run collection** com as requisições na ordem
+- [x] (Opcional) Na coleção, use **Run collection** com as requisições na ordem
   5.3 → 5.12 → 17.2 → 17.8. O Collection Runner mostra todos os `pm.test`
   verdes de uma vez. Os passos com `UPDATE` no banco ficam fora do runner.
 
@@ -2665,13 +2665,13 @@ test('volume histórico: semanas fora de 1–26 retorna 400', async () => {
 
 ### Passo 19 — `client/src/services/api.ts` (acrescentar no fim)
 
-- [ ] Espelho dos tipos do Passo 11. O volume histórico reusa o `VolumeSemanal`
+- [x] Espelho dos tipos do Passo 11. O volume histórico reusa o `VolumeSemanal`
   que já existe desde a S6, e o `DetalheSessao` reusa o `DiagnosticoIA` do
   Passo 6 e o `TipoSerie` que já existe.
-- [ ] `buscarSessoesDoMes(mes)`: o front **sempre** manda o mês. O padrão "mês
+- [x] `buscarSessoesDoMes(mes)`: o front **sempre** manda o mês. O padrão "mês
   atual" do backend fica para quem chama a API sem a tela (Postman).
-- [ ] Sai o `buscarDiagnosticosAnteriores` (D18-3 reescrita).
-- [ ] Instale a biblioteca de gráfico do próprio MUI (já é a UI do projeto,
+- [x] Sai o `buscarDiagnosticosAnteriores` (D18-3 reescrita).
+- [x] Instale a biblioteca de gráfico do próprio MUI (já é a UI do projeto,
   herda o tema e tem licença MIT): `npm install @mui/x-charts` dentro de
   `client/`.
 
@@ -2775,9 +2775,9 @@ enorme.
 (o treino), depois **a avaliação da IA**. A imagem de referência vale pela
 estrutura. O conteúdo é o que o sistema grava.
 
-- [ ] **Cabeçalho:** seta ← (volta ao calendário), nome da divisão, data e hora,
+- [x] **Cabeçalho:** seta ← (volta ao calendário), nome da divisão, data e hora,
   duração.
-- [ ] **Exercícios:** um card por exercício, na ordem em que foram feitos.
+- [x] **Exercícios:** um card por exercício, na ordem em que foram feitos.
   - Linha-resumo: `2 séries válidas · Mais pesada: 80 kg × 8 · Tonelagem:
     1.200 kg`. Os números vêm prontos no `resumo` (RNF03). A tela **não soma
     nada**.
@@ -2787,7 +2787,7 @@ estrutura. O conteúdo é o que o sistema grava.
     apresentação: a regra de "válida" já foi aplicada no backend.
   - **Sem coluna de descanso**: o sistema não grava tempo entre séries, e fica
     assim.
-- [ ] **Avaliação da IA**, três casos:
+- [x] **Avaliação da IA**, três casos:
   - com diagnóstico → `DiagnosticContent` (Passo 7), sem mudar o formato;
   - sem diagnóstico e **com** série válida → botão **"Avaliar treino"**. É a
     segunda porta da D16: cobre quem saiu da tela antes de avaliar, ou tomou
@@ -2796,13 +2796,13 @@ estrutura. O conteúdo é o que o sistema grava.
   - sem série válida → texto "Treino salvo sem séries válidas, então não há o
     que avaliar." **Sem botão**: a IA só avalia série válida (D16, confirmado
     em 25/09).
-- [ ] `versao` é um contador: somar 1 refaz o `useEffect` e recarrega o detalhe
+- [x] `versao` é um contador: somar 1 refaz o `useEffect` e recarrega o detalhe
   (depois de avaliar). É o mesmo efeito de chamar o carregamento de novo, sem
   duplicar a função fora do efeito.
-- [ ] `ativo` no efeito: se a pessoa volta e abre outra sessão rápido, a
+- [x] `ativo` no efeito: se a pessoa volta e abre outra sessão rápido, a
   resposta atrasada da anterior não sobrescreve a atual (o mesmo padrão da aba
   Cargas).
-- [ ] Número em pt-BR com `toLocaleString('pt-BR')`: 72.5 vira "72,5" e 1980
+- [x] Número em pt-BR com `toLocaleString('pt-BR')`: 72.5 vira "72,5" e 1980
   vira "1.980".
 
 Código completo:
@@ -3032,50 +3032,50 @@ anteriores). Cada aba é um componente no mesmo arquivo e só carrega o próprio
 dado quando é aberta.
 
 **Aba Cargas (D17):**
-- [ ] O eixo x é o **índice** da sessão, e a data só aparece no rótulo
+- [x] O eixo x é o **índice** da sessão, e a data só aparece no rótulo
   (`valueFormatter`). Com a data direto no eixo, duas sessões no mesmo dia
   virariam uma categoria só no `scaleType: 'point'`, e um ponto sumiria.
-- [ ] A linha é a `carga_maxima`. O **tooltip** de cada ponto mostra `80 kg × 8
+- [x] A linha é a `carga_maxima`. O **tooltip** de cada ponto mostra `80 kg × 8
   · 2 séries · tonelagem 1.200 kg`: o `valueFormatter` da série recebe o
   `dataIndex` e lê o resto do ponto. Não é uma segunda linha, porque a escala
   é diferente.
 
 **Aba Volume (D18-2):**
-- [ ] Um chip por grupamento: cheio quando teve série, contornado quando zerou,
+- [x] Um chip por grupamento: cheio quando teve série, contornado quando zerou,
   verde quando `atingiu_limiar`. O booleano vem pronto do backend (RNF03), e a
   tela não compara nada.
 
 **Aba Sessões = calendário (D18-3):**
-- [ ] **Mês a mês** com as setas ‹ ›. A ‹ fica desabilitada no mês da
+- [x] **Mês a mês** com as setas ‹ ›. A ‹ fica desabilitada no mês da
   `primeira_sessao` (ninguém navega até 2019 para ver meses vazios), e a ›
   no mês atual.
-- [ ] Nome do mês em pt-BR (`setembro de 2026`) com `toLocaleDateString`.
-- [ ] **Semana começa no domingo** (`dom … sáb`), como no calendário brasileiro
+- [x] Nome do mês em pt-BR (`setembro de 2026`) com `toLocaleDateString`.
+- [x] **Semana começa no domingo** (`dom … sáb`), como no calendário brasileiro
   comum. É só a grade visual: o volume (D10) continua de segunda a domingo.
-- [ ] A grade é um CSS grid de 7 colunas. `new Date(ano, mes - 1, 1).getDay()`
+- [x] A grade é um CSS grid de 7 colunas. `new Date(ano, mes - 1, 1).getDay()`
   diz quantas células vazias vêm antes do dia 1 (0 = domingo), e `new
   Date(ano, mes, 0).getDate()` dá o último dia do mês (o dia 0 do mês seguinte).
   Os dois usam o **construtor numérico**, que é local, sem armadilha de fuso.
-- [ ] **Ponto no dia** com treino, colorido pela faixa do score (a mesma do
+- [x] **Ponto no dia** com treino, colorido pela faixa do score (a mesma do
   círculo do diagnóstico): verde ≥ 70, amarelo 40–69, vermelho < 40, **cinza**
   sem diagnóstico. Dia com mais de um treino tem **um** ponto, com a cor do
   mais recente do dia.
-- [ ] **Hoje:** contorno no número. **Dia selecionado:** preenchido com a cor
+- [x] **Hoje:** contorno no número. **Dia selecionado:** preenchido com a cor
   primária.
-- [ ] **Ao abrir a aba ou trocar de mês:** o treino mais recente do mês já vem
+- [x] **Ao abrir a aba ou trocar de mês:** o treino mais recente do mês já vem
   selecionado, com o card embaixo. Mês sem treino: nada selecionado e o texto
   "Nenhum treino finalizado neste mês".
-- [ ] **Tocar num dia** mostra embaixo **um card por sessão**, em ordem de
+- [x] **Tocar num dia** mostra embaixo **um card por sessão**, em ordem de
   horário (selo do score, divisão, hora, séries válidas, duração). Dia sem
   treino também dá para tocar e mostra "Nenhum treino neste dia".
-- [ ] **Tocar no card** abre o `SessionDetail` **no lugar** do calendário,
+- [x] **Tocar no card** abre o `SessionDetail` **no lugar** do calendário,
   dentro da mesma aba (estado `aberta`; sem router, D7). Ao voltar, o mês é
   recarregado (`recarga + 1`), então se a pessoa avaliou o treino lá dentro, o
   ponto do dia já volta com a cor nova. O dia selecionado é mantido.
-- [ ] **Sem os cards de métricas** das imagens (treinos no mês, score médio,
+- [x] **Sem os cards de métricas** das imagens (treinos no mês, score médio,
   volume do mês) e **sem o gráfico de frequência**: ficou decidido que não
   entram.
-- [ ] Datas, três funções diferentes **de propósito**:
+- [x] Datas, três funções diferentes **de propósito**:
   - `semana_referencia` e `dia` são texto `YYYY-MM-DD`: comparar como texto,
     ou `split` para montar com o construtor numérico. **Nunca** `new
     Date('2026-09-18')`, que vira UTC e mostra o dia anterior (armadilha da
@@ -3084,7 +3084,7 @@ dado quando é aberta.
     para o fuso local (só para a hora do card);
   - o mês e o dia "de hoje" no front saem de `new Date()` com
     `getFullYear/getMonth/getDate`, que são locais.
-- [ ] `corDoScore` vem exportado do `DiagnosticContent` (Passo 7). É a mesma
+- [x] `corDoScore` vem exportado do `DiagnosticContent` (Passo 7). É a mesma
   faixa do círculo, uma fonte só.
 
 Código completo:
@@ -3547,17 +3547,17 @@ function CardSessao({ sessao, onAbrir }: { sessao: api.SessaoHistorico; onAbrir:
 }
 ```
 
-- [ ] Se o TypeScript reclamar da assinatura do `valueFormatter` da série,
+- [x] Se o TypeScript reclamar da assinatura do `valueFormatter` da série,
   confira a versão do `@mui/x-charts` no `package.json`. Na v7/v8 o segundo
   argumento é `{ dataIndex }`.
 
 ### Passo 21 — `App.tsx` + `Sidebar.tsx`: tela "historico"
 
-- [ ] `Tela` ganha `'historico'`, o mapa ganha `historico: <HistoryView />`, e o
+- [x] `Tela` ganha `'historico'`, o mapa ganha `historico: <HistoryView />`, e o
   item "Histórico" da sidebar ganha `tela: 'historico'`. Com isso **todos** os
   itens da sidebar ficam navegáveis. O `disponivel`/`opacity: 0.45` do
   `Sidebar.tsx` deixa de ter uso. Pode ficar por enquanto: a limpeza é da S9.
-- [ ] O calendário **não** vira item de menu: fica dentro do Histórico, na aba
+- [x] O calendário **não** vira item de menu: fica dentro do Histórico, na aba
   Sessões (D18-3).
 
 `client/src/App.tsx` (os trechos que mudam):
@@ -3582,7 +3582,7 @@ export type Tela = 'divisao' | 'treino' | 'volume' | 'diagnostico' | 'historico'
   { label: 'Histórico', icon: <TimelineIcon fontSize="small" />, tela: 'historico' },
 ```
 
-- [ ] Teste pela interface com o usuário do Passo 17 (o login é o
+- [x] Teste pela interface com o usuário do Passo 17 (o login é o
   `postman.s8@teste.com`):
   - **Cargas:** a linha 70 → 75 → 80. Passe o mouse no último ponto e o
     tooltip mostra "80 kg × 8 · 2 séries · tonelagem 1.200 kg".

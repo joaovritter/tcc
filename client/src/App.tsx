@@ -5,11 +5,13 @@ import { DivisionView } from './views/DivisionView'
 import { TodaySessionView } from './views/TodaySessionView'
 import { WeeklyVolumeView } from './views/WeeklyVolumeView'
 import { DiagnosticView } from './views/DiagnosticView'
+import { HistoryView } from './views/HistoryView'
+
 import { AppShell } from './components/AppShell'
 import { PageLayout } from './components/PageLayout'
 import { Typography } from '@mui/material'
 
-export type Tela = 'divisao' | 'treino' | 'volume' | 'diagnostico'
+export type Tela = 'divisao' | 'treino' | 'volume' | 'diagnostico' | 'historico'
 
 function App() {
   const { usuario, carregando } = useAuth();
@@ -33,6 +35,7 @@ function App() {
     treino: <TodaySessionView onVerDiagnostico={() => setTela('diagnostico')} />,
     volume: <WeeklyVolumeView />,
     diagnostico: <DiagnosticView />,
+    historico: <HistoryView />,
   }
 
   return (

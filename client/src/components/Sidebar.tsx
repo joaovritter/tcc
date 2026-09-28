@@ -25,6 +25,8 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Volume da semana', icon: <BarChartIcon fontSize="small" />, tela: 'volume' },
   { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" />, tela: 'diagnostico' },
   { label: 'Histórico', icon: <TimelineIcon fontSize="small" /> },
+  { label: 'Histórico', icon: <TimelineIcon fontSize="small" />, tela: 'historico' },
+
 ];
 
 const COLLAPSED = 76;

@@ -260,3 +260,91 @@ export function gerarDiagnostico(idTreino: string) {
 export function buscarDiagnosticoAtual() {
     return apiFetch('/diagnostics/latest') as Promise<{ diagnostico: DiagnosticoComTreino }>;
 }
+
+
+
+
+
+//============================historico (RF07)===========================
+
+export interface SessaoHistorico {
+    id_treino: string;
+    data: string; //timestamp com Z - so pra mostrar a hora
+    dia: string; //'YYYY-MM-DD' do banco - posiciona no calendario (nunca new Date nele)
+    duracao_total: number | null;
+    nome_divisao: string | null;
+    series_validas: number;
+    id_diagnostico: string | null; //o mais recente da sessao
+    score_geral: number | null;
+}
+
+export interface SessoesDoMes {
+    primeira_sessao: string | null; //'YYYY-MM-DD' do primeiro treino finalizado
+    sessoes: SessaoHistorico[];
+}
+
+export interface ExercicioTreinado {
+    id_exercicio: number;
+    nome_exercicio: string;
+    nome_grupamento: string;
+}
+
+//D17: mesmos numeros no grafico e no detalhe
+export interface ResumoSeriesValidas {
+    series_validas: number;
+    carga_maxima: number;
+    reps_carga_maxima: number;
+    tonelagem: number; //soma de carga x reps - nao e "volume" (volume = series/semana)
+}
+
+export interface PontoProgressaoCarga extends ResumoSeriesValidas {
+    id_treino: string;
+    data: string;
+}
+
+export interface SerieDaSessao {
+    id_serie: number;
+    tipo: TipoSerie;
+    carga: number;
+    repeticoes: number;
+    rir: number | null;
+}
+
+export interface ExercicioDaSessao {
+    id_exercicio: number;
+    nome_exercicio: string;
+    nome_grupamento: string;
+    resumo: ResumoSeriesValidas | null; //null = so preparacao
+    series: SerieDaSessao[];
+}
+
+export interface DetalheSessao {
+    sessao: SessaoHistorico;
+    exercicios: ExercicioDaSessao[];
+    diagnostico: DiagnosticoIA | null;
+}
+
+//mes = 'AAAA-MM'
+export function buscarSessoesDoMes(mes: string) {
+    return apiFetch(`/history/sessions?mes=${mes}`) as Promise<SessoesDoMes>;
+}
+
+export function buscarDetalheSessao(idTreino: string) {
+    return apiFetch(`/history/sessions/${idTreino}`) as Promise<DetalheSessao>;
+}
+
+export function buscarExerciciosTreinados() {
+    return apiFetch('/history/exercises') as Promise<{ exercicios: ExercicioTreinado[] }>;
+}
+
+export function buscarProgressaoCarga(idExercicio: number) {
+    return apiFetch(`/history/exercises/${idExercicio}/load-progression`) as Promise<{
+        progressao: PontoProgressaoCarga[];
+    }>;
+}
+
+//cada item tem o mesmo formato do GET /metrics/weekly-volume
+export function buscarHistoricoVolume(semanas?: number) {
+    const query = semanas ? `?semanas=${semanas}` : '';
+    return apiFetch(`/history/weekly-volume${query}`) as Promise<{ historico: VolumeSemanal[] }>;
+}
