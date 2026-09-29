@@ -3603,19 +3603,19 @@ export type Tela = 'divisao' | 'treino' | 'volume' | 'diagnostico' | 'historico'
 
 ## Passo 22 — Fechar a semana
 
-1. [ ] `npm run test` no `server` verde na suíte inteira: **61/61** (42 da S7
+1. [x] `npm run test` no `server` verde na suíte inteira: **61/61** (42 da S7
    + 1 do Passo 1 + 2 do Passo 2 + 16 do Passo 18), com `GEMINI_MOCK=true`.
 2. [ ] `npm run build` nos **dois** lados sem erro de tipo. No front, o
    `noUnusedLocals` pega import sobrando (ex.: o `InsightsIcon` se o Passo 9
    ficou pela metade).
-3. [ ] Passo 5 e Passo 17 do Postman rodados de ponta a ponta, com todos os
+3. [x] Passo 5 e Passo 17 do Postman rodados de ponta a ponta, com todos os
    `pm.test` verdes e as contas manuais do 5.11 e do 17.8 conferidas.
-4. [ ] Conferir a RNF06 pela tela: com a chave inválida (Passo 10), "Finalizar e
+4. [x] Conferir a RNF06 pela tela: com a chave inválida (Passo 10), "Finalizar e
    avaliar treino" → "Treino salvo, mas a avaliação falhou…" → abrir Histórico →
    Sessões → o dia de hoje: a sessão está lá, finalizada, com ponto cinza. No
    detalhe, as séries estão todas lá, só sem avaliação ("Avaliar treino").
    Voltar a chave e avaliar por esse botão.
-5. [ ] Testar no DevTools em modo celular (RNF01): Diagnóstico e Histórico numa
+5. [x] Testar no DevTools em modo celular (RNF01): Diagnóstico e Histórico numa
    coluna, sem rolagem horizontal. O gráfico da aba Cargas tem que encolher
    junto, o calendário tem que caber nas 7 colunas, e as tabelas de séries do
    detalhe não podem estourar a largura. (A barra inferior da D6 continua sendo S9.)
