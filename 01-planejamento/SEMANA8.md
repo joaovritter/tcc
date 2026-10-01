@@ -3605,7 +3605,7 @@ export type Tela = 'divisao' | 'treino' | 'volume' | 'diagnostico' | 'historico'
 
 1. [x] `npm run test` no `server` verde na suíte inteira: **61/61** (42 da S7
    + 1 do Passo 1 + 2 do Passo 2 + 16 do Passo 18), com `GEMINI_MOCK=true`.
-2. [ ] `npm run build` nos **dois** lados sem erro de tipo. No front, o
+2. [x] `npm run build` nos **dois** lados sem erro de tipo. No front, o
    `noUnusedLocals` pega import sobrando (ex.: o `InsightsIcon` se o Passo 9
    ficou pela metade).
 3. [x] Passo 5 e Passo 17 do Postman rodados de ponta a ponta, com todos os
@@ -3619,24 +3619,24 @@ export type Tela = 'divisao' | 'treino' | 'volume' | 'diagnostico' | 'historico'
    coluna, sem rolagem horizontal. O gráfico da aba Cargas tem que encolher
    junto, o calendário tem que caber nas 7 colunas, e as tabelas de séries do
    detalhe não podem estourar a largura. (A barra inferior da D6 continua sendo S9.)
-6. [ ] **Gravar a demo ponta a ponta** (critério de aceite): `Win + Alt + R`
+6. [x] **Gravar a demo ponta a ponta** (critério de aceite): `Win + Alt + R`
    (Xbox Game Bar) ou OBS. Roteiro: login → Minha divisão → Treino de hoje
    (registrar 3–4 séries) → Volume da semana → volta pro Treino de hoje →
    "Finalizar e avaliar treino" → cai na aba Diagnóstico → Histórico (Cargas com
    o tooltip, Volume, e Sessões: calendário → dia → treino → registros +
    avaliação). Com `GEMINI_MOCK=false` e a chave real — a demo precisa mostrar texto
    da IA de verdade, não o "Mock: …".
-7. [ ] Prints provisórios da **Fig. 4** (Diagnóstico da Sessão) e da **Fig. 5**
+7. [x] Prints provisórios da **Fig. 4** (Diagnóstico da Sessão) e da **Fig. 5**
    (Histórico: progressão de carga + calendário + detalhe da sessão com o
    diagnóstico), pra garantir que
    as telas fecham o critério. As versões finais saem depois do code freeze, com
    os mesmos dados das outras figuras (seção 5 do `PLANEJAMENTO.md`).
-8. [ ] Commit + push. Sugestão: **um commit por correção da Parte 1** (Passos 1,
+8. [x] Commit + push. Sugestão: **um commit por correção da Parte 1** (Passos 1,
    2, 3 e 4 — fica fácil de achar depois), um do front do diagnóstico (Passos
    6–10), um do backend do histórico (Passos 11–18) e um do front do histórico
    (Passos 19–21).
-9. [ ] Marcar os cards da S8 no Trello (`/trello-sync`).
-
+9. [x] Marcar os cards da S8 no Trello (`/trello-sync`).
+""
 ---
 
 ## Ordem sugerida pra essa semana
