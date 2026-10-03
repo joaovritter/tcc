@@ -21,6 +21,40 @@ Sempre que, durante o desenvolvimento, surgir uma decisão, implementação ou a
 4. **Não decidir sozinho qual lado muda** — o autor decide se ajusta o texto do TCC ou a implementação. A IA só aponta a divergência e propõe as duas opções quando possível.
 5. Depois da decisão, atualizar o [PLANEJAMENTO.md](PLANEJAMENTO.md) (seção de decisões de escopo) se for algo relevante ao escopo geral, e marcar/arquivar o card do Trello.
 
+## Nível do projeto: maturidade de estudante (03/10)
+
+Este é um TCC de graduação. Maturidade demais no código (teste de tudo,
+tratamento de todo erro possível, uma decisão com "alternativas descartadas"
+para cada detalhe) fica com cara de código gerado por IA e é difícil de
+defender na banca. Isso não quer dizer fazer de qualquer jeito nem reduzir o
+que o TCC promete. Quer dizer **calibrar**. Todo roteiro semanal, antes de
+propor uma tarefa, a classifica em um destes 3 níveis:
+
+| Nível | O que é | O que fazer |
+|---|---|---|
+| **1 — O que o TCC promete** | RFs, RNFs, a matriz de rastreabilidade (Tabela VI), o prompt de 5 blocos, o score da Equação 1, os testes que a Seção D cita | Fazer **completo**. Não se negocia |
+| **2 — Bug no uso normal** | Algo que um usuário comum encontra pela tela (500 ao salvar, campo que não aceita o que a pessoa digita, conteúdo escondido no celular) | Consertar do **jeito mais simples** que resolve. Um teste só se for barato |
+| **3 — Caso de borda e polimento** | Erro que só aparece chamando a API à mão, cobertura extra de testes, cenários raros, refinamento de UX além do necessário | **Cortar**, ou deixar registrado como limitação conhecida |
+
+**Regras práticas:**
+
+- **Testes:** os da matriz de rastreabilidade + o caminho feliz principal de
+  cada RF. Não um teste por regra ou por decisão. Postman só para rota nova.
+- **Erros:** tratar o que o TCC cita (RNF02/05/06) e o que quebra a tela no
+  uso normal. Não tratar todo `catch` possível.
+- **Interface:** a base visual veio de modelos prontos (UI, sidebar e
+  animações — ver `DESIGN-BASE.md`). Não acrescentar animação ou detalhe além
+  do que o modelo já traz.
+- **Comentários no código:** curtos, onde o autor comentaria. A justificativa
+  longa das decisões fica no `PLANEJAMENTO.md`, não no código.
+- **Critério final:** o autor precisa conseguir explicar **cada linha** na
+  defesa sem ler. Se não conseguiria, simplificar ou cortar.
+
+Exemplo aplicado: a revisão da `SEMANA9.md` (03/10) cortou 8 testes, o Postman
+da semana, o "Retomar treino" e o 400 para exercício inexistente (nível 3), e
+manteve os testes de integração da Tabela VI (nível 1) e as correções de 500 ao
+salvar a rotina e do teclado no celular (nível 2).
+
 ## Formato dos roteiros semanais (SEMANA*.md)
 
 A partir da SEMANA4.md, todo roteiro semanal (`SEMANAn.md`) deve marcar

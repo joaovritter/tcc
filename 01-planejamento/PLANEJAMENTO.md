@@ -99,6 +99,8 @@ Entidades (nomes reais do `schema.sql`, em português, como no DER do TCC): `Usu
 
 Cada linha S2–S9 tem duas sessões de dev/semana (1 back + 1 front), espelhando 1:1 os cards do Trello e o `TASKS.md`. S1 é exceção: as duas sessões (A e B) estruturam back e front no mesmo esqueleto, sem split funcional.
 
+**Nível do projeto (03/10):** toda tarefa planejada passa pelo critério dos 3 níveis do [`INSTRUCOES.md`](./INSTRUCOES.md) (o que o TCC promete → completo; bug no uso normal → conserto simples; caso de borda e polimento → corta). Maturidade de estudante, não de produto.
+
 **Regras anti-atraso:** S9 é o buffer; Gemini sempre atrás de mock; nada entra no escopo sem passar pela lista 🧊; 2 semanas sem entregável = replanejar cortando.
 
 ## 5. Figuras do capítulo de resultados (máx. 5)
