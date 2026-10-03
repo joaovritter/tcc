@@ -35,6 +35,8 @@ export async function comecarTreino(req: AuthenticateRequest, res: Response) {
         return res.status(200).json({ treino: aberto });
     }
 
+    await sessionModel.fecharTreinosAntigos(fkUsuario);
+
     const diaSemana = new Date().getDay();
     const divisoes = await divisionModel.buscarDivisaoPorUsuario(fkUsuario);
     const divisaoHoje = divisoes.find((d) => d.dia_semana === diaSemana) ?? null;
@@ -113,6 +115,9 @@ export async function registrarSerie(req: AuthenticateRequest, res: Response) {
     const treino = await sessionModel.buscarPorId(idTreino, req.userId as string);
     if (!treino) {
         return res.status(404).json({ erro: 'Treino não encontrado' });
+    }
+    if(treino.completed){
+        return res.status(409).json({ erro: 'Treino já foi finalizado' });
     }
 
     const validado = validarSerie(serie);

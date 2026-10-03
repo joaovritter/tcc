@@ -2,8 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import request from 'supertest';
 import app from '../app'
-import { registrarELogar, registrarComRotinaDeHoje} from './testHelpers';
-
+import { registrarELogar, registrarComRotinaDeHoje, registrarComTreinoAberto } from './testHelpers';
 
 test('GET /sessions/today monta o treino a partir da divisão do dia', async () => {
   const { token, exercicio } = await registrarComRotinaDeHoje();
@@ -181,4 +180,19 @@ test('id de treino que não é UUID retorna 404, não 500', async () => {
 
   assert.equal(finish.status, 404);
   assert.equal(diagnostico.status, 404);
+});
+
+
+test('série em treino finalizado é recusada com 409', async () => {
+  const { token, idTreino, exercicio } = await registrarComTreinoAberto();
+  await request(app)
+    .post(`/sessions/${idTreino}/finish`)
+    .set('Authorization', `Bearer ${token}`);
+
+  const resposta = await request(app)
+    .post(`/sessions/${idTreino}/sets`)
+    .set('Authorization', `Bearer ${token}`)
+    .send({ fk_exercicio: exercicio.id_exercicio, tipo: 'work', carga: 60, repeticoes: 10, rir: 2 });
+
+  assert.equal(resposta.status, 409);
 });

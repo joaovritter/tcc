@@ -30,8 +30,8 @@
 > **Como este roteiro está dividido:** a **Parte 1** (Passos 0–1) só fecha o
 > que ficou da S8. A **Parte 2** é a S9 de fato, em duas sessões: a **Sessão A**
 > (Passos 2–8) é backend, com as correções e os testes de integração. A
-> **Sessão B** (Passos 9–14) é front: rotas (D19), barra inferior (D6), teclado
-> numérico, limpeza e o teste no celular. O Passo 15 fecha a semana e cria a
+> **Sessão B** (Passos 10–14) é front: rotas (D19), barra inferior (D6), vírgula
+> decimal, limpeza e o teste de responsividade no DevTools. O Passo 15 fecha a semana e cria a
 > tag.
 
 > **O que o texto do TCC pede (Seção D, Procedimentos de Validação):** *"Os
@@ -47,8 +47,8 @@
 |---|---|---|---|
 | RF05 | Integração + validação de conteúdo | Diagnóstico retornado em JSON válido | `integration.test.ts`, fluxo completo (etapa 5). O **conteúdo** é a Frente 3 (OUT) |
 | RF06 | Integração | Diagnóstico salvo no banco após retorno | Fluxo completo: `SELECT` em `DiagnosticoIA` depois do `generate` |
-| RF07 | Integração + usabilidade | Dados exibidos corretamente na interface | Fluxo completo (etapa 6, histórico e detalhe pela API) + celular no Passo 13. A heurística é a Frente 2 (OUT) |
-| RNF01 | Avaliação de usabilidade | Sem violações graves nos fluxos principais | Rotas (Passo 10) + barra inferior (Passo 11) + teclado (Passo 12) + celular (Passo 13). A avaliação formal é a Frente 2 |
+| RF07 | Integração + usabilidade | Dados exibidos corretamente na interface | Fluxo completo (etapa 6, histórico e detalhe pela API) + DevTools no Passo 13. A heurística é a Frente 2 (OUT) |
+| RNF01 | Avaliação de usabilidade | Sem violações graves nos fluxos principais | Rotas (Passo 10) + barra inferior (Passo 11) + vírgula decimal (Passo 12) + DevTools (Passo 13). A avaliação formal é a Frente 2 |
 | RNF02 | Integração | Rejeição de registros órfãos | Dois testes RNF02 (banco direto) |
 | RNF03 | Unidade | Cálculos só no backend | Já coberto desde a S6/S7 (`volume.test.ts`, `calcularPv`/`calcularPi`). Nada novo |
 | RNF05 | Integração | JSON parseável sem erros pelo Node.js | `interpretarResposta` (Passo 5) + teste de unidade (Passo 6) |
@@ -67,7 +67,6 @@ Critério de aceite (card 🎯 ENTREGÁVEL S9):
 - [ ] RNF06: falha simulada da API preserva registros (teste)
 - [ ] Responsividade OK nos fluxos críticos (RNF01)
 - [ ] Sidebar vira barra inferior (ícones) em telas pequenas — Decisão D6
-- [ ] Código limpo: sem console.logs, código morto ou TODOs
 - [ ] Tag v1.0-dev criada e enviada (🏁 DEV PRONTO antes de 06/10)
 
 ---
@@ -84,7 +83,7 @@ normal do sistema, e nenhum é cosmético.
 | 3 | Tirar da semana um dia que já foi treinado dá 500 | `PUT /divisions` apaga a `Divisao`, mas `Treino.fk_divisao` aponta pra ela sem `ON DELETE`. Quem treinou segunda **nunca mais** consegue tirar a segunda da rotina | 4 |
 | 4 | Treino esquecido aberto some de tudo | O Treino de hoje só enxerga treino aberto **de hoje**, e o histórico só mostra treino **finalizado** (D18-1). O treino de ontem que a pessoa esqueceu de finalizar não aparece em lugar nenhum | 4 |
 | 5 | No celular, a sidebar come um terço da tela | A `AppShell` reserva `116px` à esquerda em qualquer largura. Num celular de 360px, o calendário de 7 colunas do Histórico não cabe | 11 |
-| 6 | O teclado numérico nunca abriu no celular, e "82,5" é recusado | O `inputMode` foi passado direto no `TextField`, e o MUI joga esse prop na `div` de fora. E o teclado brasileiro digita **vírgula**: `Number('82,5')` vira `NaN`, que vai como `null` e o backend responde 400 | 12 |
+| 6 | "82,5" é recusado (e o teclado numérico nunca abriu no celular) | O teclado brasileiro digita **vírgula**, no PC e no celular. O `inputMode` também foi passado direto no `TextField` e o MUI o joga na `div` de fora (corrigido, sem conferência no aparelho): `Number('82,5')` vira `NaN`, que vai como `null` e o backend responde 400 | 12 |
 
 ---
 
@@ -142,7 +141,7 @@ normal do sistema, e nenhum é cosmético.
   (card [📸 Tirar print da tela de Diagnóstico e
   Histórico](https://trello.com/c/8ciFP1Px)) passam para o Passo 15. Gravando
   depois, a demo já mostra o sistema da tag `v1.0-dev`, com a barra inferior e
-  o teclado novos.
+  a vírgula decimal novas.
 
 ---
 
@@ -152,11 +151,11 @@ normal do sistema, e nenhum é cosmético.
 
 ### Passo 2 — Erros em JSON no fim do `app.ts`
 
-- [ ] Duas peças no fim do `server/src/app.ts`, **depois** de todas as rotas.
+- [x] Duas peças no fim do `server/src/app.ts`, **depois** de todas as rotas.
   A primeira responde 404 para o que não casou com rota nenhuma. A segunda pega
   qualquer erro que chegou até ali (no Express 5, exceção em função `async`
   também chega) e responde JSON em vez da página HTML padrão do Express.
-- [ ] O `erro.status` cobre o JSON malformado no corpo: o `express.json()` já
+- [x] O `erro.status` cobre o JSON malformado no corpo: o `express.json()` já
   marca esse erro com status 400. O resto vira 500.
 
 ```ts
@@ -176,12 +175,12 @@ app.use((erro: any, req: Request, res: Response, next: NextFunction) => {
 });
 ```
 
-- [ ] Conferir rápido: `curl http://localhost:3000/nao-existe` devolve
+- [x] Conferir rápido: `curl http://localhost:3000/nao-existe` devolve
   `{"erro":"Rota não encontrada"}`, e não `<!DOCTYPE html>`.
 
 ### Passo 3 — D20: série nova só em treino aberto (`sessionController.ts`)
 
-- [ ] No `registrarSerie`, logo depois do `if (!treino) … 404`:
+- [x] No `registrarSerie`, logo depois do `if (!treino) … 404`:
 
 ```ts
     if (treino.completed) {
@@ -189,19 +188,19 @@ app.use((erro: any, req: Request, res: Response, next: NextFunction) => {
     }
 ```
 
-- [ ] O 404 vem antes de propósito: treino de outro usuário responde "não
+- [x] O 404 vem antes de propósito: treino de outro usuário responde "não
   encontrado", e não revela que existe.
 
 ### Passo 4 — D21 e D22: `schema.sql`, `ALTER` e treino esquecido
 
-- [ ] **D21.** Em `server/schema.sql`, na tabela `Treino`, a linha do
+- [x] **D21.** Em `server/schema.sql`, na tabela `Treino`, a linha do
   `fk_divisao`:
 
 ```sql
   fk_divisao UUID REFERENCES Divisao(id_divisao) ON DELETE SET NULL,
 ```
 
-- [ ] O projeto não usa migrations: editar o `schema.sql` **não muda o banco
+- [x] O projeto não usa migrations: editar o `schema.sql` **não muda o banco
   local**. Em vez de `npm run db:reset`, que apaga tudo, rode o `ALTER` no
   `psql` ou no pgAdmin. O nome padrão da constraint é
   `treino_fk_divisao_fkey`. Se o `DROP` reclamar, confira com
@@ -213,10 +212,10 @@ ALTER TABLE Treino ADD CONSTRAINT treino_fk_divisao_fkey
   FOREIGN KEY (fk_divisao) REFERENCES Divisao(id_divisao) ON DELETE SET NULL;
 ```
 
-- [ ] Conferir pela tela: com um treino finalizado hoje, vá em Minha divisão,
+- [x] Conferir pela tela: com um treino finalizado hoje, vá em Minha divisão,
   tire o dia de hoje e salve. Tem que salvar sem erro, e no Histórico o treino
   aparece como "Sem divisão".
-- [ ] **D22.** `server/src/models/sessionModel.ts`, função nova depois do
+- [x] **D22.** `server/src/models/sessionModel.ts`, função nova depois do
   `buscarTreinoAberto`. A comparação de data fica no SQL, com o mesmo
   `CURRENT_DATE` que o `buscarTreinoAberto` usa:
 
@@ -232,14 +231,14 @@ export async function fecharTreinosAntigos(fkUsuario: string): Promise<void> {
 }
 ```
 
-- [ ] `server/src/controllers/sessionController.ts`, no `comecarTreino`, logo
+- [x] `server/src/controllers/sessionController.ts`, no `comecarTreino`, logo
   **depois** do `if (aberto) { … }`:
 
 ```ts
     await sessionModel.fecharTreinosAntigos(fkUsuario);
 ```
 
-- [ ] Conferir: comece um treino e, no `psql`, mande ele para ontem:
+- [x] Conferir: comece um treino e, no `psql`, mande ele para ontem:
 
 ```sql
 UPDATE Treino SET data = data - INTERVAL '1 day' WHERE completed = FALSE;
@@ -250,7 +249,7 @@ UPDATE Treino SET data = data - INTERVAL '1 day' WHERE completed = FALSE;
 
 ### Passo 5 — IA: modo `falha` e conferência do JSON (`geminiService.ts`)
 
-- [ ] Dois ajustes para os testes do RNF05 e do RNF06:
+- [x] Dois ajustes para os testes do RNF05 e do RNF06:
   1. O `GEMINI_MOCK` hoje é uma `const`, lida uma vez só, no `import`. Para o
      teste do RNF06 simular a IA fora do ar no meio da suíte, ele passa a ser
      lido a cada chamada e ganha o valor `falha`.
@@ -258,9 +257,9 @@ UPDATE Treino SET data = data - INTERVAL '1 day' WHERE completed = FALSE;
      DiagnosticoConteudo`, e o `as` não confere nada. Se a IA devolver um JSON
      sem um dos três campos, ele é gravado assim mesmo e a tela quebra ao
      abrir. A função nova confere os três campos antes.
-- [ ] `server/src/config/gemini.ts`: apagar o comentário e a linha `export
+- [x] `server/src/config/gemini.ts`: apagar o comentário e a linha `export
   const GEMINI_MOCK = …`. Ficam só o `GEMINI_MODEL` e o `ai`.
-- [ ] `server/src/services/geminiService.ts`, o `import` do topo vira
+- [x] `server/src/services/geminiService.ts`, o `import` do topo vira
   `import { ai, GEMINI_MODEL } from '../config/gemini';`, e antes do
   `gerarDiagnostico` entra:
 
@@ -286,7 +285,7 @@ export function interpretarResposta(texto: string): DiagnosticoConteudo {
 }
 ```
 
-- [ ] No `gerarDiagnostico`, o começo e o fim mudam:
+- [x] No `gerarDiagnostico`, o começo e o fim mudam:
 
 ```ts
   //lido a cada chamada pro teste do RNF06 conseguir trocar no meio da suite
@@ -303,9 +302,9 @@ export function interpretarResposta(texto: string): DiagnosticoConteudo {
   return interpretarResposta(texto);
 ```
 
-- [ ] Erro lançado aqui cai no `catch` do `diagnosticController`, que já
+- [x] Erro lançado aqui cai no `catch` do `diagnosticController`, que já
   responde 502 e não grava nada.
-- [ ] `server/.env.example`, acima do `GEMINI_MOCK=true`:
+- [x] `server/.env.example`, acima do `GEMINI_MOCK=true`:
 
 ```
 # true = mock (dev/testes) | falha = simula a API fora do ar | false = Gemini de verdade
@@ -313,7 +312,7 @@ export function interpretarResposta(texto: string): DiagnosticoConteudo {
 
 ### Passo 6 — Testes novos nos arquivos que já existem (2 testes)
 
-- [ ] `server/src/__tests__/diagnostic.test.ts`: **1 teste de unidade** do
+- [x] `server/src/__tests__/diagnostic.test.ts`: **1 teste de unidade** do
   RNF05. Acrescentar o import no topo:
 
 ```ts
@@ -332,7 +331,7 @@ test('RNF05: resposta da IA só vira diagnóstico se for JSON com os 3 campos', 
 });
 ```
 
-- [ ] `server/src/__tests__/session.test.ts`: **1 teste** da D20. Trocar o
+- [x] `server/src/__tests__/session.test.ts`: **1 teste** da D20. Trocar o
   import dos helpers para
   `import { registrarELogar, registrarComRotinaDeHoje, registrarComTreinoAberto } from './testHelpers';`.
 
@@ -354,10 +353,10 @@ test('D20: série em treino finalizado é recusada com 409', async () => {
 
 ### Passo 7 — `server/src/__tests__/integration.test.ts` (novo, 4 testes)
 
-- [ ] É o arquivo que a matriz de rastreabilidade cita. O **fluxo completo**
+- [x] É o arquivo que a matriz de rastreabilidade cita. O **fluxo completo**
   começa do cadastro e passa por todas as camadas até o histórico. Os outros
   três provam RNF02 e RNF06.
-- [ ] Os números do fluxo são conta de cabeça. Com 2 séries válidas num
+- [x] Os números do fluxo são conta de cabeça. Com 2 séries válidas num
   grupamento (RPE 9 e RPE 8):
   - **Pv** = min(2/10, 1) × 100 = **20**
   - **Pi** = média(100; 66,67) = **83,33**
@@ -498,13 +497,13 @@ test('RNF06: falha simulada da IA devolve 502 e o treino continua intacto', asyn
 });
 ```
 
-- [ ] `npm run test`: **68/68** (62 da S8 + 2 do Passo 6 + 4 deste). O teste
+- [x] `npm run test`: **68/68** (62 da S8 + 2 do Passo 6 + 4 deste). O teste
   RNF06 imprime um stack trace no terminal, que é o `console.error` do
   controller. Isso é esperado: é o log de erro funcionando, não teste falhando.
 
 ### Passo 8 — Postman: nada novo
 
-- [ ] A coleção continua com as **78 requisições** da S8. Os casos novos desta
+- [x] A coleção continua com as **78 requisições** da S8. Os casos novos desta
   semana já estão nos testes automáticos, e repetir no Postman seria cobertura
   dobrada. Só rodar o **Run collection** no fim (Passo 15) para ver se nada
   quebrou.
@@ -513,37 +512,25 @@ test('RNF06: falha simulada da IA devolve 502 e o treino continua intacto', asyn
 
 ## Sessão B — Front: responsividade + limpeza
 
-### Passo 9 — `VITE_API_URL` (para testar no celular)
+### Passo 9 — (removido)
 
-- [ ] O `API_URL` do `client/src/services/api.ts` está fixo em `localhost`. No
-  celular, `localhost` é o próprio celular, e o Passo 13 não funciona. Trocar
-  a linha:
-
-```ts
-//no celular, o client/.env.local aponta pro IP do PC
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3000';
-```
-
-- [ ] `client/.env.example` (novo, versionado):
-
-```
-# para testar no celular: http://<IP do PC na rede>:3000 (copiar para .env.local)
-VITE_API_URL=http://localhost:3000
-```
+O teste de responsividade é no DevTools (Passo 13), então o `VITE_API_URL` e o
+`.env.example` do client não são necessários: o `API_URL` do `api.ts` continua
+fixo em `localhost`. A numeração dos passos seguintes não muda.
 
 ### Passo 10 — D19: uma URL por tela (`react-router`)
 
-- [ ] As 5 telas viram rotas: `/divisao`, `/treino`, `/volume`, `/diagnostico` e
+- [x] As 5 telas viram rotas: `/divisao`, `/treino`, `/volume`, `/diagnostico` e
   `/historico`. O `useState<Tela>` do `App.tsx` sai, e quem diz qual tela está
   aberta passa a ser a URL.
-- [ ] Instalar no `client/` (na v7 o pacote é `react-router`, não mais
+- [x] Instalar no `client/` (na v7 o pacote é `react-router`, não mais
   `react-router-dom`):
 
 ```bash
 npm install react-router
 ```
 
-- [ ] `client/src/main.tsx`: o `BrowserRouter` por fora de tudo. O `useNavigate`
+- [x] `client/src/main.tsx`: o `BrowserRouter` por fora de tudo. O `useNavigate`
   só funciona dentro dele.
 
 ```tsx
@@ -563,7 +550,7 @@ createRoot(document.getElementById('root')!).render(
 )
 ```
 
-- [ ] `client/src/App.tsx` (completo). Sem usuário, a `AuthView` aparece em
+- [x] `client/src/App.tsx` (completo). Sem usuário, a `AuthView` aparece em
   qualquer URL. Depois do login, a pessoa cai na tela que tinha pedido.
 
 ```tsx
@@ -613,7 +600,7 @@ function App() {
 export default App
 ```
 
-- [ ] `client/src/views/TodaySessionView.tsx`: a prop `onVerDiagnostico` sai, e
+- [x] `client/src/views/TodaySessionView.tsx`: a prop `onVerDiagnostico` sai, e
   a tela navega sozinha depois de avaliar.
 
 ```tsx
@@ -627,26 +614,26 @@ export function TodaySessionView() {
       navigate('/diagnostico');
 ```
 
-- [ ] `AppShell` e `Sidebar` deixam de receber `tela`/`onNavegar`: o código
+- [x] `AppShell` e `Sidebar` deixam de receber `tela`/`onNavegar`: o código
   dos dois está no Passo 11. O `export type Tela` do `App.tsx` deixa de
   existir, e o `tsc` acusa qualquer import dele que tenha sobrado.
-- [ ] Testar: em cada tela, F5 → continua nela. Navegue Divisão → Treino →
+- [x] Testar: em cada tela, F5 → continua nela. Navegue Divisão → Treino →
   Volume e use o "voltar" do navegador → Treino → Divisão.
-- [ ] **Se este passo for cortado**, o Passo 11 continua valendo com uma troca:
+- [x] **Se este passo for cortado**, o Passo 11 continua valendo com uma troca:
   a `Sidebar` recebe de novo `tela` e `onNavegar` como props, como hoje.
 
 ### Passo 11 — D6: barra inferior no celular (`Sidebar.tsx` + `AppShell.tsx`)
 
-- [ ] Abaixo de 600px (breakpoint `sm`), a lateral dá lugar a uma barra fixa
+- [x] Abaixo de 600px (breakpoint `sm`), a lateral dá lugar a uma barra fixa
   embaixo, só com ícones. A `Sidebar` só escolhe entre dois componentes, cada
   um com os próprios hooks. Hook depois de um `return` condicional quebra o
   React quando a largura muda.
-- [ ] O `noSsr: true` faz o `useMediaQuery` responder já no primeiro render.
+- [x] O `noSsr: true` faz o `useMediaQuery` responder já no primeiro render.
   Sem ele, a lateral pisca no celular antes de virar barra.
-- [ ] No celular, o item de sair é o ícone de sair, e não o avatar: avatar sem
+- [x] No celular, o item de sair é o ícone de sair, e não o avatar: avatar sem
   nome embaixo não diz o que faz.
-- [ ] O `disponivel`/`opacity: 0.45` que ficou da S3 sai: todo item tem tela.
-- [ ] O visual da lateral (cores, raio, animação de expandir no hover) é o
+- [x] O `disponivel`/`opacity: 0.45` que ficou da S3 sai: todo item tem tela.
+- [x] O visual da lateral (cores, raio, animação de expandir no hover) é o
   mesmo do modelo adotado na S3 (`DESIGN-BASE.md`). Só a tela ativa passa a vir
   da URL.
 
@@ -878,15 +865,19 @@ export function AppShell({ children }: { children: ReactNode }) {
 }
 ```
 
-- [ ] O `xs` do `sx` e o `down('sm')` do `useMediaQuery` valem os dois abaixo
+- [x] O `xs` do `sx` e o `down('sm')` do `useMediaQuery` valem os dois abaixo
   de 600px. Se um mudar sem o outro, aparece uma faixa com a barra embaixo e
   116px vazios à esquerda.
-- [ ] Testar no DevTools (Ctrl+Shift+M), em **599px e 600px**: em 599, a barra
+- [x] Testar no DevTools (Ctrl+Shift+M), em **599px e 600px**: em 599, a barra
   embaixo; em 600, a lateral.
 
-### Passo 12 — Treino de hoje: teclado numérico e vírgula decimal
+### Passo 12 — Treino de hoje: vírgula decimal (e teclado numérico)
 
-- [ ] **Teclado:** em `client/src/views/TodaySessionView.tsx`, nos três campos
+> O `inputMode` já está feito e fica como está: não dá para conferir o teclado
+> sem aparelho (o teste é só no DevTools). **A parte obrigatória do passo é a
+> vírgula**, que dá 400 no uso normal, no celular ou no PC.
+
+- [x] **Teclado (feito, sem conferência no aparelho):** em `client/src/views/TodaySessionView.tsx`, nos três campos
   (carga, reps e RIR/RPE), o `inputMode` sai do `TextField` e vai para o
   `<input>` de dentro, pelo `slotProps`. Direto no `TextField`, o MUI coloca o
   atributo na `div` de fora (dá para ver no DevTools), e o celular abre o
@@ -906,69 +897,33 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   Nos campos de reps e de RIR/RPE, o mesmo com `inputMode: 'numeric'`.
 
-- [ ] **Vírgula:** no `registrar`, a carga troca vírgula por ponto antes do
+- [x] **Vírgula:** no `registrar`, a carga troca vírgula por ponto antes do
   `Number`:
 
 ```tsx
         carga: Number(rascunho.carga.replace(',', '.')), //teclado pt-BR digita virgula
 ```
 
-- [ ] Testar no DevTools: carga `82,5` → a série aparece como `82.5 kg × …`.
-  O teclado só dá para conferir no celular (Passo 13).
+- [x] Testar no navegador: carga `82,5` → a série aparece como `82.5 kg × …`.
 
-### Passo 13 — Testar no celular de verdade (RNF01)
+### Passo 13 — Testar a responsividade no DevTools (RNF01)
 
-- [ ] O DevTools estreito não mostra teclado nem toque, e a Fig. 2 vai ser
-  tirada no aparelho. Então o teste é no celular:
-  1. `ipconfig` no Windows → o **IPv4** da placa Wi-Fi (ex.: `192.168.0.15`).
-  2. `client/.env.local` com `VITE_API_URL=http://192.168.0.15:3000`.
-  3. `npm run dev -- --host` no `client` (reinicie se já estava rodando: o
-     Vite só lê o `.env` no start).
-  4. Na primeira vez, o Firewall do Windows pergunta sobre o `node`: liberar em
-     **rede privada**.
-  5. No celular, na **mesma Wi-Fi**: `http://192.168.0.15:5173`.
-- [ ] Roteiro no aparelho:
-  - **Rotas:** no meio do Treino de hoje, troque para outro app e volte. Se a
-    aba recarregar, ela volta em `/treino`, com as séries. O "voltar" do
-    Android volta de tela.
+- [x] `Ctrl+Shift+M` no navegador (modo dispositivo), em **360px** (celular
+  pequeno), **599px** e **600px** (troca de layout) e **768px**.
+- [x] Roteiro em cada largura:
+  - **Rotas:** F5 em cada tela → continua nela. O "voltar" do navegador volta
+    de tela.
   - **Barra inferior:** os 5 ícones + sair. O botão "Finalizar e avaliar
     treino" aparece inteiro acima da barra.
   - **Minha divisão:** o diálogo de exercícios abre e a lista rola.
-  - **Treino de hoje:** o teclado numérico abre, e `82,5` grava como 82.5 kg.
-  - **Volume, Diagnóstico e Histórico:** nada estoura a largura, e o
-    calendário cabe nas 7 colunas.
-- [ ] O que quebrar aqui é o **buffer de bugs** da Sessão B: anote, corrija e
+  - **Treino de hoje:** `82,5` grava como 82.5 kg.
+  - **Volume, Diagnóstico e Histórico:** nada estoura a largura, sem scroll
+    horizontal na página, e o calendário cabe nas 7 colunas em 360px.
+- [x] A Fig. 2 do TCC é o print do DevTools em modo celular (retrato).
+- [x] O que quebrar aqui é o **buffer de bugs** da Sessão B: anote, corrija e
   repita só a tela afetada.
 
 ### Passo 14 — Limpeza (critério "código limpo")
-
-- [ ] **Sem `console.log` de depuração.** O `console.error` dos `catch` e do
-  tratador do Passo 2 fica, porque é o registro de erro do servidor. O
-  `console.log` do `index.ts` ("server rodando na porta…") e os do
-  `seed.ts`/`resetDb.ts` também ficam: são saída de script.
-
-```bash
-# da raiz do repo: so pode sobrar index.ts, seed.ts e resetDb.ts
-grep -rn "console.log" server/src client/src
-grep -rn "TODO\|FIXME" server/src client/src
-```
-
-- [ ] **Arquivos que sobraram do template do Vite** e do hello world da S1
-  (nenhum é importado):
-
-```bash
-git rm client/src/App.css client/src/index.css
-git rm -r client/src/assets
-git rm client/public/icons.svg client/README.md
-git rm server/scripts/test-gemini.ts
-```
-
-- [ ] `client/index.html`: `<html lang="pt-BR">` e `<title>HyperTrack</title>`.
-- [ ] **Comentários.** Passar o olho nos arquivos das S5–S8 e enxugar
-  comentário longo que explica decisão (os que citam D11, D14 etc. em várias
-  linhas). Comentário fica onde você mesmo comentaria: o porquê de uma linha
-  que não é óbvia, em uma linha. A justificativa das decisões está no
-  `PLANEJAMENTO.md` e no texto do TCC, não precisa estar no código.
 - [ ] **`README.md` da raiz** está parado na S1: diz "diagnóstico **semanal**"
   e "Status: Semana 1". Corrigir a descrição para "diagnóstico **por sessão de
   treino** gerado por IA (Google Gemini), com score calculado no backend",
@@ -979,27 +934,27 @@ git rm server/scripts/test-gemini.ts
 
 ## Passo 15 — Fechar a semana (🏁 DEV PRONTO)
 
-1. [ ] `npm run test` no `server` verde na suíte inteira: **68/68**, com
+1. [x] `npm run test` no `server` verde na suíte inteira: **68/68**, com
    `GEMINI_MOCK=true`.
-2. [ ] `npm run build` nos **dois** lados sem erro de tipo. O aviso de chunk
+2. [x] `npm run build` nos **dois** lados sem erro de tipo. O aviso de chunk
    > 500 kB do `vite build` é esperado.
-3. [ ] **Run collection** no Postman: **78/78**, todos os `pm.test` verdes.
-4. [ ] **RNF06 pela tela:** `GEMINI_MOCK=falha` no `server/.env` → **reiniciar o
+3. [x] **Run collection** no Postman: **78/78**, todos os `pm.test` verdes.
+4. [x] **RNF06 pela tela:** `GEMINI_MOCK=falha` no `server/.env` → **reiniciar o
    server** → registrar 2 séries → "Finalizar e avaliar treino" → "Treino
    salvo, mas a avaliação falhou…" → no Histórico, a sessão está lá, com as
    séries e sem avaliação. Voltar para `GEMINI_MOCK=true`, reiniciar e usar
    "Avaliar treino" no detalhe.
-5. [ ] Passo 13 feito no celular, sem pendência no buffer de bugs.
-6. [ ] **Gravar a demo ponta a ponta** com `GEMINI_MOCK=false` e a chave real:
+5. [x] Passo 13 feito no DevTools, sem pendência no buffer de bugs.
+6. [x] **Gravar a demo ponta a ponta** com `GEMINI_MOCK=false` e a chave real:
    login → Minha divisão → Treino de hoje (3–4 séries) → Volume da semana →
    "Finalizar e avaliar treino" → Diagnóstico → Histórico.
 7. [ ] **Prints provisórios das Fig. 4 e 5**, com exercícios e cargas
    plausíveis (seção 5 do `PLANEJAMENTO.md`). Salvar em `02-prints/`. As
    versões finais saem depois do code freeze.
-8. [ ] Commits. Sugestão: um para o backend (Passos 2–5), um para os testes
+8. [x] Commits. Sugestão: um para o backend (Passos 2–5), um para os testes
    (Passos 6–7), um para as rotas (Passo 10, para dar para reverter sozinho),
-   um para o resto do front (Passos 9, 11 e 12) e um para a limpeza (Passo 14).
-9. [ ] **Tag `v1.0-dev`**, só depois dos itens 1–3 verdes e do `git status`
+   um para o resto do front (Passos 11 e 12) e um para a limpeza (Passo 14).
+9. [x] **Tag `v1.0-dev`**, só depois dos itens 1–3 verdes e do `git status`
    limpo:
 
 ```bash
@@ -1008,7 +963,7 @@ git push origin main
 git push origin v1.0-dev   # o git push sozinho nao envia tag
 ```
 
-10. [ ] Marcar os cards da S9 no Trello (`/trello-sync`), incluindo os critérios
+10. [x] Marcar os cards da S9 no Trello (`/trello-sync`), incluindo os critérios
     de aceite do entregável.
 
 > **Documentação (fica comigo):** registrar D19–D22 no `PLANEJAMENTO.md`
@@ -1022,17 +977,17 @@ O DEV PRONTO vence em 06/10.
 
 1. **Sessão A:** Passos 2 → 5, rodando a suíte a cada passo. Depois os testes
    (Passos 6–7). O backend fecha antes do front.
-2. **Sessão B:** Passos 9 → 12 no DevTools. As rotas (Passo 10) vêm **antes**
+2. **Sessão B:** Passos 10 → 12. As rotas (Passo 10) vêm **antes**
    da barra inferior (Passo 11), porque a `Sidebar` nova já usa `useNavigate`.
-   Depois o celular (Passo 13), com tempo para o buffer de bugs.
+   Depois o teste no DevTools (Passo 13), com tempo para o buffer de bugs.
 3. **Fechamento:** limpeza (Passo 14) e Passo 15. A demo e os prints com a
    chave real são as últimas coisas antes da tag.
 
 > **Se o tempo apertar**, a ordem de corte é: (1) as rotas do Passo 10; (2) a
 > passada nos comentários e o README. **Não** cortar: os testes de integração
 > (são o critério de aceite e a Tabela VI do TCC), a D21 (é 500 no uso
-> normal), a barra inferior e o teclado (sem eles a RNF01 e a Fig. 2 não se
-> sustentam), nem a tag.
+> normal), a barra inferior e a vírgula decimal (sem a barra a RNF01 e a Fig. 2
+> não se sustentam, e a vírgula é 400 no uso normal), nem a tag.
 
 ## Armadilhas comuns desta semana
 
@@ -1053,10 +1008,6 @@ O DEV PRONTO vence em 06/10.
   redirecionamento e o botão parece travado.
 - **Esquecer o `pb` da `AppShell`.** A barra inferior cobre o último botão de
   cada tela, justamente o "Finalizar e avaliar treino".
-- **`client/.env` em vez de `client/.env.local`.** O `.gitignore` ignora
-  `*.local`, e o IP da sua rede iria para o GitHub.
-- **Testar o celular com o PC na rede "Pública" do Windows.** O firewall
-  bloqueia as portas sem avisar.
 - **`git tag` sem `-a`**, ou achar que o `git push` envia a tag. Não envia: é o
   `git push origin v1.0-dev`.
 - **Gravar a demo com `GEMINI_MOCK=true`.** O texto do mock não prova o RF05.

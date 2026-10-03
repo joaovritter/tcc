@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import {
   Card, CardContent, Typography, TextField, Button, Stack, Chip,
   IconButton, MenuItem, Divider, ToggleButton, ToggleButtonGroup, CircularProgress,
@@ -45,7 +46,9 @@ const RASCUNHO_VAZIO: Rascunho = {
   nota: '',
 };
 
-export function TodaySessionView({ onVerDiagnostico }: { onVerDiagnostico: () => void }) {
+export function TodaySessionView() {
+  const navigate = useNavigate();
+
   const [hoje, setHoje] = useState<api.TreinoDeHoje | null>(null);
   const [rascunhos, setRascunhos] = useState<Record<number, Rascunho>>({});
   const [modoNota, setModoNota] = useState<'rir' | 'rpe'>(lerModoNotaSalvo);
@@ -107,7 +110,7 @@ export function TodaySessionView({ onVerDiagnostico }: { onVerDiagnostico: () =>
   }
 
   //converte pra number so no envio; manda so o campo do modo escolhido, o outro fica null -
-  //nunca Number('') = 0, que gravaria "RIR 0" sem a pessoa ter digitado nada
+  //nunca Number('') = 0, que gravaria RIR 0 sem a pessoa ter digitado nada
   async function registrar(fkExercicio: number) {
     if (!hoje?.treino) return;
     const rascunho = rascunhos[fkExercicio] ?? RASCUNHO_VAZIO;
@@ -117,7 +120,7 @@ export function TodaySessionView({ onVerDiagnostico }: { onVerDiagnostico: () =>
       await api.registrarSerie(hoje.treino.id_treino, {
         fk_exercicio: fkExercicio,
         tipo: rascunho.tipo,
-        carga: Number(rascunho.carga),
+        carga: Number(rascunho.carga.replace(',', '.')), //se usar virgula, transforma em ponto
         repeticoes: Number(rascunho.repeticoes),
         rir: ehValida && modoNota === 'rir' ? Number(rascunho.nota) : null,
         rpe: ehValida && modoNota === 'rpe' ? Number(rascunho.nota) : null,
@@ -140,8 +143,8 @@ export function TodaySessionView({ onVerDiagnostico }: { onVerDiagnostico: () =>
     }
   }
 
-  //D16: um botao, duas chamadas em sequencia. o finish grava e fecha o treino
-  //ANTES de a IA ser chamada - se o Gemini falhar, nada do treino se perde (RNF06)
+  //um botao, duas chamadas em sequencia. o finish grava e fecha o treino
+  //ANTES de a IA ser chamada - se o Gemini falhar, nada do treino se perde
   async function finalizarEAvaliar() {
     if (!hoje?.treino) return;
 
@@ -182,7 +185,7 @@ export function TodaySessionView({ onVerDiagnostico }: { onVerDiagnostico: () =>
     try {
       await api.gerarDiagnostico(idTreino);
       setPendenteAvaliacao(null);
-      onVerDiagnostico();
+      navigate('/diagnostico');
     } catch (erro) {
       if (erro instanceof api.ApiErro && erro.status === 400) {
         //sem serie valida: treino salvo, nada a avaliar - nao oferece nova tentativa
@@ -340,11 +343,10 @@ export function TodaySessionView({ onVerDiagnostico }: { onVerDiagnostico: () =>
                         </MenuItem>
                       ))}
                     </TextField>
-                    {/* inputMode decimal/numeric abre o teclado numerico no celular*/}
                     <TextField
                       label="Carga (kg)"
                       size="small"
-                      inputMode="decimal"
+                      slotProps={{ htmlInput: { inputMode: 'decimal' } }}
                       value={rascunho.carga}
                       onChange={(e) =>
                         atualizarRascunho(exercicio.fk_exercicio, 'carga', e.target.value)

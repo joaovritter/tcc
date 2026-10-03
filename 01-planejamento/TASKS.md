@@ -181,7 +181,7 @@
 - [ ] Tirar prints das principais funcionalidades (máx. **5** figuras pro documento inteiro) — [card](https://trello.com/c/en1Tho0j)
   - Critério: cada figura prova um RF diferente. Lista fechada e regras de captura na seção 6 do [`PLANEJAMENTO.md`](./PLANEJAMENTO.md).
   - [x] Fig. 1 — Minha Divisão com a semana preenchida + chips de músculos do dia (RF02, S4)
-  - [ ] Fig. 2 — Treino de Hoje **no celular**, com séries registradas (RF03 + RNF01, S5)
+  - [ ] Fig. 2 — Treino de Hoje **em modo celular (DevTools)**, com séries registradas (RF03 + RNF01, S5)
   - [ ] Fig. 3 — Volume da Semana por grupamento, com o limiar de 10 séries (RF04, S6)
   - [ ] Fig. 4 — Diagnóstico da Sessão: score 0–100 + análises + recomendações (RF05/RF06, S7)
   - [ ] Fig. 5 — Histórico: progressão de carga + diagnósticos anteriores (RF07, S8)

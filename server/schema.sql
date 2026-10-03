@@ -49,7 +49,7 @@ CREATE TABLE DivisaoExercicio (
 CREATE TABLE Treino (
   id_treino UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   fk_usuario UUID NOT NULL REFERENCES Usuario(id_usuario),
-  fk_divisao UUID REFERENCES Divisao(id_divisao),
+  fk_divisao UUID REFERENCES Divisao(id_divisao) ON DELETE SET NULL,
   completed BOOLEAN NOT NULL DEFAULT FALSE,
   data TIMESTAMP DEFAULT NOW(),
   duracao_total INTEGER

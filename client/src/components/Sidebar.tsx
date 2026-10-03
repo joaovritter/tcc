@@ -1,38 +1,49 @@
 import { useState, type ReactNode } from 'react';
-import { Box, Stack, Typography, Avatar } from '@mui/material';
+import { Avatar, Box, ButtonBase, Stack, Typography, useMediaQuery } from '@mui/material';
+import type { Theme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import CalendarViewWeekIcon from '@mui/icons-material/CalendarViewWeek';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import InsightsIcon from '@mui/icons-material/Insights';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../context/AuthContext';
-import type { Tela } from '../App';
 
-//Sidebar lateral fixa, com animação de expansão suave (Frame Motion) e itens de navegação.
-//icone only quando colapsada (76px)
+//modelo de sidebar encontrado no site 21st.dev e adaptado para o projeto.
+
+//desktop: lateral que expande no hover. 
+//celular: barra embaixo so com icones (D6)
+
 
 interface NavItem {
   label: string;
   icon: ReactNode;
-  tela?: Tela;
+  rota: string;
 }
 
-//ordem = ordem de uso: monta a rotina, treina, confere o volume
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Minha divisão', icon: <CalendarViewWeekIcon fontSize="small" />, tela: 'divisao' },
-  { label: 'Treino de hoje', icon: <FitnessCenterIcon fontSize="small" />, tela: 'treino' },
-  { label: 'Volume da semana', icon: <BarChartIcon fontSize="small" />, tela: 'volume' },
-  { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" />, tela: 'diagnostico' },
-  { label: 'Histórico', icon: <TimelineIcon fontSize="small" />, tela: 'historico' },
+  { label: 'Minha divisão', icon: <CalendarViewWeekIcon fontSize="small" />, rota: '/divisao' },
+  { label: 'Treino de hoje', icon: <FitnessCenterIcon fontSize="small" />, rota: '/treino' },
+  { label: 'Volume da semana', icon: <BarChartIcon fontSize="small" />, rota: '/volume' },
+  { label: 'Diagnóstico', icon: <InsightsIcon fontSize="small" />, rota: '/diagnostico' },
+  { label: 'Histórico', icon: <TimelineIcon fontSize="small" />, rota: '/historico' },
 ];
 
 const COLLAPSED = 76;
 const EXPANDED = 244;
 
-export function Sidebar({ tela, onNavegar }: { tela: Tela; onNavegar: (tela: Tela) => void }) {
+export function Sidebar() {
+  const celular = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'), { noSsr: true });
+  return celular ? <BarraInferior /> : <BarraLateral />;
+}
+
+function BarraLateral() {
   const [aberta, setAberta] = useState(false);
   const { usuario, logout } = useAuth();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   return (
     <Box
@@ -41,8 +52,6 @@ export function Sidebar({ tela, onNavegar }: { tela: Tela; onNavegar: (tela: Tel
       transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
       onMouseEnter={() => setAberta(true)}
       onMouseLeave={() => setAberta(false)}
-      onFocus={() => setAberta(true)}
-      onBlur={() => setAberta(false)}
       sx={{
         position: 'fixed',
         top: 20,
@@ -84,27 +93,23 @@ export function Sidebar({ tela, onNavegar }: { tela: Tela; onNavegar: (tela: Tel
 
       <Stack spacing={0.5} sx={{ flex: 1 }}>
         {NAV_ITEMS.map((item) => {
-          const disponivel = Boolean(item.tela);
-          const ativo = item.tela === tela;
+          const ativo = pathname === item.rota;
 
           return (
             <Stack
-              key={item.label}
+              key={item.rota}
               direction="row"
               spacing={1.75}
               alignItems="center"
-              onClick={() => item.tela && onNavegar(item.tela)}
+              onClick={() => navigate(item.rota)}
               sx={{
                 px: 1.75,
                 py: 1.25,
                 borderRadius: '999px',
-                cursor: disponivel ? 'pointer' : 'default',
-                opacity: disponivel ? 1 : 0.45,
+                cursor: 'pointer',
                 bgcolor: ativo ? 'primary.main' : 'transparent',
                 color: ativo ? '#F3F6F4' : 'inherit',
-                '&:hover': disponivel
-                  ? { bgcolor: ativo ? 'primary.main' : 'rgba(255,255,255,0.07)' }
-                  : undefined,
+                '&:hover': { bgcolor: ativo ? 'primary.main' : 'rgba(255,255,255,0.07)' },
               }}
             >
               {item.icon}
@@ -142,6 +147,63 @@ export function Sidebar({ tela, onNavegar }: { tela: Tela; onNavegar: (tela: Tel
           </Box>
         )}
       </Stack>
+    </Box>
+  );
+}
+
+
+//========================celular========================
+
+function BarraInferior() {
+  const { logout } = useAuth();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  return (
+    <Box
+      component="nav"
+      sx={{
+        position: 'fixed',
+        left: 12,
+        right: 12,
+        bottom: 12,
+        height: 64,
+        px: 1,
+        bgcolor: '#0F1B17',
+        borderRadius: '22px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        boxShadow: '0 20px 45px -18px rgba(15, 27, 23, 0.55)',
+        zIndex: 10,
+      }}
+    >
+      {NAV_ITEMS.map((item) => {
+        const ativo = pathname === item.rota;
+        return (
+          <ButtonBase
+            key={item.rota}
+            aria-label={item.label}
+            onClick={() => navigate(item.rota)}
+            sx={{
+              width: 44,
+              height: 44,
+              borderRadius: '999px',
+              color: ativo ? '#F3F6F4' : '#C7D3CE',
+              bgcolor: ativo ? 'primary.main' : 'transparent',
+            }}
+          >
+            {item.icon}
+          </ButtonBase>
+        );
+      })}
+      <ButtonBase
+        aria-label="Sair"
+        onClick={logout}
+        sx={{ width: 44, height: 44, borderRadius: '999px', color: '#7C8B85' }}
+      >
+        <LogoutIcon fontSize="small" />
+      </ButtonBase>
     </Box>
   );
 }

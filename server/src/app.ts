@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import healthRoutes from './routes/healthRoutes';
@@ -24,5 +24,16 @@ app.use(sessionRoutes);
 app.use(metricsRoutes);
 app.use(diagnosticoRoutes);
 app.use(historyRoutes);
+
+//nenhuma rota foi encontrada
+app.use((req: Request,  res: Response) => {
+    res.status(404).json({erro: 'Rota não encontrada'});
+});
+
+//erro que nao foi tratado no controller. precisa dos 4 parametros pro express reconhecer
+app.use((erro: any, req: Request, res: Response, next: NextFunction) => {
+  console.error(erro);
+  res.status(erro.status || 500).json({ erro: 'Erro ao processar a requisição' });
+})
 
 export default app;

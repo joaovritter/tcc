@@ -123,7 +123,7 @@ Decidido em 03/09: **5 figuras no documento inteiro** (era 6). Critério de sele
 - Tirar **todas depois do code freeze** (19/10), não semana a semana — figuras com UI de épocas diferentes destoam entre capítulos.
 - **Mesmo usuário e mesma semana de dados** nas 5, pra o leitor seguir uma narrativa: essa divisão → esse treino → esse volume → esse diagnóstico.
 - **Dados realistas** (exercícios e cargas plausíveis; nada de "teste", "aaa", 999 kg).
-- Fig. 2 em **retrato, recortada no aparelho** — é ela que sustenta a RNF01; print de navegador estreitado não convence.
+- Fig. 2 em **retrato, recortada do DevTools em modo celular** (sem teste em aparelho real) — é ela que sustenta a RNF01.
 - Conferir legibilidade **no PDF impresso**: se não der pra ler o RPE, a figura não prova nada.
 
 ## 6. Referência rápida — prompt de 5 blocos (Tabela V)

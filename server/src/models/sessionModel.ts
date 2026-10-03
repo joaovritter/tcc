@@ -17,6 +17,17 @@ export async function buscarTreinoAberto(
     return resultado.rows[0] ?? null;
 }
 
+//treino que ficou aberto de outro dia (esqueceu de finalizar).
+//fecha sem registrar duracao porque nao da pra saber quando acabou
+export async function fecharTreinosAntigos(fkUsuario: string): Promise<void> {
+  await pool.query(
+    `UPDATE Treino SET completed = TRUE
+    WHERE fk_usuario = $1 AND completed = FALSE AND data::date < CURRENT_DATE`,
+    [fkUsuario]
+  );
+}
+
+
 // insere um treino vazio ligado (opcionalmente) à divisão do dia
 export async function criarTreino(
   fkUsuario: string,

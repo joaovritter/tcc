@@ -4,6 +4,8 @@ import request from 'supertest';
 import app from '../app';
 import { registrarComTreinoAberto } from './testHelpers';
 import { calcularPv, calcularPi, calcularScoreGeral } from '../services/scoreService';
+import { interpretarResposta } from '../services/geminiService';
+
 
 
 async function finalizar(token: string, idTreino: string) {
@@ -86,4 +88,17 @@ test('calcularPv: grupamento fora da rotina não entra na média', () => {
     };
     // só o grupamento 1 está na rotina: Pv = 100, não (100+0)/2 = 50
     assert.equal(calcularPv(volume as any, new Set([1])), 100);
+});
+
+
+test('resposta da IA só vira um diagnóstico se for JSON com os 3 campos', () => {
+    const texto = JSON.stringify({
+        diagnostico_exercicios: [],
+        analise_grupamentos: [],
+        recomendacoes_proxima_sessao: ['subir 2,5 kg'],
+    });
+    assert.deepEqual(interpretarResposta(texto).recomendacoes_proxima_sessao, ['subir 2,5 kg']);
+
+    assert.throws(() => interpretarResposta('Claro! Aqui está o diagnóstico do treino.'));
+    assert.throws(() => interpretarResposta(JSON.stringify({ diagnostico_exercicios: [] })));
 });
