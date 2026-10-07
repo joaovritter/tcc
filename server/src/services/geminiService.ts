@@ -47,7 +47,7 @@ function montarPrompt(treino: Treino, volume: VolumeSemanal, series: SerieValida
   const formato = `Responda apenas em JSON com os campos: diagnostico_exercicios `
     + `(array de {nome_exercicio, comentario}), analise_grupamentos (array de `
     + `{nome_grupamento, comentario}) e recomendacoes_proxima_sessao (array de strings). `
-    + `Não inclua nenhum campo numérico de pontuação — isso é calculado fora da IA.`;
+    + `Não inclua nenhum campo numérico de pontuação, isso é calculado fora da IA.`;
 
   return [persona, contexto, dados, diretrizes, formato].join('\n\n');
 
