@@ -43,7 +43,7 @@ function montarPrompt(treino: Treino, volume: VolumeSemanal, series: SerieValida
     + `indica estímulo otimizado; quanto mais perto de RPE 6 (4 RIR) ao longo da sessão, `
     + `menor a intensidade relativa efetiva do treino [Zourdos; Helms].`;
 
-  // Bloco 5 — Formato de saída: só JSON, sem texto fora do schema
+  // Bloco 5 - Formato de saída: só JSON, sem texto fora do schema
   const formato = `Responda apenas em JSON com os campos: diagnostico_exercicios `
     + `(array de {nome_exercicio, comentario}), analise_grupamentos (array de `
     + `{nome_grupamento, comentario}) e recomendacoes_proxima_sessao (array de strings). `
@@ -54,6 +54,7 @@ function montarPrompt(treino: Treino, volume: VolumeSemanal, series: SerieValida
 }
 // schema de validação do JSON de saída, para o Gemini filtrar respostas inválidas
 //isso é o formato que o Gemini vai tentar devolver
+//diferente do RAG que busca documentos externos, aqui a IA tem que gerar o conteúdo do zero
 const SCHEMA = {
   type: 'object',
   properties: {
