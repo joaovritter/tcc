@@ -20,8 +20,8 @@ Atualizado em 26/10/2026. Esta versão segue a ordem do artigo e já traz as dec
 | — | Resumo | E3 (por último) | ⏳ |
 | I | Introdução e objetivos | E1 | ✅ |
 | II | Referencial teórico (II.A a II.E) | E1 | ✅ |
-| III | Declaração de uso de IA | E1 | ⚠️ preencher a finalidade |
-| IV | Metodologia: Abordagem de desenvolvimento | E2 | ⚠️ 2 ajustes + cronograma |
+| III | Declaração de uso de IA | E1 | ✅ |
+| IV | Metodologia: Abordagem de desenvolvimento | E2 | ✅ (falta só a frase do cronograma, para depois) |
 | IV | Metodologia: Requisitos do sistema | E2 | ✅ |
 | IV | Metodologia: Procedimentos de validação | E2 | ⏳ falta o [N] |
 | V | Solução desenvolvida (7 subseções) | E2 | ⏳ |
@@ -37,7 +37,7 @@ Atualizado em 26/10/2026. Esta versão segue a ordem do artigo e já traz as dec
 - [ ] **Achados da heurística** (quantidade por severidade), para os Resultados.
 - [ ] **Prints** tirados depois do code freeze, com `GEMINI_MOCK=false`.
 - [ ] **BibTeX novos** no `references.bib`: `nielsen1994severity` e `googleStructuredOutput`.
-- [ ] **Declaração de IA:** trocar `[descrever a finalidade do uso]`.
+- [ ] **Frase do cronograma** no fim da Abordagem de Desenvolvimento (deixada para depois).
 - [ ] **D13 no `PLANEJAMENTO.md`:** ainda diz "grupamentos da divisão da semana"; o certo é "grupamentos treinados na sessão".
 - [ ] **PDF parcial ao orientador** (Introdução até Solução). O prazo era 25/10.
 
@@ -86,28 +86,19 @@ Os dados são persistidos no sistema gerenciador de banco de dados relacional Po
 
 ---
 
-# III · Declaração de uso de IA — E1 ⚠️
+# III · Declaração de uso de IA — E1 ✅
 
-**Onde:** `\section{Declaração de uso de Inteligência Artificial}`, entre o Referencial e a Metodologia, **numerada**.
+Feito no TCC II: seção **numerada**, entre o Referencial e a Metodologia, com o modelo de texto do curso e a finalidade preenchida (planejamento, roteiros de implementação com código, depuração e revisão do código, redação e revisão do texto).
 
-O autor está usando o modelo de texto do curso. Falta só trocar `[descrever a finalidade do uso]`. Sugestão:
-
-```latex
-com a finalidade de apoiar o planejamento das etapas de desenvolvimento, a elaboração de roteiros de implementação com exemplos de código, a depuração e revisão do código, e a redação e revisão do texto.
-```
-
-**Ajustar antes de usar:**
-- listar todas as ferramentas usadas de fato (Claude no chat, Claude Code, outras);
-- manter "redação e revisão do texto": os textos deste arquivo são sugestões geradas com IA;
-- o Gemini **não** entra aqui: ele é parte do sistema e está descrito na Solução.
+**Conferir na revisão:** se outras ferramentas foram usadas (Claude Code, por exemplo), incluir. O Gemini **não** entra aqui: é parte do sistema.
 
 ---
 
 # IV · Metodologia — E2
 
-## IV · Abertura e Abordagem de Desenvolvimento ⚠️
+## IV · Abertura e Abordagem de Desenvolvimento ✅ (cronograma pendente)
 
-O texto já está no TCC II. Faltam dois ajustes e a frase do cronograma. Versão final:
+Feito no TCC II. Falta só colar a frase do cronograma (último parágrafo abaixo), quando chegar a hora. Versão final:
 
 ```latex
 \section{Metodologia}
@@ -127,16 +118,14 @@ O projeto foi conduzido pela metodologia FDD \cite{palmer2001practical}, que atu
     \item Visualizar o histórico de cargas, de volume e das sessões, com seus diagnósticos.
 \end{itemize}
 
-As etapas de planejamento, projeto e construção por funcionalidade foram executadas em nove ciclos semanais (S1 a S9), de agosto a outubro de 2026. O primeiro ciclo preparou a base do sistema, com a estrutura MVC e o banco de dados. Os ciclos de S2 a S8 entregaram as funcionalidades do \textit{backlog} na ordem de suas dependências: autenticação; divisão semanal e exercícios da rotina; execução do treino; finalização e volume semanal; diagnóstico via Gemini; e telas de diagnóstico e histórico. Funcionalidades maiores, como a divisão semanal, foram divididas em dois ciclos, respeitando o limite de duas semanas do FDD. O último ciclo foi dedicado aos testes de integração e aos ajustes finais.
+As etapas de planejamento, projeto e construção por funcionalidade foram executadas em nove ciclos semanais (S1 a S9), de agosto a outubro de 2026. O primeiro ciclo preparou a base do sistema, com a estrutura MVC e o banco de dados. Os ciclos de S2 a S8 entregaram as funcionalidades do \textit{backlog} na ordem de suas dependências: autenticação, divisão semanal e exercícios da rotina, execução do treino, finalização e volume semanal, diagnóstico via Gemini, e telas de diagnóstico e histórico. Funcionalidades maiores, como a divisão semanal, foram divididas em dois ciclos, respeitando o limite de duas semanas do FDD. O último ciclo foi dedicado aos testes de integração e aos ajustes finais.
 
 Em relação ao cronograma da proposta, a implementação foi antecipada: o banco de dados, previsto para setembro e outubro, foi implementado em agosto; a integração com o Gemini, prevista para outubro e novembro, foi concluída em setembro; e a validação, prevista para novembro, ocorreu em outubro.
 ```
 
-**Os dois ajustes em relação ao que está no TCC II:**
-- "a primeira etapa" → "a primeira do FDD" (evita repetir "etapa");
-- lista de ciclos com **ponto e vírgula**, porque alguns itens têm "e" dentro.
+**Decisão do autor:** a lista de ciclos fica com vírgulas.
 
-**O que entra:** o último parágrafo (cronograma), que substitui a Fig. 6.
+**Pendente:** o último parágrafo (cronograma), que substitui a Fig. 6.
 
 **Apagado:** a Tabela I (`quadroFDD`) e o parágrafo "Após a definição do backlog...". Conferir se não sobrou `\ref{quadroFDD}`.
 
