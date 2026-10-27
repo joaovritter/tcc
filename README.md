@@ -97,6 +97,11 @@ Para usar a IA de verdade, coloque a chave em `GEMINI_API_KEY` e mude
 |---|---|
 | `npm run dev` | sobe a API com hot-reload |
 | `npm run seed` | popula grupos musculares e exercícios |
-| `npm run db:reset` | apaga e recria o banco com o seed |
+| `npm run seed:demo` | carrega os usuários de demonstração (`src/demo/usuariosDemo.json`) |
+| `npm run demo:export` | salva os usuários de demonstração do banco local no JSON |
+| `npm run db:reset` | apaga e recria o banco com o seed e os usuários de demonstração |
+
+Usuários de demonstração (senha `www.com.brj`): `joao@teste.com`, com 5 semanas
+de treino e diagnósticos, e `joao2@teste.com`, sem dados, para ver as telas vazias.
 | `npm run test` | roda os testes |
 | `npm run build` | compila o TypeScript |

@@ -1,0 +1,4162 @@
+[
+  {
+    "nome": "joaoteste",
+    "email": "joao@teste.com",
+    "senha_hash": "$2b$10$Vn1xda16S0o7PWdMHyoX3u76n4Do7Vl4PNN5X/./ECka9pbYSjuXy",
+    "divisoes": [
+      {
+        "dia_semana": 1,
+        "nome": "Push",
+        "exercicios": [
+          "Supino Reto com Barra",
+          "Supino Inclinado com Halteres",
+          "Desenvolvimento com Halteres",
+          "Elevação Lateral com Halteres",
+          "Tríceps Pulldown (Corda)",
+          "Tríceps Francês na Polia"
+        ]
+      },
+      {
+        "dia_semana": 2,
+        "nome": "Pull",
+        "exercicios": [
+          "Puxada Aberta na Polia",
+          "Remada Curvada com Barra",
+          "Remada Baixa Sentado",
+          "Face Pull",
+          "Rosca Direta com Barra W",
+          "Rosca Martelo com Halteres"
+        ]
+      },
+      {
+        "dia_semana": 3,
+        "nome": "Legs",
+        "exercicios": [
+          "Agachamento Livre com Barra",
+          "Leg Press 45",
+          "Stiff com Barra",
+          "Cadeira Extensora",
+          "Mesa Flexora (Deitada)",
+          "Gêmeos em Pé",
+          "Abdominal na Polia Alta"
+        ]
+      },
+      {
+        "dia_semana": 5,
+        "nome": "Upper",
+        "exercicios": [
+          "Supino Reto com Halteres",
+          "Puxada Fechada (Triângulo)",
+          "Desenvolvimento na Máquina",
+          "Remada Unilateral (Serrote)",
+          "Rosca Scott (Barra W)",
+          "Tríceps Testa com Barra W"
+        ]
+      }
+    ],
+    "treinos": [
+      {
+        "data": "2026-09-28 18:30:00.000000",
+        "dia_divisao": 1,
+        "completed": true,
+        "duracao_total": 62,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "feeder",
+            "carga": 55,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 8,
+            "rir": 2
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 7,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 26,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 26,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "aquecimento",
+            "carga": 12,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "feeder",
+            "carga": 18,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 22,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 22,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "aquecimento",
+            "carga": 5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "feeder",
+            "carga": 8,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 10,
+            "repeticoes": 12,
+            "rir": 2
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 10,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": 2
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 25,
+            "repeticoes": 12,
+            "rir": 2
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 25,
+            "repeticoes": 11,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 62,
+          "data_geracao": "2026-09-28 19:35:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 83.33333333333331,
+              "pv": 40
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal acumulado de 4 séries está significativamente abaixo do limiar de 10 séries necessárias para hipertrofia otimizada.",
+                "nome_grupamento": "Ombros"
+              },
+              {
+                "comentario": "O volume atual de 4 séries é insuficiente; o grupamento necessita de mais 6 séries adicionais na semana para atingir o volume mínimo.",
+                "nome_grupamento": "Peito"
+              },
+              {
+                "comentario": "Volume insuficiente; a carga de trabalho atual não provê estímulo crônico suficiente para adaptações hipertróficas consistentes.",
+                "nome_grupamento": "Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução técnica adequada com RIR entre 1 e 2, demonstrando boa intensidade de esforço para o estímulo de deltoides.",
+                "nome_exercicio": "Desenvolvimento com Halteres"
+              },
+              {
+                "comentario": "Volume e RIR bem controlados; o esforço está na faixa ótima para isolamento lateral.",
+                "nome_exercicio": "Elevação Lateral com Halteres"
+              },
+              {
+                "comentario": "Boa progressão entre séries, mantendo a falha técnica controlada dentro da margem recomendada.",
+                "nome_exercicio": "Supino Inclinado com Halteres"
+              },
+              {
+                "comentario": "Intensidade mecânica alta, com RIR 1 e 2, garantindo recrutamento efetivo de fibras peitorais.",
+                "nome_exercicio": "Supino Reto com Barra"
+              },
+              {
+                "comentario": "Boa amplitude mantida sob carga, com RIR adequado para o trabalho de alongamento do tríceps.",
+                "nome_exercicio": "Tríceps Francês na Polia"
+              },
+              {
+                "comentario": "Execução precisa, mantendo a tensão constante sob RIR 1 e 2.",
+                "nome_exercicio": "Tríceps Pulldown (Corda)"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar a frequência semanal de treino para atingir o limiar mínimo de 10 séries por grupamento.",
+              "Adicionar pelo menos 2 a 3 séries complementares para Ombros, Peito e Tríceps ainda nesta semana de referência.",
+              "Priorizar a manutenção do RIR entre 1 e 2, evitando RPE abaixo de 8 para garantir a intensidade necessária.",
+              "Considerar a introdução de um segundo dia de treino para esses grupamentos para viabilizar o volume necessário sem prejudicar a recuperação."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-09-29 18:40:00.000000",
+        "dia_divisao": 2,
+        "completed": true,
+        "duracao_total": 55,
+        "series": [
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 8,
+            "rir": 2
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 7,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 55,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 55,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 25,
+            "repeticoes": 15,
+            "rir": 2
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 25,
+            "repeticoes": 14,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "aquecimento",
+            "carga": 8,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "feeder",
+            "carga": 12,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 14,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 14,
+            "repeticoes": 9,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 68,
+          "data_geracao": "2026-09-29 19:38:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 83.33333333333333,
+              "pv": 53.333333333333336
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "O volume semanal atual de 4 séries está significativamente abaixo do limiar mínimo de 10 séries, sendo insuficiente para o volume de treino necessário.",
+                "nome_grupamento": "Bíceps"
+              },
+              {
+                "comentario": "Com apenas 6 séries semanais, o grupamento carece de volume para otimização da resposta hipertrófica.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "O volume acumulado de 6 séries é sub-ótimo. É necessário aumentar a frequência ou o número de séries por sessão.",
+                "nome_grupamento": "Ombros"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Intensidade adequada com RIR entre 1 e 2, garantindo recrutamento efetivo da musculatura alvo.",
+                "nome_exercicio": "Rosca Direta com Barra W"
+              },
+              {
+                "comentario": "Progresso consistente, mantendo controle de cadência e proximidade da falha técnica.",
+                "nome_exercicio": "Rosca Martelo com Halteres"
+              },
+              {
+                "comentario": "Execução dentro da faixa de intensidade ideal para hipertrofia, respeitando o controle do RIR.",
+                "nome_exercicio": "Puxada Aberta na Polia"
+              },
+              {
+                "comentario": "Volume de carga satisfatório, demonstrando boa mecânica de execução com RIR próximo ao otimizado.",
+                "nome_exercicio": "Remada Baixa Sentado"
+              },
+              {
+                "comentario": "A redução na repetição entre séries indica fadiga acumulada, mas dentro do esperado para o exercício composto.",
+                "nome_exercicio": "Remada Curvada com Barra"
+              },
+              {
+                "comentario": "Volume e intensidade bem controlados para o trabalho de deltóide posterior.",
+                "nome_exercicio": "Face Pull"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar progressivamente o número de séries por sessão para atingir a meta mínima de 10 séries semanais por grupamento.",
+              "Priorizar exercícios multiarticulares no início do treino para permitir maior sobrecarga tensional.",
+              "Monitorar a progressão de carga mantendo a margem de 1-2 RIR, evitando o aumento indiscriminado de volume sem a devida recuperação."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-09-30 18:20:00.000000",
+        "dia_divisao": 3,
+        "completed": true,
+        "duracao_total": 68,
+        "series": [
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "aquecimento",
+            "carga": 50,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "feeder",
+            "carga": 75,
+            "repeticoes": 5,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 90,
+            "repeticoes": 8,
+            "rir": 3
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 90,
+            "repeticoes": 7,
+            "rir": 2
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "aquecimento",
+            "carga": 100,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "feeder",
+            "carga": 160,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 200,
+            "repeticoes": 10,
+            "rir": 3
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 200,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "feeder",
+            "carga": 60,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 10,
+            "rir": 3
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 12,
+            "rir": 3
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 11,
+            "rir": 2
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "aquecimento",
+            "carga": 25,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "feeder",
+            "carga": 37.5,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 12,
+            "rir": 3
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 11,
+            "rir": 2
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "feeder",
+            "carga": 65,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 80,
+            "repeticoes": 15,
+            "rir": 3
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 80,
+            "repeticoes": 14,
+            "rir": 2
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "feeder",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": 3
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 40,
+            "repeticoes": 11,
+            "rir": 2
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 55,
+          "data_geracao": "2026-09-30 19:31:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 49.999999999999986,
+              "pv": 60
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal muito abaixo do limiar mínimo de 10 séries, resultando em insuficiência para hipertrofia.",
+                "nome_grupamento": "Abdômen"
+              },
+              {
+                "comentario": "Atingiu o volume semanal recomendado, porém a intensidade relativa (RPE) esteve consistentemente abaixo da zona de otimização.",
+                "nome_grupamento": "Pernas"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "O esforço está abaixo do limiar de otimização; a intensidade precisa ser ajustada para atingir o RIR 1 com consistência.",
+                "nome_exercicio": "Abdominal na Polia Alta"
+              },
+              {
+                "comentario": "Volume de intensidade subótimo, mantendo-se na zona de RIR 2-3 em vez de buscar a falha técnica ou RIR 1.",
+                "nome_exercicio": "Agachamento Livre com Barra"
+              },
+              {
+                "comentario": "Execução dentro de uma margem segura, porém carece de maior proximidade com a falha para maximizar o recrutamento de fibras.",
+                "nome_exercicio": "Cadeira Extensora"
+              },
+              {
+                "comentario": "Intensidade moderada; é necessário progredir na carga ou reduzir o RIR para garantir estímulo hipertrófico adequado.",
+                "nome_exercicio": "Gêmeos em Pé"
+              },
+              {
+                "comentario": "A variação entre RIR 2 e 3 indica que a carga atual permite uma intensidade relativa maior antes da falha técnica.",
+                "nome_exercicio": "Leg Press 45"
+              },
+              {
+                "comentario": "O estímulo está aquém do ideal; o controle motor está bom, mas a proximidade da falha deve ser aumentada.",
+                "nome_exercicio": "Mesa Flexora (Deitada)"
+              },
+              {
+                "comentario": "A série final apresentou RIR 3, o que sugere um esforço insuficiente para o nível de treinamento atual.",
+                "nome_exercicio": "Stiff com Barra"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar a proximidade da falha em todos os exercícios, visando RIR 1 (RPE 9) na maioria das séries válidas.",
+              "Aumentar a frequência semanal de treino para os grupamentos de Bíceps, Costas, Ombros, Peito e Tríceps para atingir o mínimo de 10 séries semanais.",
+              "Incrementar o volume semanal para o grupamento de Abdômen, visando o limiar mínimo de 10 séries.",
+              "Priorizar a progressão de carga apenas após a estabilização da intensidade relativa em RIR 1."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-02 19:00:00.000000",
+        "dia_divisao": 5,
+        "completed": true,
+        "duracao_total": 51,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "aquecimento",
+            "carga": 16,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "feeder",
+            "carga": 24,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 55,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 55,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "feeder",
+            "carga": 32.5,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 40,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 40,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "feeder",
+            "carga": 22,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 28,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 28,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 25,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 25,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 78,
+          "data_geracao": "2026-10-02 19:54:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 83.33333333333331,
+              "pv": 72
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal de 6 séries está abaixo do limiar de 10. Necessário aumentar o número de séries efetivas.",
+                "nome_grupamento": "Bíceps"
+              },
+              {
+                "comentario": "Volume adequado, atingindo o limiar mínimo de 10 séries semanais.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "Volume de 8 séries próximo ao limiar, mas ainda insuficiente para otimização hipertrófica.",
+                "nome_grupamento": "Ombros"
+              },
+              {
+                "comentario": "Volume de 6 séries abaixo da recomendação científica. É necessário adicionar pelo menos 4 séries semanais adicionais.",
+                "nome_grupamento": "Peito"
+              },
+              {
+                "comentario": "Volume de 6 séries abaixo do limiar mínimo. O estímulo de intensidade é bom, mas o volume total deve subir.",
+                "nome_grupamento": "Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução dentro da faixa de intensidade ideal (RIR 1-2). Manter a progressão de carga mantendo a técnica.",
+                "nome_exercicio": "Rosca Scott (Barra W)"
+              },
+              {
+                "comentario": "Bom controle de intensidade. A cadência deve ser preservada conforme o aumento de volume nas próximas semanas.",
+                "nome_exercicio": "Puxada Fechada (Triângulo)"
+              },
+              {
+                "comentario": "RPE condizente com o volume proposto. Estimulo eficiente para hipertrofia de dorsais.",
+                "nome_exercicio": "Remada Unilateral (Serrote)"
+              },
+              {
+                "comentario": "O esforço está bem posicionado. O uso da máquina permite uma falha técnica mais segura com o RPE 9.",
+                "nome_exercicio": "Desenvolvimento na Máquina"
+              },
+              {
+                "comentario": "Estímulo adequado para peitorais. Atenção à estabilidade conforme a fadiga acumulada na sessão aumenta.",
+                "nome_exercicio": "Supino Reto com Halteres"
+              },
+              {
+                "comentario": "Boa relação entre carga e percepção de esforço. O volume atual é insuficiente para a meta semanal, mas a intensidade por série está correta.",
+                "nome_exercicio": "Tríceps Testa com Barra W"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume semanal de treino para Bíceps, Peito e Tríceps para atingir o mínimo de 10 séries por grupamento.",
+              "Priorizar o aumento de volume total antes de elevar a intensidade máxima (RPE 10), visando a manutenção do RIR 1-2.",
+              "Avaliar a inclusão de um segundo dia de treino para os grupamentos com volume insuficiente para distribuir a carga semanal."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-05 18:30:00.000000",
+        "dia_divisao": 1,
+        "completed": true,
+        "duracao_total": 59,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "feeder",
+            "carga": 55,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 72.5,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 72.5,
+            "repeticoes": 7,
+            "rir": 0
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 28,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 28,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "aquecimento",
+            "carga": 12,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "feeder",
+            "carga": 18,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 24,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 24,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "aquecimento",
+            "carga": 5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "feeder",
+            "carga": 8,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 10,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 70,
+          "data_geracao": "2026-10-05 19:32:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 40
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal de 4 séries está muito abaixo do limiar de 10 séries. É necessária uma progressão gradual para atingir o volume mínimo recomendado.",
+                "nome_grupamento": "Ombros"
+              },
+              {
+                "comentario": "Atualmente com 4 séries semanais, insuficiente para estímulo hipertrófico ótimo. Necessita aumento de volume em frequências subsequentes.",
+                "nome_grupamento": "Peito"
+              },
+              {
+                "comentario": "Volume de 4 séries semanais abaixo do ideal. A intensidade está correta, mas o volume total precisa ser dobrado ou triplicado para atingir patamares ótimos.",
+                "nome_grupamento": "Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução consistente com RIR 1. A manutenção da técnica é crucial para evitar compensação lombar nesta faixa de intensidade.",
+                "nome_exercicio": "Desenvolvimento com Halteres"
+              },
+              {
+                "comentario": "Progresso de volume percebido entre as séries. O controle da fase excêntrica deve ser priorizado para otimizar o recrutamento das fibras laterais.",
+                "nome_exercicio": "Elevação Lateral com Halteres"
+              },
+              {
+                "comentario": "Estímulo adequado para peitoral superior. A variação de repetições sugere bom controle motor próximo à falha técnica.",
+                "nome_exercicio": "Supino Inclinado com Halteres"
+              },
+              {
+                "comentario": "A primeira série atingiu falha concêntrica (RIR 0). Deve-se monitorar a fadiga central para não comprometer a técnica na segunda série.",
+                "nome_exercicio": "Supino Reto com Barra"
+              },
+              {
+                "comentario": "Boa manutenção do RIR. O trabalho em alongamento é excelente para hipertrofia do vasto lateral e cabeça longa.",
+                "nome_exercicio": "Tríceps Francês na Polia"
+              },
+              {
+                "comentario": "Volume e intensidade alinhados. O foco deve ser na extensão completa do cotovelo sem compensação escapular.",
+                "nome_exercicio": "Tríceps Pulldown (Corda)"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o número de séries semanais para Ombros, Peito e Tríceps visando atingir o mínimo de 10 séries.",
+              "Distribuir o volume de treino ao longo da semana para evitar fadiga excessiva em uma única sessão.",
+              "Manter a intensidade atual entre RIR 1 e 2, garantindo a execução técnica perfeita antes de adicionar mais volume de séries.",
+              "Considerar a introdução de novos exercícios ou aumento do número de séries por exercício para elevar o volume semanal de forma segura."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-06 18:35:00.000000",
+        "dia_divisao": 2,
+        "completed": true,
+        "duracao_total": 53,
+        "series": [
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 62.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 62.5,
+            "repeticoes": 9,
+            "rir": 0
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 7,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 15,
+            "rir": 1
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 14,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "aquecimento",
+            "carga": 8,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "feeder",
+            "carga": 12,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 16,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 16,
+            "repeticoes": 8,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 77,
+          "data_geracao": "2026-10-06 19:31:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 53.333333333333336
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Intensidade está ótima, porém o volume semanal total está crítico, alcançando apenas 40% do limiar mínimo necessário.",
+                "nome_grupamento": "Bíceps"
+              },
+              {
+                "comentario": "Intensidade global satisfatória, contudo o volume acumulado de 6 séries é insuficiente para promover adaptações hipertróficas consistentes.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "Estímulo efetivo na sessão, mas o grupamento precisa de maior frequência ou volume distribuído ao longo da semana para atingir o limiar de 10 séries.",
+                "nome_grupamento": "Ombros"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Excelente controle de intensidade, mantendo-se na zona alvo de RIR 1 com carga estável.",
+                "nome_exercicio": "Rosca Direta com Barra W"
+              },
+              {
+                "comentario": "Execução consistente com RPE adequado para estímulo de hipertrofia.",
+                "nome_exercicio": "Rosca Martelo com Halteres"
+              },
+              {
+                "comentario": "A primeira série atingiu falha técnica total (RPE 10), o que pode comprometer a recuperação neuromuscular se repetido excessivamente.",
+                "nome_exercicio": "Puxada Aberta na Polia"
+              },
+              {
+                "comentario": "Volume e intensidade bem controlados, mantendo RPE 9 dentro da faixa alvo.",
+                "nome_exercicio": "Remada Baixa Sentado"
+              },
+              {
+                "comentario": "Carga desafiadora que manteve o padrão de esforço próximo ao ideal, observando-se leve queda na performance na segunda série.",
+                "nome_exercicio": "Remada Curvada com Barra"
+              },
+              {
+                "comentario": "Trabalho de isolamento posterior de ombro bem executado, dentro da faixa de RPE recomendada.",
+                "nome_exercicio": "Face Pull"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o número de séries semanais para Bíceps, Costas e Ombros para atingir o limiar de 10 séries.",
+              "Priorizar o volume em detrimento da falha concêntrica total (evitar RPE 10) para permitir um maior número de séries com qualidade.",
+              "Adicionar exercícios acessórios para atingir os grupamentos que ainda estão com volume insuficiente, como abdômen e pernas, para equilibrar o treino semanal.",
+              "Manter o controle de RPE entre 8 e 9 para garantir a progressão de carga sem gerar estresse excessivo no sistema nervoso central."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-07 18:25:00.000000",
+        "dia_divisao": 3,
+        "completed": true,
+        "duracao_total": 70,
+        "series": [
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "aquecimento",
+            "carga": 50,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "feeder",
+            "carga": 75,
+            "repeticoes": 5,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 95,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 95,
+            "repeticoes": 7,
+            "rir": 0
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "aquecimento",
+            "carga": 100,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "feeder",
+            "carga": 160,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 220,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 220,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "feeder",
+            "carga": 60,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "aquecimento",
+            "carga": 25,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "feeder",
+            "carga": 37.5,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 47.5,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 47.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "feeder",
+            "carga": 65,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 90,
+            "repeticoes": 15,
+            "rir": 1
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 90,
+            "repeticoes": 14,
+            "rir": 1
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "feeder",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 42.5,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 42.5,
+            "repeticoes": 11,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 80,
+          "data_geracao": "2026-10-07 19:38:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 60
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal muito abaixo do limiar de 10 séries, sendo necessária a progressão do volume total para garantir resposta hipertrófica.",
+                "nome_grupamento": "Abdômen"
+              },
+              {
+                "comentario": "Grupamento com volume semanal adequado e intensidade de esforço excelente, atingindo o limiar mínimo de 10 séries com qualidade técnica.",
+                "nome_grupamento": "Pernas"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Volume e intensidade adequados, mantendo um RIR seguro e efetivo para hipertrofia abdominal.",
+                "nome_exercicio": "Abdominal na Polia Alta"
+              },
+              {
+                "comentario": "Excelente controle de intensidade, atingindo a falha técnica na primeira série e mantendo margem mínima na segunda.",
+                "nome_exercicio": "Agachamento Livre com Barra"
+              },
+              {
+                "comentario": "Execução dentro da faixa de RIR recomendada, proporcionando estresse metabólico eficiente para o quadríceps.",
+                "nome_exercicio": "Cadeira Extensora"
+              },
+              {
+                "comentario": "Boa manutenção de intensidade; o volume e o esforço estão bem alinhados com o objetivo de hipertrofia de panturrilhas.",
+                "nome_exercicio": "Gêmeos em Pé"
+              },
+              {
+                "comentario": "Intensidade otimizada com RIR 1, permitindo alto recrutamento de unidades motoras.",
+                "nome_exercicio": "Leg Press 45"
+              },
+              {
+                "comentario": "Estímulo consistente para os isquiotibiais, mantendo a tensão mecânica necessária.",
+                "nome_exercicio": "Mesa Flexora (Deitada)"
+              },
+              {
+                "comentario": "Aplicação correta de sobrecarga com RPE ideal para evitar colapso técnico prematuro em exercícios multiarticulares de cadeia posterior.",
+                "nome_exercicio": "Stiff com Barra"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume de séries semanais para grupamentos fora do foco atual (Abdômen, Bíceps, Costas, Ombros, Peito, Tríceps) para atingir o limiar de 10 séries.",
+              "Manter a progressão de carga apenas se o RIR for mantido acima de 0, evitando falha concêntrica total em exercícios complexos como o Agachamento.",
+              "Priorizar o aumento de volume para grupamentos deficitários nas próximas sessões de treino para evitar estagnação hipertrófica global.",
+              "Monitorar a recuperação sistêmica dado o volume elevado de trabalho em membros inferiores registrado nesta sessão."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-09 19:00:00.000000",
+        "dia_divisao": 5,
+        "completed": true,
+        "duracao_total": 57,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "aquecimento",
+            "carga": 16,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "feeder",
+            "carga": 24,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 32,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 32,
+            "repeticoes": 8,
+            "rir": 0
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "feeder",
+            "carga": 32.5,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 42.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 42.5,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "feeder",
+            "carga": 22,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 9,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 86,
+          "data_geracao": "2026-10-09 20:00:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 72
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Atingiu o volume mínimo semanal de 10 séries, garantindo um estímulo suficiente para a manutenção e crescimento muscular.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "Estes grupamentos estão operando abaixo do limiar mínimo de 10 séries semanais, o que compromete o potencial hipertrófico a longo prazo.",
+                "nome_grupamento": "Bíceps, Ombros, Peito, Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução dentro da faixa de intensidade ideal, mantendo RIR 1 consistente.",
+                "nome_exercicio": "Rosca Scott (Barra W)"
+              },
+              {
+                "comentario": "Progresso de volume e intensidade adequado, mantendo o controle mecânico com RIR 1.",
+                "nome_exercicio": "Puxada Fechada (Triângulo)"
+              },
+              {
+                "comentario": "Bom controle de carga, com aumento de reps na segunda série sem falha concêntrica.",
+                "nome_exercicio": "Remada Unilateral (Serrote)"
+              },
+              {
+                "comentario": "Estímulo eficiente para deltoide, mantendo RIR 1 em ambas as séries.",
+                "nome_exercicio": "Desenvolvimento na Máquina"
+              },
+              {
+                "comentario": "A primeira série atingiu falha momentânea (RIR 0). Recomendado ajuste de carga para evitar fadiga neural excessiva e manter RIR 1.",
+                "nome_exercicio": "Supino Reto com Halteres"
+              },
+              {
+                "comentario": "Execução técnica correta, mantendo intensidade otimizada para hipertrofia.",
+                "nome_exercicio": "Tríceps Testa com Barra W"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume semanal para Bíceps, Peito e Tríceps adicionando séries efetivas ao longo dos próximos treinos.",
+              "Ajustar a carga no Supino Reto com Halteres para garantir que o RIR 1 seja mantido em todas as séries e evitar a falha total (RIR 0).",
+              "Priorizar exercícios multiarticulares nos grupamentos com volume insuficiente para acelerar o acúmulo de séries válidas.",
+              "Monitorar a recuperação sistêmica dado que o aumento de volume para os grupamentos deficitários elevará a demanda metabólica da sessão."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-12 10:00:00.000000",
+        "dia_divisao": 1,
+        "completed": true,
+        "duracao_total": 61,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "feeder",
+            "carga": 55,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 72.5,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 72.5,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 28,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 28,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "aquecimento",
+            "carga": 12,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "feeder",
+            "carga": 18,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 24,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 24,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "aquecimento",
+            "carga": 5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "feeder",
+            "carga": 8,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 11,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 70,
+          "data_geracao": "2026-10-12 11:04:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 40
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal de 4 séries está muito abaixo do limiar de 10 séries, sendo insuficiente para otimização hipertrófica.",
+                "nome_grupamento": "Ombros"
+              },
+              {
+                "comentario": "Volume semanal insuficiente, sendo necessário aumentar a frequência ou o volume por sessão para atingir 10+ séries.",
+                "nome_grupamento": "Peito"
+              },
+              {
+                "comentario": "Volume insuficiente, mantendo-se em 4 séries semanais, o que compromete o potencial de adaptação.",
+                "nome_grupamento": "Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Volume e intensidade adequados, com progressão na segunda série mantendo RIR 1.",
+                "nome_exercicio": "Desenvolvimento com Halteres"
+              },
+              {
+                "comentario": "Boa execução com manutenção de RIR 1, eficiente para hipertrofia do deltoide lateral.",
+                "nome_exercicio": "Elevação Lateral com Halteres"
+              },
+              {
+                "comentario": "Progresso de volume atingido com intensidade consistente.",
+                "nome_exercicio": "Supino Inclinado com Halteres"
+              },
+              {
+                "comentario": "Carga desafiadora que permitiu progressão de reps dentro do RIR alvo.",
+                "nome_exercicio": "Supino Reto com Barra"
+              },
+              {
+                "comentario": "Boa relação carga-reps, garantindo estímulo próximo à falha técnica.",
+                "nome_exercicio": "Tríceps Francês na Polia"
+              },
+              {
+                "comentario": "Volume de trabalho estável, porém é necessário observar a estagnação na segunda série.",
+                "nome_exercicio": "Tríceps Pulldown"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume de trabalho para todos os grupamentos treinados para atingir pelo menos 10 séries semanais por músculo.",
+              "Adicionar um exercício de isolamento ou mais séries efetivas nos grupamentos Peito e Ombros para elevar o volume semanal.",
+              "Priorizar a progressão de carga apenas se a técnica impecável for mantida, dado o RIR 1 atual.",
+              "Monitorar a recuperação para garantir que o aumento de volume não comprometa a intensidade (RIR) nas próximas sessões."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-13 18:40:00.000000",
+        "dia_divisao": 2,
+        "completed": true,
+        "duracao_total": 55,
+        "series": [
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "aquecimento",
+            "carga": 8,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "feeder",
+            "carga": 12,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 16,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 16,
+            "repeticoes": 9,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 77,
+          "data_geracao": "2026-10-13 19:38:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 53.333333333333336
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "O volume semanal atual de 4 séries está significativamente abaixo do limiar de 10 séries, sendo necessária uma progressão urgente para garantir o limiar hipertrófico.",
+                "nome_grupamento": "Bíceps"
+              },
+              {
+                "comentario": "Apresenta um bom nível de intensidade por série, porém o volume semanal acumulado (6 séries) é insuficiente para maximizar a resposta hipertrófica.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "A intensidade está correta, porém o volume semanal de 6 séries não é suficiente para sustentar ganhos ideais a longo prazo.",
+                "nome_grupamento": "Ombros"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução consistente com alta intensidade, mantendo RIR 1 e bom controle de carga.",
+                "nome_exercicio": "Rosca Direta com Barra W"
+              },
+              {
+                "comentario": "Boa manutenção do estímulo, apresentando leve queda na repetição na segunda série, mantendo o RIR alvo.",
+                "nome_exercicio": "Rosca Martelo com Halteres"
+              },
+              {
+                "comentario": "Volume e intensidade adequados, nota-se boa estabilidade de performance entre as séries.",
+                "nome_exercicio": "Puxada Aberta na Polia"
+              },
+              {
+                "comentario": "Excelente controle de carga com uma queda mínima de repetições, indicando fadiga acumulada controlada.",
+                "nome_exercicio": "Remada Baixa Sentado"
+              },
+              {
+                "comentario": "Carga desafiadora, observada leve queda no rendimento, mantendo o RPE dentro da zona de otimização.",
+                "nome_exercicio": "Remada Curvada com Barra"
+              },
+              {
+                "comentario": "Execução estável e com volume de repetições constante, atingindo o estímulo proposto.",
+                "nome_exercicio": "Face Pull"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o número de séries semanais para Bíceps, Costas e Ombros, visando atingir o limiar mínimo de 10 séries por grupamento.",
+              "Priorizar a progressão de carga apenas se a técnica impecável for mantida, dado que a intensidade (RPE 9) já está otimizada.",
+              "Avaliar a inclusão de exercícios adicionais para completar o volume semanal necessário, mantendo o RIR entre 1 e 2.",
+              "Monitorar a recuperação sistêmica para suportar o incremento de volume necessário."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-14 18:20:00.000000",
+        "dia_divisao": 3,
+        "completed": true,
+        "duracao_total": 72,
+        "series": [
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "aquecimento",
+            "carga": 50,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "feeder",
+            "carga": 75,
+            "repeticoes": 5,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 97.5,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 97.5,
+            "repeticoes": 7,
+            "rir": 1
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "aquecimento",
+            "carga": 100,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "feeder",
+            "carga": 160,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 230,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 230,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "aquecimento",
+            "carga": 25,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "feeder",
+            "carga": 37.5,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 47.5,
+            "repeticoes": 13,
+            "rir": 1
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 47.5,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "feeder",
+            "carga": 60,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "feeder",
+            "carga": 65,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 95,
+            "repeticoes": 14,
+            "rir": 1
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 95,
+            "repeticoes": 13,
+            "rir": 1
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "feeder",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 11,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 79,
+          "data_geracao": "2026-10-14 19:35:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 97.6190476190476,
+              "pv": 60
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "O grupamento atingiu o volume semanal mínimo de 10 séries, com intensidade de treino predominantemente em RPE 9, o que otimiza o potencial hipertrófico.",
+                "nome_grupamento": "Pernas"
+              },
+              {
+                "comentario": "Volume insuficiente de apenas 2 séries semanais. Está muito abaixo do limiar de 10 séries necessário para o desenvolvimento hipertrófico adequado.",
+                "nome_grupamento": "Abdômen"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução consistente com RPE 9, demonstrando bom controle de carga para a faixa de repetições.",
+                "nome_exercicio": "Abdominal na Polia Alta"
+              },
+              {
+                "comentario": "Excelente intensidade. O ajuste de repetições na segunda série indica uma manutenção eficaz da tensão mecânica.",
+                "nome_exercicio": "Agachamento Livre com Barra"
+              },
+              {
+                "comentario": "A progressão para RPE 9 na segunda série mostra um melhor recrutamento das fibras musculares após a familiarização do primeiro set.",
+                "nome_exercicio": "Cadeira Extensora"
+              },
+              {
+                "comentario": "Volume e intensidade adequados, mantendo o RIR 1 em ambas as séries, o que é ideal para o estímulo de panturrilhas.",
+                "nome_exercicio": "Gêmeos em Pé"
+              },
+              {
+                "comentario": "Boa manutenção de carga. A proximidade da falha (RIR 1) garante o estímulo necessário para hipertrofia neste padrão de movimento.",
+                "nome_exercicio": "Leg Press 45"
+              },
+              {
+                "comentario": "Bom controle de tempo sob tensão. O volume por série está alinhado com o objetivo de fadiga metabólica e mecânica.",
+                "nome_exercicio": "Mesa Flexora (Deitada)"
+              },
+              {
+                "comentario": "Execução segura e dentro da zona de intensidade ideal. A variabilidade entre séries é pequena, sugerindo boa estabilidade da técnica.",
+                "nome_exercicio": "Stiff com Barra"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar progressivamente o volume semanal para o grupamento de Abdômen, visando atingir o mínimo de 10 séries semanais.",
+              "Manter a intensidade atual de RPE 9 (RIR 1) para exercícios compostos de pernas, garantindo a sobrecarga progressiva.",
+              "Monitorar a recuperação sistêmica dado o volume total de pernas, garantindo que o RIR não caia abaixo de 1 nas sessões subsequentes.",
+              "Considerar a introdução de mais 2 séries de um exercício acessório para Abdômen na próxima sessão para elevar o volume semanal."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-16 19:00:00.000000",
+        "dia_divisao": 5,
+        "completed": true,
+        "duracao_total": 58,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "aquecimento",
+            "carga": 16,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "feeder",
+            "carga": 24,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 32,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 32,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "feeder",
+            "carga": 22,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "feeder",
+            "carga": 32.5,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 27.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 10,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 86,
+          "data_geracao": "2026-10-16 20:01:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 72
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal de 6 séries está significativamente abaixo do limiar de 10 séries, limitando o potencial de hipertrofia.",
+                "nome_grupamento": "Bíceps"
+              },
+              {
+                "comentario": "Atingiu o volume mínimo de 10 séries, demonstrando planejamento adequado para este grupamento.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "Volume de 8 séries encontra-se abaixo do recomendado; necessário ajuste para alcançar 10 séries semanais.",
+                "nome_grupamento": "Ombros"
+              },
+              {
+                "comentario": "Volume de 6 séries é insuficiente para garantir o limiar de otimização de hipertrofia.",
+                "nome_grupamento": "Peito"
+              },
+              {
+                "comentario": "Com 6 séries semanais, o volume está abaixo do limiar de 10, exigindo incremento no número de séries em sessões futuras.",
+                "nome_grupamento": "Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução com RIR 1 indica boa intensidade. A progressão de repetições na segunda série demonstra ajuste eficiente à carga.",
+                "nome_exercicio": "Rosca Scott (Barra W)"
+              },
+              {
+                "comentario": "Volume e intensidade adequados, mantendo o RIR 1. Aumento de repetições na segunda série confirma manutenção do estímulo.",
+                "nome_exercicio": "Puxada Fechada (Triângulo)"
+              },
+              {
+                "comentario": "Progresso consistente de volume na segunda série com RIR 1 mantido, indicando boa qualidade técnica.",
+                "nome_exercicio": "Remada Unilateral (Serrote)"
+              },
+              {
+                "comentario": "Intensidade otimizada com RIR 1, embora o volume total semanal para o grupamento esteja abaixo do limiar.",
+                "nome_exercicio": "Desenvolvimento na Máquina"
+              },
+              {
+                "comentario": "Desempenho dentro da zona de esforço ideal (RPE 9), com leve ganho de volume na segunda série.",
+                "nome_exercicio": "Supino Reto com Halteres"
+              },
+              {
+                "comentario": "Bom controle de carga com RIR 1; a variação positiva na segunda série é um indicador positivo de prontidão para a carga selecionada.",
+                "nome_exercicio": "Tríceps Testa com Barra W"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o número de séries semanais para Bíceps, Ombros, Peito e Tríceps para atingir o mínimo de 10 séries cada.",
+              "Manter a intensidade atual de RPE 9 (RIR 1) para garantir o estímulo de alta qualidade.",
+              "Priorizar exercícios multiarticulares no início do treino para os grupamentos com volume insuficiente.",
+              "Monitorar a capacidade de recuperação caso o aumento de volume cause fadiga excessiva que impacte a manutenção do RIR alvo."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-19 18:30:00.000000",
+        "dia_divisao": 1,
+        "completed": true,
+        "duracao_total": 66,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "feeder",
+            "carga": 55,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 7,
+            "rir": 0
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 8,
+            "rir": 0
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "aquecimento",
+            "carga": 12,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "feeder",
+            "carga": 18,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 24,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 24,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "aquecimento",
+            "carga": 5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "feeder",
+            "carga": 8,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 10,
+            "rir": 0
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 75,
+          "data_geracao": "2026-10-19 19:39:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 50
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume de 5 séries insuficiente. Necessita de incremento de 5 séries adicionais na semana para atingir o limiar de hipertrofia.",
+                "nome_grupamento": "Ombros"
+              },
+              {
+                "comentario": "Volume de 6 séries insuficiente. Requer aumento para, no mínimo, 10 séries semanais, possivelmente adicionando exercícios de isolamento ou maior volume em supinos.",
+                "nome_grupamento": "Peito"
+              },
+              {
+                "comentario": "Volume de 4 séries insuficiente. Déficit importante de 6 séries para alcançar o limiar mínimo recomendado de volume semanal.",
+                "nome_grupamento": "Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução com RPE 9 consistente, demonstrando controle técnico adequado próximo à falha concêntrica.",
+                "nome_exercicio": "Desenvolvimento com Halteres"
+              },
+              {
+                "comentario": "Volume de três séries adequado para isolamento, mas a última série atingiu falha técnica (RPE 10), exigindo cautela na progressão de carga.",
+                "nome_exercicio": "Elevação Lateral com Halteres"
+              },
+              {
+                "comentario": "A progressão para RPE 10 na terceira série indica fadiga acumulada significativa, mantendo bom estímulo mecânico.",
+                "nome_exercicio": "Supino Inclinado com Halteres"
+              },
+              {
+                "comentario": "A variação de carga entre 70kg e 75kg mostra capacidade de atingir o limiar de falha, garantindo unidade motora alta.",
+                "nome_exercicio": "Supino Reto com Barra"
+              },
+              {
+                "comentario": "Execução consistente dentro da faixa de RPE 9, otimizando o estiramento da cabeça longa do tríceps.",
+                "nome_exercicio": "Tríceps Francês na Polia"
+              },
+              {
+                "comentario": "Volume e intensidade mantidos com RPE 9, finalizando bem o grupamento muscular.",
+                "nome_exercicio": "Tríceps Pulldown (Corda)"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume de séries semanais para Ombros, Peito e Tríceps para atingir a marca mínima de 10 séries cada.",
+              "Priorizar o aumento de volume semanal antes de focar apenas no incremento de RPE ou carga.",
+              "Distribuir o volume de treino ao longo da semana para evitar que todas as séries sejam realizadas em uma única sessão, otimizando a recuperação entre séries.",
+              "Monitorar a falha técnica (RPE 10) para garantir que a técnica não seja prejudicada pelo excesso de fadiga nas séries iniciais."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-20 18:35:00.000000",
+        "dia_divisao": 2,
+        "completed": true,
+        "duracao_total": 60,
+        "series": [
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Aberta na Polia",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 8,
+            "rir": 0
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 67.5,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Curvada com Barra",
+            "tipo": "work",
+            "carga": 67.5,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Baixa Sentado",
+            "tipo": "work",
+            "carga": 57.5,
+            "repeticoes": 10,
+            "rir": 0
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 13,
+            "rir": 1
+          },
+          {
+            "exercicio": "Face Pull",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Direta com Barra W",
+            "tipo": "work",
+            "carga": 32.5,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "aquecimento",
+            "carga": 8,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "feeder",
+            "carga": 12,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 18,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Martelo com Halteres",
+            "tipo": "work",
+            "carga": 18,
+            "repeticoes": 8,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 82,
+          "data_geracao": "2026-10-20 19:38:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 63.333333333333336
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Com 4 séries semanais, o grupamento está abaixo do volume mínimo necessário para otimização hipertrófica.",
+                "nome_grupamento": "Bíceps"
+              },
+              {
+                "comentario": "Atingiu 8 séries semanais, aproximando-se do limiar mínimo, mas ainda insuficiente para volume ótimo de treinamento.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "Com 7 séries acumuladas, o grupamento requer aumento de volume para atingir o patamar recomendado de 10 séries semanais.",
+                "nome_grupamento": "Ombros"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução consistente com RPE 9, mantendo a intensidade ideal dentro da faixa de repetições proposta.",
+                "nome_exercicio": "Rosca Direta com Barra W"
+              },
+              {
+                "comentario": "Boa manutenção de intensidade; o volume está adequado para o estímulo do braquial e braquiorradial.",
+                "nome_exercicio": "Rosca Martelo com Halteres"
+              },
+              {
+                "comentario": "O atingimento de RPE 10 na primeira série sugere uma fadiga neuromuscular rápida; ajuste de carga ou volume pode ser necessário para evitar falha concêntrica prematura.",
+                "nome_exercicio": "Puxada Aberta na Polia"
+              },
+              {
+                "comentario": "O volume de 3 séries foi bem executado, embora a última série tenha atingido falha técnica/concêntrica.",
+                "nome_exercicio": "Remada Baixa Sentado"
+              },
+              {
+                "comentario": "Execução com RPE 9 indica bom controle motor sob carga elevada para este exercício composto.",
+                "nome_exercicio": "Remada Curvada com Barra"
+              },
+              {
+                "comentario": "Intensidade apropriada para trabalho acessório de deltoide posterior e estabilizadores escapulares.",
+                "nome_exercicio": "Face Pull"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar gradualmente o volume de séries semanais para todos os grupamentos treinados para atingir o limiar de 10 séries.",
+              "Monitorar a Puxada Aberta na Polia para evitar RPE 10 constante, visando manter as séries entre 1 a 2 RIR para melhor recuperação intrassessão.",
+              "Distribuir o volume de treino ao longo da semana para permitir que o volume total de 10 séries por grupamento seja alcançado sem comprometer a intensidade relativa."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-21 18:50:00.000000",
+        "dia_divisao": 3,
+        "completed": true,
+        "duracao_total": 64,
+        "series": [
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "aquecimento",
+            "carga": 50,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "feeder",
+            "carga": 75,
+            "repeticoes": 5,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 97.5,
+            "repeticoes": 7,
+            "rir": 1
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 95,
+            "repeticoes": 7,
+            "rir": 1
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "aquecimento",
+            "carga": 100,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "feeder",
+            "carga": 160,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 230,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 230,
+            "repeticoes": 8,
+            "rir": 2
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "aquecimento",
+            "carga": 25,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "feeder",
+            "carga": 37.5,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 47.5,
+            "repeticoes": 12,
+            "rir": 2
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 47.5,
+            "repeticoes": 11,
+            "rir": 2
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "feeder",
+            "carga": 60,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 10,
+            "rir": 2
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "feeder",
+            "carga": 65,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 95,
+            "repeticoes": 13,
+            "rir": 2
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 95,
+            "repeticoes": 12,
+            "rir": 2
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 86,
+          "data_geracao": "2026-10-21 19:57:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 72.22222222222219,
+              "pv": 100
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Grupamento com volume semanal atingido (12 séries), demonstrando consistência e estímulo otimizado nesta sessão.",
+                "nome_grupamento": "Pernas"
+              },
+              {
+                "comentario": "Volume semanal insuficiente abaixo do limiar de 10 séries, sugerindo a necessidade de redistribuição da frequência semanal ou aumento de volume total.",
+                "nome_grupamento": "Outros Grupamentos (Peito, Costas, Bíceps, Tríceps, Ombros, Abdômen)"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Excelente intensidade com RPE 9, atingindo o limiar ideal de esforço para hipertrofia.",
+                "nome_exercicio": "Agachamento Livre com Barra"
+              },
+              {
+                "comentario": "Execução com RIR 2, permitindo volume consistente sem comprometer a recuperação sistêmica imediata.",
+                "nome_exercicio": "Cadeira Extensora"
+              },
+              {
+                "comentario": "Volume e intensidade adequados, mantendo margem de segurança dentro da zona de hipertrofia.",
+                "nome_exercicio": "Gêmeos em Pé"
+              },
+              {
+                "comentario": "Boa progressão de volume na segunda série, mantendo RIR 2.",
+                "nome_exercicio": "Leg Press 45"
+              },
+              {
+                "comentario": "Estímulo de isolamento bem executado, respeitando a faixa de RIR proposta.",
+                "nome_exercicio": "Mesa Flexora (Deitada)"
+              },
+              {
+                "comentario": "Boa cadência e manutenção de intensidade na segunda série, eficiente para cadeia posterior.",
+                "nome_exercicio": "Stiff com Barra"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Manter a intensidade do Agachamento Livre em RPE 9 para maximizar o recrutamento de unidades motoras de alto limiar.",
+              "Considerar aumentar gradualmente o volume de outros grupamentos deficitários (peito, costas, membros superiores) para alinhar com as recomendações de volume mínimo de 10 séries semanais.",
+              "Monitorar a fadiga acumulada, dado que a maior parte do volume semanal está concentrada em pernas, para evitar o overreaching."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-23 19:10:00.000000",
+        "dia_divisao": 5,
+        "completed": true,
+        "duracao_total": 59,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "aquecimento",
+            "carga": 16,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "feeder",
+            "carga": 24,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 34,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Halteres",
+            "tipo": "work",
+            "carga": 34,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Puxada Fechada (Triângulo)",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 8,
+            "rir": 0
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "feeder",
+            "carga": 22,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 32,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Remada Unilateral (Serrote)",
+            "tipo": "work",
+            "carga": 32,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "feeder",
+            "carga": 32.5,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento na Máquina",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Rosca Scott (Barra W)",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Testa com Barra W",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 8,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 89,
+          "data_geracao": "2026-10-23 20:12:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 78
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal insuficiente (6 séries). É necessário um aumento progressivo de volume para atingir o limiar mínimo de 10 séries.",
+                "nome_grupamento": "Bíceps e Tríceps"
+              },
+              {
+                "comentario": "Grupamento bem trabalhado, atingindo o limiar mínimo e operando com intensidade alta.",
+                "nome_grupamento": "Costas"
+              },
+              {
+                "comentario": "Volume semanal próximo ao limiar, mas ainda insuficiente. Requer um leve ajuste de volume na próxima microciclo para otimização.",
+                "nome_grupamento": "Ombros e Peito"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Execução dentro da zona de intensidade ideal (RIR 1), demonstrando controle e esforço adequado.",
+                "nome_exercicio": "Rosca Scott (Barra W)"
+              },
+              {
+                "comentario": "Primeira série atingiu falha técnica (RIR 0), o que pode comprometer a performance nas séries subsequentes. Manter RIR 1 é preferível para otimizar o volume total.",
+                "nome_exercicio": "Puxada Fechada (Triângulo)"
+              },
+              {
+                "comentario": "Intensidade bem ajustada e consistente entre as séries realizadas.",
+                "nome_exercicio": "Remada Unilateral (Serrote)"
+              },
+              {
+                "comentario": "Progresso de volume percebido entre as séries mantendo a RIR 1, sugerindo boa capacidade de recuperação intrassessão.",
+                "nome_exercicio": "Desenvolvimento na Máquina"
+              },
+              {
+                "comentario": "Volume e intensidade adequados, dentro da margem de segurança para hipertrofia.",
+                "nome_exercicio": "Supino Reto com Halteres"
+              },
+              {
+                "comentario": "Execução correta respeitando a margem de RIR 1, mantendo a integridade articular.",
+                "nome_exercicio": "Tríceps Testa com Barra W"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o número de séries semanais para Bíceps e Tríceps para alcançar pelo menos 10 séries.",
+              "Adicionar 1 a 2 séries de trabalho para Peito e Ombros para superar o limiar mínimo de volume.",
+              "Monitorar a Puxada Fechada para evitar a falha total (RIR 0) na primeira série, visando melhor sustentação do volume total.",
+              "Priorizar o aumento de volume em detrimento do aumento de carga para os grupamentos com volume semanal abaixo de 10 séries."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-26 18:30:00.000000",
+        "dia_divisao": 1,
+        "completed": true,
+        "duracao_total": 64,
+        "series": [
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "feeder",
+            "carga": 60,
+            "repeticoes": 5,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 75,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Reto com Barra",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "aquecimento",
+            "carga": 14,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado com Halteres",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 8,
+            "rir": 0
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "aquecimento",
+            "carga": 12,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "feeder",
+            "carga": 18,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 26,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Desenvolvimento com Halteres",
+            "tipo": "work",
+            "carga": 26,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "aquecimento",
+            "carga": 5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "feeder",
+            "carga": 8,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 14,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 14,
+            "repeticoes": 9,
+            "rir": 1
+          },
+          {
+            "exercicio": "Elevação Lateral com Halteres",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 11,
+            "rir": 0
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "aquecimento",
+            "carga": 15,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "feeder",
+            "carga": 25,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 12,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Pulldown (Corda)",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "aquecimento",
+            "carga": 12.5,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "feeder",
+            "carga": 20,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 11,
+            "rir": 1
+          },
+          {
+            "exercicio": "Tríceps Francês na Polia",
+            "tipo": "work",
+            "carga": 30,
+            "repeticoes": 10,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 75,
+          "data_geracao": "2026-10-26 19:37:00.000000",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 50
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Volume semanal de 5 séries está muito abaixo do limiar de 10 séries, sendo insuficiente para otimizar a hipertrofia.",
+                "nome_grupamento": "Ombros"
+              },
+              {
+                "comentario": "Volume semanal de 6 séries é insuficiente. O foco deve ser aumentar o número de séries efetivas mantendo a intensidade atual.",
+                "nome_grupamento": "Peito"
+              },
+              {
+                "comentario": "Volume semanal de 4 séries abaixo do recomendado. É necessário dobrar a carga de trabalho semanal para garantir progressão consistente.",
+                "nome_grupamento": "Tríceps"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Boa manutenção de intensidade, operando consistentemente no RIR 1.",
+                "nome_exercicio": "Desenvolvimento com Halteres"
+              },
+              {
+                "comentario": "A segunda série apresentou falha técnica prematura (RIR 0). O volume e a carga estão adequados para o estímulo de isolamento.",
+                "nome_exercicio": "Elevação Lateral com Halteres"
+              },
+              {
+                "comentario": "Progressão de carga atingiu o limite de fadiga na terceira série, resultando em falha técnica (RIR 0). O controle motor parece ser o fator limitante.",
+                "nome_exercicio": "Supino Inclinado com Halteres"
+              },
+              {
+                "comentario": "Eficiente aumento de carga da primeira para a segunda série, mantendo o RIR 1. A performance foi constante.",
+                "nome_exercicio": "Supino Reto com Barra"
+              },
+              {
+                "comentario": "Execução estável e boa gestão de RIR, indicando recrutamento eficaz da porção longa do tríceps.",
+                "nome_exercicio": "Tríceps Francês na Polia"
+              },
+              {
+                "comentario": "Volume e intensidade bem executados, com boa resposta metabólica ao final da sessão.",
+                "nome_exercicio": "Tríceps Pulldown (Corda)"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume de séries para peito e ombros para buscar o limiar mínimo de 10 séries semanais.",
+              "Monitorar a falha técnica (RIR 0) observada no supino inclinado para evitar prejuízo na recuperação neural entre as séries.",
+              "Priorizar a manutenção do RIR 1 (RPE 9) para evitar excesso de fadiga central, permitindo maior volume total na semana.",
+              "Considerar a introdução de uma sessão complementar de treino de empurrar para alcançar o volume semanal recomendado."
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "nome": "João",
+    "email": "joao2@teste.com",
+    "senha_hash": "$2b$10$GBy20RzhjMEVF1ZinXp3ZOfT2YIzHjFnlyrsSnOFTeVp2py3k2a5i",
+    "divisoes": [],
+    "treinos": []
+  }
+]

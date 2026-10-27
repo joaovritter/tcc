@@ -1,5 +1,6 @@
 // Simulação das 2 semanas de treino (28/09 a 09/10/2026) para a avaliação de Nielsen.
-// Uso: npx tsx scripts/simularDuasSemanas.ts [--limpar]
+// Uso: npx tsx scripts/simularDuasSemanas.ts [--limpar] [--arquivo=x.json --inicio=AAAA-MM-DD --fim=AAAA-MM-DD]
+// Sem argumentos usa o período e o arquivo originais (semanas 1 e 2).
 //
 // A API não aceita data nem duração (start/finish usam NOW()), então este script
 // reproduz o fluxo em ordem cronológica direto no banco, com o código real do app:
@@ -17,10 +18,12 @@ import { LIMIAR_SERIES } from '../src/services/volumeService';
 import { calcularPv, calcularPi, calcularScoreGeral } from '../src/services/scoreService';
 import { NovaSerieTreino, Treino, VolumeGrupamento, VolumeSemanal } from '../src/types/indexTypes';
 
+const arg = (nome: string) => process.argv.find((a) => a.startsWith(`--${nome}=`))?.split('=')[1];
+
 const EMAIL = 'joao@teste.com';
-const INICIO = '2026-09-28';
-const FIM = '2026-10-11'; // exclusivo
-const ARQUIVO = path.join(__dirname, '../../01-planejamento/enriquecer-usuario.dados.json');
+const INICIO = arg('inicio') ?? '2026-09-28';
+const FIM = arg('fim') ?? '2026-10-11'; // exclusivo
+const ARQUIVO = path.join(__dirname, '../../01-planejamento', arg('arquivo') ?? 'enriquecer-usuario.dados.json');
 
 interface Sessao {
   sessao: number;
@@ -123,7 +126,7 @@ async function main() {
 
   for (const s of sessoes) {
     const inicio = `${s.dia} ${s.hora}`;
-    console.log(`\n[${s.sessao}/8] ${s.divisao} - ${inicio} (${s.duracao_min} min)`);
+    console.log(`\n[${s.sessao}] ${s.divisao} - ${inicio} (${s.duracao_min} min)`);
 
     //1. comecar treino (mesmo INSERT do sessionModel.criarTreino, com a data da sessão)
     const treinoAberto = (await pool.query<Treino>(
@@ -172,7 +175,7 @@ async function main() {
     if (process.env.GEMINI_MOCK !== 'true') await esperar(5_000); //folga pro limite de req/min
   }
 
-  console.log('\nPronto: 8 sessões, 200 séries, 8 diagnósticos.');
+  console.log(`\nPronto: ${sessoes.length} sessões, ${sessoes.reduce((n, x) => n + x.series.length, 0)} séries, ${sessoes.length} diagnósticos.`);
 }
 
 main()

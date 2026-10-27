@@ -1,0 +1,1686 @@
+[
+  {
+    "sessao": 9,
+    "dia": "2026-10-12",
+    "hora": "10:00",
+    "divisao": "Push",
+    "duracao_min": 61,
+    "series": [
+      {
+        "fk_exercicio": 1,
+        "tipo": "aquecimento",
+        "carga": 40,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "feeder",
+        "carga": 55,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 72.5,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 72.5,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "aquecimento",
+        "carga": 14,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 28,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 28,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "aquecimento",
+        "carga": 12,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "feeder",
+        "carga": 18,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "work",
+        "carga": 24,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "work",
+        "carga": 24,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "aquecimento",
+        "carga": 5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "feeder",
+        "carga": 8,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 12,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 12,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "aquecimento",
+        "carga": 15,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "feeder",
+        "carga": 25,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "aquecimento",
+        "carga": 12.5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "work",
+        "carga": 27.5,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "work",
+        "carga": 27.5,
+        "repeticoes": 11,
+        "rir": 1
+      }
+    ]
+  },
+  {
+    "sessao": 10,
+    "dia": "2026-10-13",
+    "hora": "18:40",
+    "divisao": "Pull",
+    "duracao_min": 55,
+    "series": [
+      {
+        "fk_exercicio": 16,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 16,
+        "tipo": "feeder",
+        "carga": 50,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 16,
+        "tipo": "work",
+        "carga": 65,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 16,
+        "tipo": "work",
+        "carga": 65,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "feeder",
+        "carga": 50,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "work",
+        "carga": 65,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "work",
+        "carga": 65,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "feeder",
+        "carga": 45,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "work",
+        "carga": 57.5,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "work",
+        "carga": 57.5,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "aquecimento",
+        "carga": 12.5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 10,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "aquecimento",
+        "carga": 15,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "feeder",
+        "carga": 25,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "work",
+        "carga": 32.5,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "work",
+        "carga": 32.5,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "aquecimento",
+        "carga": 8,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "feeder",
+        "carga": 12,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "work",
+        "carga": 16,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "work",
+        "carga": 16,
+        "repeticoes": 9,
+        "rir": 1
+      }
+    ]
+  },
+  {
+    "sessao": 11,
+    "dia": "2026-10-14",
+    "hora": "18:20",
+    "divisao": "Legs",
+    "duracao_min": 72,
+    "series": [
+      {
+        "fk_exercicio": 44,
+        "tipo": "aquecimento",
+        "carga": 50,
+        "repeticoes": 10,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 44,
+        "tipo": "feeder",
+        "carga": 75,
+        "repeticoes": 5,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 44,
+        "tipo": "work",
+        "carga": 97.5,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 44,
+        "tipo": "work",
+        "carga": 97.5,
+        "repeticoes": 7,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "aquecimento",
+        "carga": 100,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "feeder",
+        "carga": 160,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "work",
+        "carga": 230,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "work",
+        "carga": 230,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "feeder",
+        "carga": 50,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "work",
+        "carga": 70,
+        "repeticoes": 10,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "work",
+        "carga": 70,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "aquecimento",
+        "carga": 25,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "feeder",
+        "carga": 37.5,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "work",
+        "carga": 47.5,
+        "repeticoes": 13,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "work",
+        "carga": 47.5,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "aquecimento",
+        "carga": 40,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "feeder",
+        "carga": 60,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "aquecimento",
+        "carga": 40,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "feeder",
+        "carga": 65,
+        "repeticoes": 10,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "work",
+        "carga": 95,
+        "repeticoes": 14,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "work",
+        "carga": 95,
+        "repeticoes": 13,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 82,
+        "tipo": "aquecimento",
+        "carga": 20,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 82,
+        "tipo": "feeder",
+        "carga": 30,
+        "repeticoes": 10,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 82,
+        "tipo": "work",
+        "carga": 45,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 82,
+        "tipo": "work",
+        "carga": 45,
+        "repeticoes": 11,
+        "rir": 1
+      }
+    ]
+  },
+  {
+    "sessao": 12,
+    "dia": "2026-10-16",
+    "hora": "19:00",
+    "divisao": "Upper",
+    "duracao_min": 58,
+    "series": [
+      {
+        "fk_exercicio": 2,
+        "tipo": "aquecimento",
+        "carga": 16,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 2,
+        "tipo": "feeder",
+        "carga": 24,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 2,
+        "tipo": "work",
+        "carga": 32,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 2,
+        "tipo": "work",
+        "carga": 32,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "feeder",
+        "carga": 45,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "work",
+        "carga": 60,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "work",
+        "carga": 60,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "aquecimento",
+        "carga": 14,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "feeder",
+        "carga": 22,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "aquecimento",
+        "carga": 20,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "feeder",
+        "carga": 32.5,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "work",
+        "carga": 45,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "work",
+        "carga": 45,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "aquecimento",
+        "carga": 12.5,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "work",
+        "carga": 27.5,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "work",
+        "carga": 27.5,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "aquecimento",
+        "carga": 15,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "feeder",
+        "carga": 25,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "work",
+        "carga": 32.5,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "work",
+        "carga": 32.5,
+        "repeticoes": 10,
+        "rir": 1
+      }
+    ]
+  },
+  {
+    "sessao": 13,
+    "dia": "2026-10-19",
+    "hora": "18:30",
+    "divisao": "Push",
+    "duracao_min": 66,
+    "series": [
+      {
+        "fk_exercicio": 1,
+        "tipo": "aquecimento",
+        "carga": 40,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "feeder",
+        "carga": 55,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 7,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 70,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "aquecimento",
+        "carga": 14,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 8,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "aquecimento",
+        "carga": 12,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "feeder",
+        "carga": 18,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "work",
+        "carga": 24,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "work",
+        "carga": 24,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "aquecimento",
+        "carga": 5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "feeder",
+        "carga": 8,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 12,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 12,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 12,
+        "repeticoes": 10,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "aquecimento",
+        "carga": 15,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "feeder",
+        "carga": 25,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "aquecimento",
+        "carga": 12.5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 9,
+        "rir": 1
+      }
+    ]
+  },
+  {
+    "sessao": 14,
+    "dia": "2026-10-20",
+    "hora": "18:35",
+    "divisao": "Pull",
+    "duracao_min": 60,
+    "series": [
+      {
+        "fk_exercicio": 16,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 16,
+        "tipo": "feeder",
+        "carga": 50,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 16,
+        "tipo": "work",
+        "carga": 65,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 16,
+        "tipo": "work",
+        "carga": 65,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 16,
+        "tipo": "work",
+        "carga": 65,
+        "repeticoes": 8,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "feeder",
+        "carga": 50,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "work",
+        "carga": 67.5,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 21,
+        "tipo": "work",
+        "carga": 67.5,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "feeder",
+        "carga": 45,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "work",
+        "carga": 57.5,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "work",
+        "carga": 57.5,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 25,
+        "tipo": "work",
+        "carga": 57.5,
+        "repeticoes": 10,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "aquecimento",
+        "carga": 12.5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 10,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 13,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 42,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "aquecimento",
+        "carga": 15,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "feeder",
+        "carga": 25,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "work",
+        "carga": 32.5,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 62,
+        "tipo": "work",
+        "carga": 32.5,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "aquecimento",
+        "carga": 8,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "feeder",
+        "carga": 12,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "work",
+        "carga": 18,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 64,
+        "tipo": "work",
+        "carga": 18,
+        "repeticoes": 8,
+        "rir": 1
+      }
+    ]
+  },
+  {
+    "sessao": 15,
+    "dia": "2026-10-21",
+    "hora": "18:50",
+    "divisao": "Legs",
+    "duracao_min": 64,
+    "series": [
+      {
+        "fk_exercicio": 44,
+        "tipo": "aquecimento",
+        "carga": 50,
+        "repeticoes": 10,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 44,
+        "tipo": "feeder",
+        "carga": 75,
+        "repeticoes": 5,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 44,
+        "tipo": "work",
+        "carga": 97.5,
+        "repeticoes": 7,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 44,
+        "tipo": "work",
+        "carga": 95,
+        "repeticoes": 7,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "aquecimento",
+        "carga": 100,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "feeder",
+        "carga": 160,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "work",
+        "carga": 230,
+        "repeticoes": 9,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 47,
+        "tipo": "work",
+        "carga": 230,
+        "repeticoes": 8,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "feeder",
+        "carga": 50,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "work",
+        "carga": 70,
+        "repeticoes": 10,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 50,
+        "tipo": "work",
+        "carga": 70,
+        "repeticoes": 9,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "aquecimento",
+        "carga": 25,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "feeder",
+        "carga": 37.5,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "work",
+        "carga": 47.5,
+        "repeticoes": 12,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 51,
+        "tipo": "work",
+        "carga": 47.5,
+        "repeticoes": 11,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "aquecimento",
+        "carga": 40,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "feeder",
+        "carga": 60,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 10,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 53,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 9,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "aquecimento",
+        "carga": 40,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "feeder",
+        "carga": 65,
+        "repeticoes": 10,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "work",
+        "carga": 95,
+        "repeticoes": 13,
+        "rir": 2
+      },
+      {
+        "fk_exercicio": 59,
+        "tipo": "work",
+        "carga": 95,
+        "repeticoes": 12,
+        "rir": 2
+      }
+    ]
+  },
+  {
+    "sessao": 16,
+    "dia": "2026-10-23",
+    "hora": "19:10",
+    "divisao": "Upper",
+    "duracao_min": 59,
+    "series": [
+      {
+        "fk_exercicio": 2,
+        "tipo": "aquecimento",
+        "carga": 16,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 2,
+        "tipo": "feeder",
+        "carga": 24,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 2,
+        "tipo": "work",
+        "carga": 34,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 2,
+        "tipo": "work",
+        "carga": 34,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "aquecimento",
+        "carga": 30,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "feeder",
+        "carga": 45,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "work",
+        "carga": 60,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "work",
+        "carga": 60,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 17,
+        "tipo": "work",
+        "carga": 60,
+        "repeticoes": 8,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "aquecimento",
+        "carga": 14,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "feeder",
+        "carga": 22,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "work",
+        "carga": 32,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 23,
+        "tipo": "work",
+        "carga": 32,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "aquecimento",
+        "carga": 20,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "feeder",
+        "carga": 32.5,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "work",
+        "carga": 45,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 33,
+        "tipo": "work",
+        "carga": 45,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "aquecimento",
+        "carga": 12.5,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 66,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "aquecimento",
+        "carga": 15,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "feeder",
+        "carga": 25,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 74,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 8,
+        "rir": 1
+      }
+    ]
+  },
+  {
+    "sessao": 17,
+    "dia": "2026-10-26",
+    "hora": "18:30",
+    "divisao": "Push",
+    "duracao_min": 64,
+    "series": [
+      {
+        "fk_exercicio": 1,
+        "tipo": "aquecimento",
+        "carga": 40,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "feeder",
+        "carga": 60,
+        "repeticoes": 5,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 75,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 1,
+        "tipo": "work",
+        "carga": 70,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "aquecimento",
+        "carga": 14,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 5,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 8,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "aquecimento",
+        "carga": 12,
+        "repeticoes": 12,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "feeder",
+        "carga": 18,
+        "repeticoes": 6,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "work",
+        "carga": 26,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 31,
+        "tipo": "work",
+        "carga": 26,
+        "repeticoes": 8,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "aquecimento",
+        "carga": 5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "feeder",
+        "carga": 8,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 14,
+        "repeticoes": 10,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 14,
+        "repeticoes": 9,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 34,
+        "tipo": "work",
+        "carga": 12,
+        "repeticoes": 11,
+        "rir": 0
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "aquecimento",
+        "carga": 15,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "feeder",
+        "carga": 25,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 12,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 73,
+        "tipo": "work",
+        "carga": 35,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "aquecimento",
+        "carga": 12.5,
+        "repeticoes": 15,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "feeder",
+        "carga": 20,
+        "repeticoes": 8,
+        "rir": null
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 11,
+        "rir": 1
+      },
+      {
+        "fk_exercicio": 77,
+        "tipo": "work",
+        "carga": 30,
+        "repeticoes": 10,
+        "rir": 1
+      }
+    ]
+  }
+]
