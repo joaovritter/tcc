@@ -417,7 +417,7 @@ function CardSessao({ sessao, onAbrir }: { sessao: api.SessaoHistorico; onAbrir:
       <CardActionArea onClick={onAbrir}>
         <CardContent>
           <Stack direction="row" spacing={2} alignItems="center">
-            {/* selo do score: o numero com a cor da faixa; "—" = ainda sem avaliacao */}
+            {/* selo do score: o numero com a cor da faixa; "-" = ainda sem avaliacao */}
             <Box
               sx={{
                 width: 44,

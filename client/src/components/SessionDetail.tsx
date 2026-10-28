@@ -54,7 +54,7 @@ function TabelaSeries({
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>#</TableCell>
+            <TableCell>Nº</TableCell>
             <TableCell>Carga</TableCell>
             <TableCell>Reps</TableCell>
             <TableCell>{variante === 'validas' ? 'RIR' : 'Tipo'}</TableCell>

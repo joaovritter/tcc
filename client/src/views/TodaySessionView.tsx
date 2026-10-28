@@ -215,7 +215,7 @@ export function TodaySessionView() {
           </Typography>
           <FeedbackAlert sucesso={sucesso} />
           <Typography color="text.secondary">
-            {DIAS[hoje?.dia_semana ?? new Date().getDay()]} não tem divisão cadastrada — dia de descanso.
+            {DIAS[hoje?.dia_semana ?? new Date().getDay()]} não tem divisão cadastrada - dia de descanso.
           </Typography>
         </CardContent>
       </Card>
@@ -229,7 +229,7 @@ export function TodaySessionView() {
           Treino de Hoje
         </Typography>
         <Typography color="text.secondary" gutterBottom>
-          {DIAS[hoje.dia_semana]} — {hoje.divisaoHoje.nome}
+          {DIAS[hoje.dia_semana]} - {hoje.divisaoHoje.nome}
         </Typography>
 
         <FeedbackAlert erro={erro} />
