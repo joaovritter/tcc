@@ -178,7 +178,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
   - H6 (celular): o detalhe do ponto só aparece no tooltip. Tocando no ponto, ele abre?
   - H2: "tonelagem" é claro?
   - H10 (joao2): "Nenhuma série válida registrada ainda." Diz o que fazer? (Compare com a do Diagnóstico.)
-- [ ] Desktop  [ ] Celular
+- [X] Desktop  
+- [X] Celular
 
 #### 7. Histórico – Volume
 - **Como abrir:** aba Volume.
@@ -186,7 +187,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
 - **Conferir:**
   - H10 (joao2): sempre aparecem as últimas 8 semanas, com todos os chips zerados e nenhum texto explicando. A tela diz o que fazer?
   - H8: com 8 semanas e 7 grupamentos, fica legível no celular?
-- [ ] Desktop  [ ] Celular
+- [X] Desktop  
+- [X] Celular
 
 #### 8. Histórico – Sessões
 - **Como abrir:** aba Sessões. Com joao, navegue até setembro pelas setas e abra uma sessão (detalhe com séries e "Avaliação da IA", botão de voltar ao calendário).
@@ -195,7 +197,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
   - **H1: ao abrir a aba, antes de tocar em um dia, aparece "Nenhum treino finalizado neste mês." mesmo em outubro, que tem treinos.** A mensagem engana; é forte candidato a severidade 2 ou 3.
   - H6/H10: não há legenda para a cor dos pontos. Dá para saber o que verde, amarelo e vermelho significam?
   - H3: o "voltar" do detalhe volta para o mesmo mês e dia que estavam abertos?
-- [ ] Desktop  [ ] Celular
+- [X] Desktop 
+- [X] Celular
 
 #### 9. Navegação geral
 - **O que olhar:** a sidebar no desktop e a barra de ícones no celular.

@@ -269,7 +269,7 @@ function AbaSessoes() {
         if (!ativo) return;
         setDados(resposta);
         //dia ja selecionado neste mes (voltou do detalhe): mantem.
-        //senao, o treino mais recente do mes - ou nada, se o mes esta vazio
+        //senao, o ultimo dia com treino do mes (ou null se nao tiver nenhum)
         setDia((atual) =>
           atual?.startsWith(mes) ? atual : (resposta.sessoes.at(-1)?.dia ?? null)
         );

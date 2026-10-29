@@ -71,4 +71,29 @@
     - tudo certo
 
 6. historico - cargas
-    - 
+    - se segurar apertado ele mostra. ta certo ele mostra
+    - não é claro mas o cara consegue saber se ver a quantidade de reps e cargas
+    - h10 não diz o que fazer, vou corrigir agora e por
+        1. tela historico, aba cargas
+        2. problema: sem nada registrado a mensagem não instrui ao que fazer para ter registros.
+        3. Heuristica 10: ajuda e documentação 
+        4. severidade: 1
+
+7. historico - volume
+    - h10 a tela nao diz o que fazer para ter series validas carregadas.
+        1. tela historico, aba volume
+        2. problema: sem nada registrado, a tela não instrui a treinar para ter series validas registradas.
+        3. heuristica 10: ajuda e documentação
+        4. seveirdade: 1
+    - fica legivel a tela toda no celular
+
+8. historico - sessoes
+    - certo, vai direto para o ultimo dia que teve treino
+    - certo, voltar volta para o dia que estava olhando antes
+
+9. navegação geral
+    - não da para saber qual icone é da pagina, tinha que ter texto
+        1. tela: navbar celular
+        2. problema: a barra só mostra icones, sem texto. o usuario precisa decorar a funcao de cada um.
+        3. heuristica 6: reconhecimento em vez de memorização
+        4. severidade: 2 (afeta todo usuario, mas ele aprende depois de alguns usos)
