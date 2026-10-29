@@ -38,10 +38,10 @@ function montarPrompt(treino: Treino, volume: VolumeSemanal, series: SerieValida
 
   //Bloco 4 - Diretrizes científicas: os dois limiares (RIR e RPE) do referencial
   const diretrizes = `Considere: (1) 10 ou mais séries semanais por grupamento é o limiar `
-    + `mínimo associado a ganhos hipertróficos [Schoenfeld, Ogborn, Krieger]; grupamentos `
+    + `mínimo associado a ganhos hipertróficos; grupamentos `
     + `abaixo disso estão com volume insuficiente. (2) Na escala RPE/RIR, RPE 9 (1 RIR) `
     + `indica estímulo otimizado; quanto mais perto de RPE 6 (4 RIR) ao longo da sessão, `
-    + `menor a intensidade relativa efetiva do treino [Zourdos; Helms].`;
+    + `menor a intensidade relativa efetiva do treino.`;
 
   // Bloco 5 - Formato de saída: só JSON, sem texto fora do schema
   const formato = `Responda apenas em JSON com os campos: diagnostico_exercicios `

@@ -217,7 +217,7 @@ function AbaVolume() {
     <Stack spacing={2.5}>
       <Typography variant="body2" color="text.secondary">
         Séries válidas por grupamento nas últimas {historico.length} semanas · limiar de{' '}
-        {historico[0]?.limiar} séries [Schoenfeld]
+        {historico[0]?.limiar} séries
       </Typography>
 
       {historico.map((semana) => (

@@ -66,8 +66,8 @@ export function DiagnosticContent({ diagnostico }: { diagnostico: DiagnosticoIA 
         </Box>
 
         <Stack spacing={1}>
-          <Chip size="small" variant="outlined" label={`Volume (Pv): ${Math.round(conteudo.score_detalhe.pv)}`} />
-          <Chip size="small" variant="outlined" label={`Intensidade (Pi): ${Math.round(conteudo.score_detalhe.pi)}`} />
+          <Chip size="small" variant="outlined" label={`Pontuação de Volume (Pv): ${Math.round(conteudo.score_detalhe.pv)}`} />
+          <Chip size="small" variant="outlined" label={`Pontuação de Intensidade (Pi): ${Math.round(conteudo.score_detalhe.pi)}`} />
         </Stack>
       </Stack>
 

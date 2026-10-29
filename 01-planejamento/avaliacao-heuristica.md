@@ -22,6 +22,27 @@ Roteiro para fazer a inspeção de usabilidade do sistema e transformar o result
 
 ---
 
+## Onde estamos
+
+- **Dados prontos:** `joao@teste.com` (5 semanas de treino, 28/09 a 26/10, com diagnóstico) e `joao2@teste.com` (vazio). Senha dos dois: `www.com.brj`. Se o banco mudar, `npm run seed:demo` em `server/` recria os dois.
+- **1ª passada (T1, T2, T3) feita:** anotações em `resultados_heuristica.md`. Confira se ela foi feita **nos dois dispositivos**; se faltou o celular, repita só o que mudar de layout (T1 inteira e o calendário da T3).
+- **Agora:** passar as anotações para a planilha (rascunho logo abaixo) e fazer a 2ª passada tela por tela (seção 3, "Roteiro por tela").
+
+### Rascunho de achados da 1ª passada (para a aba Achados)
+
+A severidade é sugestão; a decisão é sua. Preencha o **Dispositivo** conforme onde viu o problema.
+
+| ID | Tela | Tarefa | Heurística | Problema | Sev. sugerida |
+|---|---|---|---|---|---|
+| A1 | Treino de Hoje | T1 | 9. Ajudar a corrigir erros | RIR 7: a série é recusada, mas o aviso aparece no topo do card, longe do campo, e o campo não fica marcado em vermelho. | 2 |
+| A2 | Treino de Hoje | T1 | 9. Ajudar a corrigir erros (ou 1. Visibilidade) | Carga vazia: o botão "Registrar série" só fica desabilitado, sem dizer qual campo falta. | 1 ou 2 |
+| A3 | Treino de Hoje | T1 | 5. Prevenção de erros | Carga absurda (9999 kg) é aceita e gravada; não há limite nem pedido de confirmação. | 2 |
+| A4 | Treino de Hoje | T1 | 3. Controle e liberdade | Não dá para editar uma série; é preciso apagar e registrar de novo. | 2 |
+
+**Não é achado:** carga com vírgula (22,5). O sistema converte para 22.5 de propósito; confira na lista se apareceu "22.5 kg". Se apareceu, isso conta a favor da heurística 2 (o praticante digita como está acostumado).
+
+---
+
 ## 1. Preparar (30 min)
 
 1. **Subir o sistema** com `GEMINI_MOCK=false`, para o diagnóstico ser real.
@@ -91,6 +112,93 @@ Para cada tela (Minha Divisão, Treino de Hoje, Volume da Semana, Diagnóstico, 
 | 8 | Estética e design minimalista | A tela de treino tem só o necessário? |
 | 9 | Ajudar a corrigir erros | As mensagens de erro são claras e dizem o que fazer? |
 | 10 | Ajuda e documentação | As telas vazias explicam o próximo passo? |
+
+### Roteiro por tela
+
+Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra no desktop e no celular (iPhone 12, 390 px), passe pelas 10 heurísticas e anote os "não". Os itens **"Conferir"** são pontos que eu vi no código e que podem virar achado; confirme olhando a tela antes de registrar.
+
+#### 1. Login/Cadastro
+- **Como abrir:** sair do sistema (ícone de sair).
+- **O que tem:** e-mail, senha, botão Entrar, link "Não tem conta? Criar uma" (o cadastro acrescenta o campo Nome).
+- **Conferir:**
+  - H9: senha errada e e-mail já cadastrado. A mensagem diz o que fazer?
+  - H1: o botão muda para "Enviando..." enquanto espera?
+- [ ] Desktop  [ ] Celular
+
+#### 2. Minha Divisão
+- **Como abrir:** menu "Minha divisão", com `joao@teste.com`; depois com `joao2@teste.com` (vazio).
+- **O que tem:** um campo por dia, ícone de descanso (soneca), botão "Exercícios" por dia, "Salvar semana" e o diálogo de exercícios (busca, filtro por grupamento, adicionar, subir/descer, remover, "Salvar exercícios").
+- **Conferir:**
+  - H6/H2: o ícone de descanso só explica o que faz no tooltip, e no celular não existe hover. Dá para entender sem passar o mouse?
+  - H3/H5: no diálogo de exercícios, clicar fora dele ou em "Cancelar" descarta as mudanças sem avisar.
+  - H1: depois de "Salvar semana", aparece "Divisão salva com sucesso!"? E depois de "Salvar exercícios" aparece algum aviso, ou o diálogo só fecha?
+  - H10 (joao2): a tela vazia explica que é preciso dar nome ao dia e depois escolher os exercícios?
+- [ ] Desktop  [ ] Celular
+
+#### 3. Treino de Hoje
+- **Como abrir:** menu "Treino de hoje". É a tela da T1; aproveite o que já anotou.
+- **O que tem:** "Começar treino", seletor RIR/RPE (vale para a sessão toda), um bloco por exercício (Tipo, Carga (kg), Reps, RIR ou RPE, "Registrar série"), a lista de séries com lixeira e, no fim, "Finalizar e avaliar treino", que pede um segundo toque para confirmar.
+- **Conferir:**
+  - **H3/H5: a lixeira apaga a série na hora, sem confirmação e sem desfazer.** É o exemplo de severidade 3 do próprio roteiro; se confirmar, é obrigatório corrigir.
+  - H6: a tela não mostra a carga nem as repetições da última sessão daquele exercício. O usuário precisa lembrar.
+  - H1: depois de registrar, a série aparece na lista. Isso basta como confirmação, ou falta um aviso de "série salva"?
+  - H1/H9 (celular): o aviso de erro aparece no topo do card. Registrando o 5º exercício no celular, dá para ver o erro sem rolar a tela?
+  - H4/H8 (celular): a barra de ícones fixa embaixo cobre o botão "Finalizar e avaliar treino" no fim da página? Se cobrir e não der para tocar, é severidade 4.
+  - H10 (joao2 ou dia sem divisão): a mensagem "dia de descanso" diz onde cadastrar a divisão?
+- [ ] Desktop  [ ] Celular
+
+#### 4. Volume da Semana
+- **Como abrir:** menu "Volume da semana". Como hoje é meio de semana, com joao aparecem poucas séries (só o Push de segunda e o que você registrou na T1). Isso é esperado.
+- **O que tem:** uma barra por grupamento, um chip "N / 10 séries" e o texto "Faltam N séries para o limiar".
+- **Conferir:**
+  - H2: "limiar" e "séries válidas" são termos que um praticante entende? Em algum lugar diz que aquecimento e feeder não contam?
+  - H10 (joao2): todos os grupamentos aparecem com "Nenhuma série válida nesta semana". A tela diz o que fazer para isso mudar?
+  - H6: dá para ver a semana passada daqui, ou só no Histórico → Volume? Basta saber que existe.
+- [ ] Desktop  [ ] Celular
+
+#### 5. Diagnóstico
+- **Como abrir:** menu "Diagnóstico" (mostra o diagnóstico da sessão mais recente).
+- **O que tem:** score de 0 a 100 no círculo, chips de Pv e Pi, análise por grupamento, por exercício e recomendações.
+- **Conferir:**
+  - H2: o praticante entende o que são Pv e Pi só pelos chips? E a cor do score (vermelho, amarelo, verde)?
+  - H4: o título do menu é "Diagnóstico" e o da tela é "Diagnóstico da Sessão". Fica claro que é só da última sessão?
+  - H6: a tela leva para diagnósticos anteriores, ou o usuário precisa saber que eles estão no Histórico → Sessões?
+  - H10 (joao2): "Nenhum diagnóstico ainda. Em Treino de hoje, toque em Finalizar e avaliar treino…". Bom exemplo de tela vazia bem resolvida (pode citar no texto).
+- [ ] Desktop  [ ] Celular
+
+#### 6. Histórico – Cargas
+- **Como abrir:** menu "Histórico", aba Cargas.
+- **O que tem:** um seletor de exercício e o gráfico da maior carga válida por sessão. O tooltip mostra reps, séries e tonelagem.
+- **Conferir:**
+  - H6 (celular): o detalhe do ponto só aparece no tooltip. Tocando no ponto, ele abre?
+  - H2: "tonelagem" é claro?
+  - H10 (joao2): "Nenhuma série válida registrada ainda." Diz o que fazer? (Compare com a do Diagnóstico.)
+- [ ] Desktop  [ ] Celular
+
+#### 7. Histórico – Volume
+- **Como abrir:** aba Volume.
+- **O que tem:** uma linha por semana com chips "Grupamento N/10" (verde quando atingiu o limiar).
+- **Conferir:**
+  - H10 (joao2): sempre aparecem as últimas 8 semanas, com todos os chips zerados e nenhum texto explicando. A tela diz o que fazer?
+  - H8: com 8 semanas e 7 grupamentos, fica legível no celular?
+- [ ] Desktop  [ ] Celular
+
+#### 8. Histórico – Sessões
+- **Como abrir:** aba Sessões. Com joao, navegue até setembro pelas setas e abra uma sessão (detalhe com séries e "Avaliação da IA", botão de voltar ao calendário).
+- **O que tem:** calendário do mês com um ponto colorido nos dias de treino, lista de treinos do dia escolhido, card com score, divisão, hora, séries válidas e duração.
+- **Conferir:**
+  - **H1: ao abrir a aba, antes de tocar em um dia, aparece "Nenhum treino finalizado neste mês." mesmo em outubro, que tem treinos.** A mensagem engana; é forte candidato a severidade 2 ou 3.
+  - H6/H10: não há legenda para a cor dos pontos. Dá para saber o que verde, amarelo e vermelho significam?
+  - H3: o "voltar" do detalhe volta para o mesmo mês e dia que estavam abertos?
+- [ ] Desktop  [ ] Celular
+
+#### 9. Navegação geral
+- **O que olhar:** a sidebar no desktop e a barra de ícones no celular.
+- **Conferir:**
+  - H6 (celular): a barra inferior só tem ícones, sem texto. Dá para saber qual é qual sem decorar?
+  - H4: os nomes não batem com os títulos. "Minha divisão" e "Treino de hoje" no menu viram "Minha Divisão" e "Treino de Hoje" no título; "Diagnóstico" vira "Diagnóstico da Sessão". Cosmético (severidade 1), mas é um achado de consistência fácil de mostrar.
+  - H1: fica claro em qual tela você está (item ativo destacado)?
+- [ ] Desktop  [ ] Celular
 
 ---
 

@@ -47,7 +47,7 @@ export function WeeklyVolumeView() {
           <>
             <Typography color="text.secondary" gutterBottom>
               Semana de {formatarDia(volume.semana_referencia)} · séries válidas por
-              grupamento · limiar de {volume.limiar} séries [Schoenfeld]
+              grupamento · limiar de {volume.limiar} séries 
             </Typography>
 
             <Stack spacing={2.5} sx={{ mt: 3 }}>
