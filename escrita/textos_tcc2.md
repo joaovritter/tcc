@@ -436,8 +436,18 @@ Molde. Preencher com os achados da Frente 2.
 ```latex
 \subsection{Avaliação Heurística de Usabilidade}
 
-A inspeção identificou [N] problemas de usabilidade nos fluxos avaliados: [a] de severidade 1, [b] de severidade 2, [c] de severidade 3 e nenhum de severidade 4. [Descrever em uma ou duas frases os mais relevantes, citando a heurística violada. Exemplo: ``Na tela Treino de Hoje, não havia confirmação visual após salvar uma série, violando a heurística de visibilidade do estado do sistema (severidade 2).''] Os problemas de severidade 2 ou superior foram corrigidos antes do congelamento do código, em 19 de outubro de 2026, e nenhum problema de severidade 3 ou 4 permaneceu, atendendo ao critério definido para o RNF01.
+A inspeção identificou [N] problemas de usabilidade nos fluxos avaliados: [a] de severidade 1, [b] de severidade 2, [c] de severidade 3 e nenhum de severidade 4. [Descrever em uma ou duas frases os mais relevantes, citando a heurística violada. Exemplo: ``Na tela Treino de Hoje, não havia confirmação visual após salvar uma série, violando a heurística de visibilidade do estado do sistema (severidade 2).''] Os problemas de severidade [3 ou superior / 2 ou superior] foram corrigidos com ajustes pontuais de interface, e nenhum problema de severidade 3 ou 4 permaneceu, atendendo ao critério definido para o RNF01.
 ```
+
+**Atenção:** não dizer que as correções vieram "antes do congelamento do código". Elas foram feitas depois do *code freeze* (19/10), como ajustes de usabilidade apontados pela própria avaliação, o que o roteiro permite.
+
+**Ponto positivo para citar** (já verificado com o usuário sem dados, `joao2@teste.com`). Pode entrar logo depois da frase dos achados mais relevantes:
+
+```latex
+Entre os aspectos bem avaliados, destaca-se o tratamento de estados vazios: na tela Diagnóstico, um usuário que ainda não avaliou nenhuma sessão é orientado a, em Treino de Hoje, tocar em ``Finalizar e avaliar treino'' ao término do treino, o que atende à heurística de ajuda e documentação.
+```
+
+**Por quê:** mostra que a inspeção também registrou o que funciona, e não só problemas. Isso deixa a avaliação mais crível para a banca.
 
 Tabela opcional, se couber:
 ```latex

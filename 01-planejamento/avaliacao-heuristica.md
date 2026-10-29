@@ -123,7 +123,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
 - **Conferir:**
   - H9: senha errada e e-mail já cadastrado. A mensagem diz o que fazer?
   - H1: o botão muda para "Enviando..." enquanto espera?
-- [ ] Desktop  [ ] Celular
+- [X] Desktop  
+- [X] Celular
 
 #### 2. Minha Divisão
 - **Como abrir:** menu "Minha divisão", com `joao@teste.com`; depois com `joao2@teste.com` (vazio).
@@ -133,7 +134,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
   - H3/H5: no diálogo de exercícios, clicar fora dele ou em "Cancelar" descarta as mudanças sem avisar.
   - H1: depois de "Salvar semana", aparece "Divisão salva com sucesso!"? E depois de "Salvar exercícios" aparece algum aviso, ou o diálogo só fecha?
   - H10 (joao2): a tela vazia explica que é preciso dar nome ao dia e depois escolher os exercícios?
-- [ ] Desktop  [ ] Celular
+- [X] Desktop  
+- [X] Celular
 
 #### 3. Treino de Hoje
 - **Como abrir:** menu "Treino de hoje". É a tela da T1; aproveite o que já anotou.
@@ -145,7 +147,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
   - H1/H9 (celular): o aviso de erro aparece no topo do card. Registrando o 5º exercício no celular, dá para ver o erro sem rolar a tela?
   - H4/H8 (celular): a barra de ícones fixa embaixo cobre o botão "Finalizar e avaliar treino" no fim da página? Se cobrir e não der para tocar, é severidade 4.
   - H10 (joao2 ou dia sem divisão): a mensagem "dia de descanso" diz onde cadastrar a divisão?
-- [ ] Desktop  [ ] Celular
+- [X] Desktop  
+- [X] Celular
 
 #### 4. Volume da Semana
 - **Como abrir:** menu "Volume da semana". Como hoje é meio de semana, com joao aparecem poucas séries (só o Push de segunda e o que você registrou na T1). Isso é esperado.
@@ -154,7 +157,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
   - H2: "limiar" e "séries válidas" são termos que um praticante entende? Em algum lugar diz que aquecimento e feeder não contam?
   - H10 (joao2): todos os grupamentos aparecem com "Nenhuma série válida nesta semana". A tela diz o que fazer para isso mudar?
   - H6: dá para ver a semana passada daqui, ou só no Histórico → Volume? Basta saber que existe.
-- [ ] Desktop  [ ] Celular
+- [X] Desktop  
+- [X] Celular
 
 #### 5. Diagnóstico
 - **Como abrir:** menu "Diagnóstico" (mostra o diagnóstico da sessão mais recente).
@@ -164,7 +168,8 @@ Os nomes das telas são os da coluna **Tela** da planilha. Para cada uma: abra n
   - H4: o título do menu é "Diagnóstico" e o da tela é "Diagnóstico da Sessão". Fica claro que é só da última sessão?
   - H6: a tela leva para diagnósticos anteriores, ou o usuário precisa saber que eles estão no Histórico → Sessões?
   - H10 (joao2): "Nenhum diagnóstico ainda. Em Treino de hoje, toque em Finalizar e avaliar treino…". Bom exemplo de tela vazia bem resolvida (pode citar no texto).
-- [ ] Desktop  [ ] Celular
+- [X] Desktop  
+- [X] Celular
 
 #### 6. Histórico – Cargas
 - **Como abrir:** menu "Histórico", aba Cargas.
