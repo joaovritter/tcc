@@ -63,3 +63,12 @@
         2. problema: ao excluir uma serie, não aparece nenhuma confirmação, a serie apaga na hora e sem opção de desfazer.
         3. heuristica 5: prevenção de erros
         4. severidade 3
+
+4. volume da semana
+    - tudo certo
+
+5. diagnostico
+    - tudo certo
+
+6. historico - cargas
+    - 
