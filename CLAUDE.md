@@ -20,7 +20,7 @@ Este diretório é o repositório git (`github.com/joaovritter/tcc`, branch `mai
 
 ## Avaliação heurística (Frente 2) — andamento
 
-Roteiro: `01-planejamento/avaliacao-heuristica.md`. Anotações do autor: `01-planejamento/resultados_heuristica.md`.
+Roteiro e resultados por tela: `01-planejamento/avaliacao-heuristica.md` (versão final; achados A1 a A8). Anotações brutas do autor: `01-planejamento/resultados_heuristica.md`.
 Cada achado precisa de: tela, problema, heurística (1 a 10 de Nielsen) e severidade (0 a 4). O mesmo problema em duas telas é um achado só.
 Para o texto só importam: contagem por severidade, 1 ou 2 exemplos e nenhum problema de severidade 3 ou 4 sem correção (critério do RNF01).
 
@@ -29,11 +29,15 @@ Achados confirmados pelo autor:
 | Tela | Heurística | Problema | Sev. | Situação |
 |---|---|---|---|---|
 | Treino de Hoje | 5. Prevenção de erros | Lixeira apaga a série na hora, sem confirmação nem desfazer | 3 | a corrigir (confirmação em dois toques, como o "Finalizar") |
-| Minha Divisão | 1. Visibilidade | "Salvar semana" não mostra confirmação. Causa: `FeedbackAlert` usa `erro ?? sucesso` e recebe `erro=''`; trocar por `\|\|` | 2 | a corrigir (tirar print do antes) |
+| Minha Divisão | 1. Visibilidade | "Salvar semana" não mostra confirmação. Causa: `FeedbackAlert` usa `erro ?? sucesso` e recebe `erro=''`; trocar por `\|\|` | 2 | registrado (autor decidiu não mexer no código além do A1) |
 | Treino de Hoje | 9. Corrigir erros | Erro ao registrar série aparece no topo do card, fora da tela no celular; campo não destacado | 2 | registrado |
 | Treino de Hoje | 5. Prevenção de erros | Carga sem limite nem confirmação (9999 kg, ou 225 no lugar de 22,5) | 2 | registrado |
 | Treino de Hoje | 3. Controle e liberdade | Não dá para editar série; apagar e refazer joga a série para o fim da lista | 2 | registrado |
 | Minha Divisão | 3. Controle e liberdade | Diálogo de exercícios descarta mudanças sem avisar ao clicar fora ou em Cancelar | 2 | registrado |
+| Navegação (celular) | 6. Reconhecimento | Barra inferior só com ícones, sem texto | 2 | registrado |
+| Histórico (Cargas e Volume) | 10. Ajuda e documentação | Estado vazio não diz o que fazer para ter dados (um achado só, duas abas) | 1 | autor quer corrigir |
+
+Avaliação encerrada em 29/10/2026: 8 achados (sev. 1: 1, sev. 2: 6, sev. 3: 1, sev. 4: 0). Texto em `escrita/textos_tcc2.md`, seção VI.B.
 
 Verificado e **não** é achado (decisão do autor): carga com vírgula (convertida de propósito); login com "Credenciais inválidas" genérico (segurança); termos "limiar" e "séries válidas" (público é praticante experiente); Volume da Semana sem atalho para semanas anteriores; mensagem de "dia de descanso"; Diagnóstico (Pv/Pi descritos, data da sessão visível).
 

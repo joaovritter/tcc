@@ -431,23 +431,28 @@ RNF06 & Teste de integração & Registros intactos após falha simulada & Atendi
 
 ## VI.B · Avaliação Heurística de Usabilidade
 
-Molde. Preencher com os achados da Frente 2.
+Preenchido em 29/10/2026 com os achados de `01-planejamento/resultados_heuristica.md`.
+
+**Contagem (8 achados):**
+
+| Sev. | Qtd. | Achados |
+|---|---|---|
+| 1 | 1 | Histórico (abas Cargas e Volume) vazio não diz o que fazer (H10). Duas abas, mesmo problema: conta como um achado só |
+| 2 | 6 | Salvar semana sem confirmação (H1); diálogo de exercícios descarta sem avisar (H3); série não editável (H3); carga sem limite (H5); erro do RIR fora da tela (H9); barra do celular só com ícones (H6) |
+| 3 | 1 | Lixeira apaga a série sem confirmação nem desfazer (H5) |
+| 4 | 0 | — |
 
 ```latex
 \subsection{Avaliação Heurística de Usabilidade}
 
-A inspeção identificou [N] problemas de usabilidade nos fluxos avaliados: [a] de severidade 1, [b] de severidade 2, [c] de severidade 3 e nenhum de severidade 4. [Descrever em uma ou duas frases os mais relevantes, citando a heurística violada. Exemplo: ``Na tela Treino de Hoje, não havia confirmação visual após salvar uma série, violando a heurística de visibilidade do estado do sistema (severidade 2).''] Os problemas de severidade [3 ou superior / 2 ou superior] foram corrigidos com ajustes pontuais de interface, e nenhum problema de severidade 3 ou 4 permaneceu, atendendo ao critério definido para o RNF01.
+A inspeção identificou oito problemas de usabilidade nos fluxos avaliados: um de severidade 1, seis de severidade 2, um de severidade 3 e nenhum de severidade 4. O mais grave estava na tela Treino de Hoje, em que o botão de excluir apagava a série imediatamente, sem confirmação nem opção de desfazer, violando a heurística de prevenção de erros (severidade 3). Na tela Minha Divisão, a ação de salvar a semana não exibia nenhuma confirmação, o que viola a heurística de visibilidade do estado do sistema e leva o usuário a repetir a ação (severidade 2). Entre os aspectos bem avaliados, destaca-se o tratamento de estados vazios: na tela Diagnóstico, um usuário que ainda não avaliou nenhuma sessão é orientado a, em Treino de Hoje, tocar em ``Finalizar e avaliar treino'' ao término do treino, o que atende à heurística de ajuda e documentação. O problema de severidade 3 foi corrigido com a inclusão de uma confirmação em dois toques antes da exclusão da série, e os demais, de severidade 1 e 2, foram registrados como melhorias para versões futuras. Assim, nenhum problema de severidade 3 ou 4 permaneceu, atendendo ao critério definido para o RNF01.
 ```
+
+**Antes de colar:** o texto só vale depois da correção da lixeira (A1). Em 29/10 ela ainda não estava no código. Se corrigir mais algum achado, citar no texto. Detalhes por tela em `01-planejamento/avaliacao-heuristica.md`.
 
 **Atenção:** não dizer que as correções vieram "antes do congelamento do código". Elas foram feitas depois do *code freeze* (19/10), como ajustes de usabilidade apontados pela própria avaliação, o que o roteiro permite.
 
-**Ponto positivo para citar** (já verificado com o usuário sem dados, `joao2@teste.com`). Pode entrar logo depois da frase dos achados mais relevantes:
-
-```latex
-Entre os aspectos bem avaliados, destaca-se o tratamento de estados vazios: na tela Diagnóstico, um usuário que ainda não avaliou nenhuma sessão é orientado a, em Treino de Hoje, tocar em ``Finalizar e avaliar treino'' ao término do treino, o que atende à heurística de ajuda e documentação.
-```
-
-**Por quê:** mostra que a inspeção também registrou o que funciona, e não só problemas. Isso deixa a avaliação mais crível para a banca.
+**Ponto positivo** (verificado com o usuário sem dados, `joao2@teste.com`): já está no texto acima. Mostra que a inspeção também registrou o que funciona, e não só problemas, o que deixa a avaliação mais crível para a banca.
 
 Tabela opcional, se couber:
 ```latex

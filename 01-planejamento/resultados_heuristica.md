@@ -97,3 +97,5 @@
         2. problema: a barra só mostra icones, sem texto. o usuario precisa decorar a funcao de cada um.
         3. heuristica 6: reconhecimento em vez de memorização
         4. severidade: 2 (afeta todo usuario, mas ele aprende depois de alguns usos)
+    - certo
+    - certo
