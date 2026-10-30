@@ -9,7 +9,7 @@ Texto pronto para colar no TCC II (`main.tex` no Prism), **na ordem do artigo**.
 
 Os trechos entre colchetes, como [N], são lacunas para preencher com números reais.
 
-Atualizado em 26/10/2026. Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
+Atualizado em 30/10/2026 (Frentes 2 e 3 concluídas). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
 
 ---
 
@@ -23,7 +23,7 @@ Atualizado em 26/10/2026. Esta versão segue a ordem do artigo e já traz as dec
 | III | Declaração de uso de IA | E1 | ✅ |
 | IV | Metodologia: Abordagem de desenvolvimento | E2 | ✅ (falta só a frase do cronograma, para depois) |
 | IV | Metodologia: Requisitos do sistema | E2 | ✅ |
-| IV | Metodologia: Procedimentos de validação | E2 | ⏳ falta o [N] |
+| IV | Metodologia: Procedimentos de validação | E2 | ✅ |
 | V | Solução desenvolvida (7 subseções) | E2 | ⏳ |
 | VI | Resultados | E3 | ⏳ |
 | VII | Conclusões | E3 | ⏳ |
@@ -32,9 +32,10 @@ Atualizado em 26/10/2026. Esta versão segue a ordem do artigo e já traz as dec
 
 ## Pendências abertas
 
-- [ ] **[N] de cenários** da Frente 3 (validação do conteúdo da IA).
+- [x] **[N] de cenários** da Frente 3: 5 cenários, feitos em 30/10 (`validacao-ia-cenarios.md`).
 - [ ] **Números do `npm test`** (total de testes e de arquivos), para os Resultados e o Resumo.
-- [ ] **Achados da heurística** (quantidade por severidade), para os Resultados.
+- [x] **Achados da heurística** (quantidade por severidade), para os Resultados.
+- [ ] **Correção do A1 (lixeira)** no código, antes de colar a VI.B.
 - [ ] **Prints** tirados depois do code freeze, com `GEMINI_MOCK=false`.
 - [ ] **BibTeX novos** no `references.bib`: `nielsen1994severity` e `googleStructuredOutput`.
 - [ ] **Frase do cronograma** no fim da Abordagem de Desenvolvimento (deixada para depois).
@@ -172,7 +173,7 @@ RNF06 & O sistema deve preservar os registros de treino em caso de falha na API 
 - a Tabela IV (`tab:operacionalizacao`) foi apagada e não sobrou `\ref{tab:operacionalizacao}`;
 - as Figs. 1 e 2 (`figCasoUso`, `figDominio`) saíram, junto com os parágrafos que as apresentavam.
 
-## IV · Procedimentos de Validação ⏳
+## IV · Procedimentos de Validação ✅
 
 **Onde:** `\subsection{Procedimentos de Validação}`. Substitui os três parágrafos antigos, que estão no futuro ("verificarão", "será conduzida") e dizem que a Frente 1 "cobrirá RNF02, RNF03 e RNF06", o que contradiz a tabela de resultados.
 
@@ -181,15 +182,16 @@ RNF06 & O sistema deve preservar os registros de treino em caso de falha na API 
 
 A validação foi organizada em três frentes \cite{pressman2011engenharia}. A primeira consistiu em testes automatizados, executados contra um banco de dados de teste recriado a cada execução. Testes de unidade verificaram as funções de cálculo do \textit{score} e a validação da resposta da IA. Testes das rotas da API verificaram o cálculo do volume semanal, comparando-o com a contagem manual de cenários conhecidos (RF04), e as regras de cada funcionalidade. Testes de integração percorreram o fluxo completo, do cadastro à gravação e leitura do diagnóstico (RF05 a RF07), além da rejeição de registros órfãos pelo banco (RNF02) e da preservação dos registros quando a API falha (RNF06). Para que esses testes fossem determinísticos, a chamada ao Gemini pôde ser substituída por uma simulação, inclusive de falha.
 
-A segunda frente foi uma inspeção de usabilidade baseada nas heurísticas de Nielsen \cite{nielsen1994enhancing}, realizada pelo autor nos fluxos de registro de séries (RF03) e de visualização do diagnóstico e do histórico (RF05 e RF07), no navegador de \textit{desktop} e no modo de dispositivo móvel das ferramentas de desenvolvedor do navegador (RNF01). Cada problema encontrado recebeu uma severidade de 0 a 4 \cite{nielsen1994severity}, e o critério de aceitação foi a ausência de problemas de severidade 3 ou 4 ao final das correções.
+A segunda frente foi uma inspeção de usabilidade baseada nas heurísticas de Nielsen \cite{nielsen1994enhancing}, realizada pelo autor em todas as telas do sistema, no navegador de \textit{desktop} e no modo de dispositivo móvel das ferramentas de desenvolvedor do navegador (RNF01), com a API real do Gemini. A inspeção teve duas passadas. Na primeira, foram executadas três tarefas: registrar uma sessão com erros propositais de digitação (RF03), consultar o diagnóstico, inclusive com falha forçada da API (RF05), e percorrer o histórico com e sem dados (RF07). Na segunda, cada tela foi examinada segundo as dez heurísticas. Cada problema encontrado recebeu uma severidade de 0 a 4 \cite{nielsen1994severity}, e o critério de aceitação foi a ausência de problemas de severidade 3 ou 4 ao final das correções.
 
-A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados [N] cenários de sessão com volume e esforço conhecidos, combinando grupamentos abaixo, no limiar e acima do limiar de 10 séries com séries de maior e menor intensidade. Cada diagnóstico gerado pela API real foi avaliado quanto à coerência com a literatura \cite{schoenfeld2017dose, zourdos2016novel, helms2016application}, à fidelidade aos dados enviados, à permanência no domínio do treinamento de força e à integridade do formato JSON.
+A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados cinco cenários de sessão com volume e esforço conhecidos, cada um em uma conta separada: grupamentos abaixo, no limiar e acima de 10 séries semanais, séries de maior e menor intensidade, uma sessão com aquecimento e \textit{feeder}, que não devem ser contados, e uma sessão cujo volume semanal incluía séries de um dia anterior. Cada diagnóstico gerado pela API real foi avaliado quanto à coerência com a literatura \cite{schoenfeld2017dose, zourdos2016novel, helms2016application}, à fidelidade aos dados enviados, à permanência no domínio do treinamento de força e à integridade do formato JSON, e o \textit{score} exibido foi comparado ao calculado manualmente.
 ```
 
-**Pendências:**
-- **[N]:** número de cenários da Frente 3 (planejado: no mínimo 5);
-- **`nielsen1994severity`** no `references.bib` (BibTeX no fim deste arquivo);
-- se a Frente 2 ou a 3 não aconteceu como descrito, ajustar o texto ao que foi feito de verdade.
+**Decisões (30/10):**
+- **Frente 2:** descreve as duas passadas e "todas as telas", porque a inspeção passou também por Login e Minha Divisão (RF01 e RF02). Os números ficam na VI.B.
+- **Frente 3:** 5 cenários, um por conta. O C4 teve a sessão anterior inserida pelo banco na quarta (28/10), para testar o volume de dias diferentes como no uso real. Detalhes em `validacao-ia-cenarios.md`.
+
+**Pendência:** `nielsen1994severity` no `references.bib` (BibTeX no fim deste arquivo).
 
 **Como os testes estão no repositório** (conferir com `npm test`):
 - 67 casos em 8 arquivos (`server/src/__tests__`);
@@ -419,7 +421,7 @@ RF07 & Teste de API e usabilidade & Cargas, volume e sessões exibidos corretame
 RNF01 & Avaliação de usabilidade & Sem problemas de severidade 3 ou 4 & [preencher] \\ \hline
 RNF02 & Teste de integração & Registro órfão rejeitado pelo banco & Atendido \\ \hline
 RNF03 & Teste de unidade e de API & Cálculos feitos no servidor & Atendido \\ \hline
-RNF04 & Validação de conteúdo & Diagnóstico dentro do domínio & [preencher] \\ \hline
+RNF04 & Validação de conteúdo & Diagnóstico dentro do domínio & Atendido \\ \hline
 RNF05 & Teste de unidade & Resposta fora do formato recusada sem gravar & Atendido \\ \hline
 RNF06 & Teste de integração & Registros intactos após falha simulada & Atendido \\ \hline
 \end{tabular}
@@ -463,24 +465,42 @@ Treino de Hoje & [...] & [2] & Corrigido \\ \hline
 \end{tabular}
 ```
 
-## VI.C · Validação do Conteúdo dos Diagnósticos
+## VI.C · Validação do Conteúdo dos Diagnósticos ✅
 
-Molde. Preencher com as fichas da Frente 3.
+Preenchido em 30/10/2026 com os resultados de `validacao-ia-cenarios.md`.
 
 ```latex
 \subsection{Validação do Conteúdo dos Diagnósticos}
 
-Os [N] cenários de sessão foram submetidos à API real. Em [X] deles, o diagnóstico foi coerente com o limiar de volume \cite{schoenfeld2017dose} e com a leitura de intensidade por RPE e RIR \cite{zourdos2016novel, helms2016application}. [Descrever as divergências, se houver. Exemplo: ``No cenário com séries em RPE 6, o modelo recomendou aumentar a carga, mas não apontou que a sessão teve intensidade baixa.''] Em nenhum caso o modelo citou exercícios ou valores ausentes dos dados enviados [ajustar se houve], e todas as respostas vieram no formato JSON esperado. [Se o \textit{prompt} foi ajustado: descrever a mudança e comparar as duas rodadas.]
+Os cinco cenários foram submetidos à API real, e os resultados estão na Tabela~\ref{tab:cenarios-ia}. Em todos, o \textit{score} exibido coincidiu com o calculado manualmente a partir das séries registradas, e o diagnóstico foi coerente com o limiar de volume \cite{schoenfeld2017dose} e com a leitura de intensidade por RPE e RIR \cite{zourdos2016novel, helms2016application}. No cenário de intensidade baixa, o modelo recomendou aumentar a carga, e não o número de séries; nos cenários com volume no limiar ou acima dele, não sugeriu séries adicionais para o grupamento. No cenário com aquecimento e \textit{feeder}, considerou apenas as três séries válidas, e no cenário com séries de um dia anterior, usou o volume semanal acumulado. Em nenhum caso foram citados exercícios ou valores ausentes dos dados, as respostas permaneceram no domínio do treinamento de força e todas vieram no formato JSON esperado.
+
+Foram observadas duas imprecisões. Em um cenário, o modelo afirmou que cinco séries de um exercício atingiam o volume, embora o limiar se refira ao grupamento. Além disso, o comentário sobre grupamentos sem séries na semana apareceu em um cenário e não em outro, em situação semelhante. Por outro lado, a IA acrescentou informação que o \textit{score} não capta: apontou grupamentos não treinados na semana, que não afetam o $P_v$, e, no cenário em RPE 10, recomendou reduzir para RPE 9, embora o $P_i$ atribua pontuação máxima a ambos.
+
+\begin{table}[!h]
+\centering
+\caption{Cenários de validação do conteúdo dos diagnósticos}
+\label{tab:cenarios-ia}
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{|p{0.06\columnwidth}|p{0.50\columnwidth}|p{0.14\columnwidth}|p{0.18\columnwidth}|}
+\hline
+\textbf{\#} & \textbf{Cenário} & \textbf{\textit{Score}} & \textbf{Critérios} \\ \hline
+C1 & Peito, 4 séries válidas em RPE 9 & 70 & 4/4 \\ \hline
+C2 & Costas, 10 séries válidas em RPE 6 e 7 & 58 & 4/4 \\ \hline
+C3 & Pernas, 12 séries válidas em RPE 8 e 9 & 89 & 4/4 \\ \hline
+C4 & Peito e tríceps, com séries de um dia anterior (12 e 6 na semana) & 90 & 4/4 \\ \hline
+C5 & Ombros, 2 aquecimentos, 1 \textit{feeder} e 3 séries válidas em RPE 10 & 65 & 4/4 \\ \hline
+\end{tabular}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
 ```
 
-Tabela opcional:
-```latex
-\begin{tabular}{|p{0.07\columnwidth}|p{0.27\columnwidth}|p{0.14\columnwidth}|p{0.14\columnwidth}|p{0.14\columnwidth}|}
-\hline
-\textbf{\#} & \textbf{Cenário} & \textbf{Coerência} & \textbf{Fidelidade} & \textbf{Domínio} \\ \hline
-1 & Peito 12 séries, RPE 9 & Sim & Sim & Sim \\ \hline
-\end{tabular}
-```
+**Critérios:** coerência, fidelidade, domínio e JSON. "4/4" quer dizer os quatro atendidos.
+
+**Se faltar espaço:** a tabela pode sair. O texto se sustenta sozinho; nesse caso, tirar o "e os resultados estão na Tabela~\ref{tab:cenarios-ia}".
+
+**Não esconder as imprecisões:** um resultado com falhas explicadas é mais crível para a banca do que 5 de 5 perfeitos sem comentário.
 
 ## VI.D · Prints das telas
 
@@ -529,7 +549,7 @@ Como trabalhos futuros, sugerem-se: avaliar o sistema com praticantes reais por 
 
 ```latex
 \begin{abstract}
-O treinamento de força voltado à hipertrofia exige, em praticantes experientes, o controle conjunto do volume semanal de séries, da Percepção Subjetiva de Esforço (RPE) e das Repetições em Reserva (RIR), um cruzamento difícil de sustentar manualmente. Este trabalho desenvolveu um sistema web, estruturado no padrão MVC com React, Node.js e PostgreSQL, que registra as séries de cada sessão, calcula o volume semanal por grupamento muscular e, ao final de cada sessão, gera um diagnóstico por meio da API do Google Gemini, com um \textit{prompt} estruturado em cinco blocos e saída em JSON. Um \textit{score} de 0 a 100, que combina volume e intensidade, é calculado no servidor de forma determinística, independentemente da IA. O desenvolvimento seguiu a metodologia FDD em nove ciclos semanais. A validação incluiu [N] testes automatizados, todos aprovados, uma inspeção heurística de usabilidade sem problemas graves remanescentes e a avaliação de [N] cenários de sessão, nos quais os diagnósticos se mostraram [coerentes] com a literatura.
+O treinamento de força voltado à hipertrofia exige, em praticantes experientes, o controle conjunto do volume semanal de séries, da Percepção Subjetiva de Esforço (RPE) e das Repetições em Reserva (RIR), um cruzamento difícil de sustentar manualmente. Este trabalho desenvolveu um sistema web, estruturado no padrão MVC com React, Node.js e PostgreSQL, que registra as séries de cada sessão, calcula o volume semanal por grupamento muscular e, ao final de cada sessão, gera um diagnóstico por meio da API do Google Gemini, com um \textit{prompt} estruturado em cinco blocos e saída em JSON. Um \textit{score} de 0 a 100, que combina volume e intensidade, é calculado no servidor de forma determinística, independentemente da IA. O desenvolvimento seguiu a metodologia FDD em nove ciclos semanais. A validação incluiu [N] testes automatizados, todos aprovados, uma inspeção heurística de usabilidade sem problemas graves remanescentes e a avaliação de cinco cenários de sessão, nos quais os diagnósticos se mostraram coerentes com a literatura.
 \end{abstract}
 ```
 
