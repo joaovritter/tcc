@@ -9,7 +9,7 @@ Texto pronto para colar no TCC II (`main.tex` no Prism), **na ordem do artigo**.
 
 Os trechos entre colchetes, como [N], são lacunas para preencher com números reais.
 
-Atualizado em 30/10/2026 (Frentes 2 e 3 concluídas). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
+Atualizado em 31/10/2026 (Frentes 2 e 3 concluídas, A1 corrigido, 68 testes). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
 
 ---
 
@@ -25,7 +25,7 @@ Atualizado em 30/10/2026 (Frentes 2 e 3 concluídas). Esta versão segue a ordem
 | IV | Metodologia: Requisitos do sistema | E2 | ✅ |
 | IV | Metodologia: Procedimentos de validação | E2 | ✅ |
 | V | Solução desenvolvida (7 subseções) | E2 | ⏳ |
-| VI | Resultados | E3 | ⏳ |
+| VI | Resultados | E3 | ⏳ (VI.A, VI.B e VI.C prontas para colar; faltam os prints) |
 | VII | Conclusões | E3 | ⏳ |
 | — | Referências novas (BibTeX) | E2/E3 | ⏳ |
 | — | Lista de busca (Ctrl+F) | E4 | ⏳ |
@@ -33,11 +33,11 @@ Atualizado em 30/10/2026 (Frentes 2 e 3 concluídas). Esta versão segue a ordem
 ## Pendências abertas
 
 - [x] **[N] de cenários** da Frente 3: 5 cenários, feitos em 30/10 (`validacao-ia-cenarios.md`).
-- [ ] **Números do `npm test`** (total de testes e de arquivos), para os Resultados e o Resumo.
+- [x] **Números do `npm test`:** 68 testes em 8 arquivos, todos passando (31/10).
 - [x] **Achados da heurística** (quantidade por severidade), para os Resultados.
-- [ ] **Correção do A1 (lixeira)** no código, antes de colar a VI.B.
+- [x] **Correção do A1 (lixeira):** diálogo "Apagar esta série?" com Cancelar e Apagar (commit `0f93077`, 31/10).
 - [ ] **Prints** tirados depois do code freeze, com `GEMINI_MOCK=false`.
-- [ ] **BibTeX novos** no `references.bib`: `nielsen1994severity` e `googleStructuredOutput`.
+- [ ] **BibTeX novos** no `references.bib`: `nielsen1994severity` ✅ (31/10) e `googleStructuredOutput` (entra com a V.D).
 - [ ] **Frase do cronograma** no fim da Abordagem de Desenvolvimento (deixada para depois).
 - [ ] **D13 no `PLANEJAMENTO.md`:** ainda diz "grupamentos da divisão da semana"; o certo é "grupamentos treinados na sessão".
 - [ ] **PDF parcial ao orientador** (Introdução até Solução). O prazo era 25/10.
@@ -182,16 +182,16 @@ RNF06 & O sistema deve preservar os registros de treino em caso de falha na API 
 
 A validação foi organizada em três frentes \cite{pressman2011engenharia}. A primeira consistiu em testes automatizados, executados contra um banco de dados de teste recriado a cada execução. Testes de unidade verificaram as funções de cálculo do \textit{score} e a validação da resposta da IA. Testes das rotas da API verificaram o cálculo do volume semanal, comparando-o com a contagem manual de cenários conhecidos (RF04), e as regras de cada funcionalidade. Testes de integração percorreram o fluxo completo, do cadastro à gravação e leitura do diagnóstico (RF05 a RF07), além da rejeição de registros órfãos pelo banco (RNF02) e da preservação dos registros quando a API falha (RNF06). Para que esses testes fossem determinísticos, a chamada ao Gemini pôde ser substituída por uma simulação, inclusive de falha.
 
-A segunda frente foi uma inspeção de usabilidade baseada nas heurísticas de Nielsen \cite{nielsen1994enhancing}, realizada pelo autor em todas as telas do sistema, no navegador de \textit{desktop} e no modo de dispositivo móvel das ferramentas de desenvolvedor do navegador (RNF01), com a API real do Gemini. A inspeção teve duas passadas. Na primeira, foram executadas três tarefas: registrar uma sessão com erros propositais de digitação (RF03), consultar o diagnóstico, inclusive com falha forçada da API (RF05), e percorrer o histórico com e sem dados (RF07). Na segunda, cada tela foi examinada segundo as dez heurísticas. Cada problema encontrado recebeu uma severidade de 0 a 4 \cite{nielsen1994severity}, e o critério de aceitação foi a ausência de problemas de severidade 3 ou 4 ao final das correções.
+A segunda frente foi uma inspeção de usabilidade baseada nas heurísticas de Nielsen \cite{nielsen1994enhancing}, realizada pelo autor em todas as telas do sistema, no navegador de \textit{desktop} e no modo de dispositivo móvel das ferramentas de desenvolvedor do navegador (RNF01), com a API do Gemini. A inspeção teve duas rodadas. Na primeira, foram executadas três tarefas: registrar uma sessão com erros propositais de digitação (RF03), consultar o diagnóstico, inclusive com falha forçada da API (RF05), e percorrer o histórico com e sem dados (RF07). Na segunda, cada tela foi examinada segundo as dez heurísticas. Cada problema encontrado recebeu uma severidade de 0 a 4 \cite{nielsen1994severity}, e o critério de aceitação foi a ausência de problemas de severidade 3 ou 4 ao final das correções.
 
-A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados cinco cenários de sessão com volume e esforço conhecidos, cada um em uma conta separada: grupamentos abaixo, no limiar e acima de 10 séries semanais, séries de maior e menor intensidade, uma sessão com aquecimento e \textit{feeder}, que não devem ser contados, e uma sessão cujo volume semanal incluía séries de um dia anterior. Cada diagnóstico gerado pela API real foi avaliado quanto à coerência com a literatura \cite{schoenfeld2017dose, zourdos2016novel, helms2016application}, à fidelidade aos dados enviados, à permanência no domínio do treinamento de força e à integridade do formato JSON, e o \textit{score} exibido foi comparado ao calculado manualmente.
+A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados cinco cenários de sessão com volume e esforço conhecidos, combinando grupamentos abaixo, no limiar e acima de 10 séries semanais, com séries de maior e menor intensidade, uma sessão com aquecimento e \textit{feeder}, que não devem ser contados, e uma sessão cujo volume semanal incluía séries de um dia anterior. Cada diagnóstico gerado pela API real foi avaliado quanto à coerência com a literatura \cite{schoenfeld2017dose, zourdos2016novel, helms2016application}, à fidelidade aos dados enviados, à permanência no domínio do treinamento de força e à integridade do formato JSON, e o \textit{score} exibido foi comparado ao calculado manualmente.
 ```
 
 **Decisões (30/10):**
-- **Frente 2:** descreve as duas passadas e "todas as telas", porque a inspeção passou também por Login e Minha Divisão (RF01 e RF02). Os números ficam na VI.B.
+- **Frente 2:** descreve as duas rodadas e "todas as telas", porque a inspeção passou também por Login e Minha Divisão (RF01 e RF02). Os números ficam na VI.B.
 - **Frente 3:** 5 cenários, um por conta. O C4 teve a sessão anterior inserida pelo banco na quarta (28/10), para testar o volume de dias diferentes como no uso real. Detalhes em `validacao-ia-cenarios.md`.
 
-**Pendência:** `nielsen1994severity` no `references.bib` (BibTeX no fim deste arquivo).
+**Status (31/10):** colado no TCC II e `nielsen1994severity` adicionado ao `references.bib`.
 
 **Como os testes estão no repositório** (conferir com `npm test`):
 - 67 casos em 8 arquivos (`server/src/__tests__`);
@@ -399,7 +399,7 @@ Seção nova, depois da Solução. Cerca de 2 páginas.
 
 \subsection{Testes Automatizados}
 
-A suíte de testes do \textit{backend} reúne [N] casos de teste, distribuídos em [8] arquivos, e todos foram executados com sucesso na versão final do sistema. A Tabela~\ref{tab:matriz-rastreabilidade} relaciona cada requisito ao método usado para verificá-lo e ao resultado obtido. [Opcional: ``No teste de falha simulada, a API externa foi forçada a falhar após a finalização da sessão; o servidor respondeu com erro 502 e o número de séries gravadas permaneceu o mesmo antes e depois da tentativa.'']
+A suíte de testes do \textit{backend} reúne 68 casos de teste, distribuídos em oito arquivos, e todos foram executados com sucesso na versão final do sistema. A Tabela~\ref{tab:matriz-rastreabilidade} relaciona cada requisito ao método usado para verificá-lo e ao resultado obtido. [Opcional: ``No teste de falha simulada, a API externa foi forçada a falhar após a finalização da sessão; o servidor respondeu com erro 502 e o número de séries gravadas permaneceu o mesmo antes e depois da tentativa.'']
 
 \begin{table}[!h]
 \scriptsize
@@ -418,7 +418,7 @@ RF04 & Teste de API & Volume igual à contagem manual & Atendido \\ \hline
 RF05 & Teste de integração e validação de conteúdo & Diagnóstico da sessão em JSON válido e coerente & Atendido \\ \hline
 RF06 & Teste de integração & Diagnóstico gravado e vinculado à sessão & Atendido \\ \hline
 RF07 & Teste de API e usabilidade & Cargas, volume e sessões exibidos corretamente & Atendido \\ \hline
-RNF01 & Avaliação de usabilidade & Sem problemas de severidade 3 ou 4 & [preencher] \\ \hline
+RNF01 & Avaliação de usabilidade & Sem problemas de severidade 3 ou 4 & Atendido \\ \hline
 RNF02 & Teste de integração & Registro órfão rejeitado pelo banco & Atendido \\ \hline
 RNF03 & Teste de unidade e de API & Cálculos feitos no servidor & Atendido \\ \hline
 RNF04 & Validação de conteúdo & Diagnóstico dentro do domínio & Atendido \\ \hline
@@ -447,10 +447,10 @@ Preenchido em 29/10/2026 com os achados de `01-planejamento/resultados_heuristic
 ```latex
 \subsection{Avaliação Heurística de Usabilidade}
 
-A inspeção identificou oito problemas de usabilidade nos fluxos avaliados: um de severidade 1, seis de severidade 2, um de severidade 3 e nenhum de severidade 4. O mais grave estava na tela Treino de Hoje, em que o botão de excluir apagava a série imediatamente, sem confirmação nem opção de desfazer, violando a heurística de prevenção de erros (severidade 3). Na tela Minha Divisão, a ação de salvar a semana não exibia nenhuma confirmação, o que viola a heurística de visibilidade do estado do sistema e leva o usuário a repetir a ação (severidade 2). Entre os aspectos bem avaliados, destaca-se o tratamento de estados vazios: na tela Diagnóstico, um usuário que ainda não avaliou nenhuma sessão é orientado a, em Treino de Hoje, tocar em ``Finalizar e avaliar treino'' ao término do treino, o que atende à heurística de ajuda e documentação. O problema de severidade 3 foi corrigido com a inclusão de uma confirmação em dois toques antes da exclusão da série, e os demais, de severidade 1 e 2, foram registrados como melhorias para versões futuras. Assim, nenhum problema de severidade 3 ou 4 permaneceu, atendendo ao critério definido para o RNF01.
+A inspeção identificou oito problemas de usabilidade nos fluxos avaliados: um de severidade 1, seis de severidade 2, um de severidade 3 e nenhum de severidade 4. O mais grave estava na tela Treino de Hoje, em que o botão de excluir apagava a série imediatamente, sem confirmação nem opção de desfazer, violando a heurística de prevenção de erros (severidade 3). Na tela Minha Divisão, a ação de salvar a semana não exibia nenhuma confirmação, o que viola a heurística de visibilidade do estado do sistema e leva o usuário a repetir a ação (severidade 2). Entre os aspectos bem avaliados, destaca-se o tratamento de estados vazios: na tela Diagnóstico, um usuário que ainda não avaliou nenhuma sessão é orientado a, em Treino de Hoje, tocar em ``Finalizar e avaliar treino'' ao término do treino, o que atende à heurística de ajuda e documentação. O problema de severidade 3 foi corrigido com a inclusão de uma janela de confirmação antes da exclusão da série, e os demais, de severidade 1 e 2, foram registrados como melhorias para versões futuras. Assim, nenhum problema de severidade 3 ou 4 permaneceu, atendendo ao critério definido para o RNF01.
 ```
 
-**Antes de colar:** o texto só vale depois da correção da lixeira (A1). Em 29/10 ela ainda não estava no código. Se corrigir mais algum achado, citar no texto. Detalhes por tela em `01-planejamento/avaliacao-heuristica.md`.
+**Pronto para colar:** a lixeira (A1) foi corrigida em 31/10 (commit `0f93077`) com um diálogo "Apagar esta série?" (Cancelar / Apagar). Se corrigir mais algum achado, citar no texto. Detalhes por tela em `01-planejamento/avaliacao-heuristica.md`.
 
 **Atenção:** não dizer que as correções vieram "antes do congelamento do código". Elas foram feitas depois do *code freeze* (19/10), como ajustes de usabilidade apontados pela própria avaliação, o que o roteiro permite.
 
@@ -549,7 +549,7 @@ Como trabalhos futuros, sugerem-se: avaliar o sistema com praticantes reais por 
 
 ```latex
 \begin{abstract}
-O treinamento de força voltado à hipertrofia exige, em praticantes experientes, o controle conjunto do volume semanal de séries, da Percepção Subjetiva de Esforço (RPE) e das Repetições em Reserva (RIR), um cruzamento difícil de sustentar manualmente. Este trabalho desenvolveu um sistema web, estruturado no padrão MVC com React, Node.js e PostgreSQL, que registra as séries de cada sessão, calcula o volume semanal por grupamento muscular e, ao final de cada sessão, gera um diagnóstico por meio da API do Google Gemini, com um \textit{prompt} estruturado em cinco blocos e saída em JSON. Um \textit{score} de 0 a 100, que combina volume e intensidade, é calculado no servidor de forma determinística, independentemente da IA. O desenvolvimento seguiu a metodologia FDD em nove ciclos semanais. A validação incluiu [N] testes automatizados, todos aprovados, uma inspeção heurística de usabilidade sem problemas graves remanescentes e a avaliação de cinco cenários de sessão, nos quais os diagnósticos se mostraram coerentes com a literatura.
+O treinamento de força voltado à hipertrofia exige, em praticantes experientes, o controle conjunto do volume semanal de séries, da Percepção Subjetiva de Esforço (RPE) e das Repetições em Reserva (RIR), um cruzamento difícil de sustentar manualmente. Este trabalho desenvolveu um sistema web, estruturado no padrão MVC com React, Node.js e PostgreSQL, que registra as séries de cada sessão, calcula o volume semanal por grupamento muscular e, ao final de cada sessão, gera um diagnóstico por meio da API do Google Gemini, com um \textit{prompt} estruturado em cinco blocos e saída em JSON. Um \textit{score} de 0 a 100, que combina volume e intensidade, é calculado no servidor de forma determinística, independentemente da IA. O desenvolvimento seguiu a metodologia FDD em nove ciclos semanais. A validação incluiu 68 testes automatizados, todos aprovados, uma inspeção heurística de usabilidade sem problemas graves remanescentes e a avaliação de cinco cenários de sessão, nos quais os diagnósticos se mostraram coerentes com a literatura.
 \end{abstract}
 ```
 
