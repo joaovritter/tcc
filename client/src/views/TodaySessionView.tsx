@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import {
   Card, CardContent, Typography, TextField, Button, Stack, Chip,
   IconButton, MenuItem, Divider, ToggleButton, ToggleButtonGroup, CircularProgress,
+  Dialog, DialogTitle, DialogActions,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -54,6 +55,7 @@ export function TodaySessionView() {
   const [modoNota, setModoNota] = useState<'rir' | 'rpe'>(lerModoNotaSalvo);
   const [carregando, setCarregando] = useState(true);
   const [confirmandoFim, setConfirmandoFim] = useState(false);
+  const [serieParaApagar, setSerieParaApagar] = useState<number | null>(null);
   const [erro, setErro] = useState('');
   const [sucesso, setSucesso] = useState('');
   const [etapa, setEtapa] = useState<'finalizando' | 'avaliando' | null>(null); //mostra o que esta acontecendo e trava cliques repetidos
@@ -319,7 +321,7 @@ export function TodaySessionView() {
                         {serie.rir != null ? ` · RIR ${serie.rir}` : ''}
                         {serie.tipo !== 'work' ? ` · ${serie.tipo}` : ''}
                       </Typography>
-                      <IconButton size="small" onClick={() => remover(serie.id_serie)}>
+                      <IconButton size="small" onClick={() => setSerieParaApagar(serie.id_serie)}>
                         <DeleteIcon fontSize="small" />
                       </IconButton>
                     </Stack>
@@ -409,7 +411,23 @@ export function TodaySessionView() {
             </Button>
           </Stack>
         )}
+        <Dialog open={serieParaApagar !== null} onClose={() => setSerieParaApagar(null)}>
+          <DialogTitle>Apagar esta série?</DialogTitle>
+          <DialogActions>
+            <Button onClick={() => setSerieParaApagar(null)}>Cancelar</Button>
+            <Button
+              color="error"
+              variant="contained"
+              onClick={() => {
+                if (serieParaApagar !== null) remover(serieParaApagar);
+                setSerieParaApagar(null);
+              }}
+            >
+              Apagar
+            </Button>
+          </DialogActions>
+        </Dialog>
       </CardContent>
-    </Card>
+    </Card >
   );
 }
