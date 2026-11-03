@@ -9,7 +9,7 @@ Texto pronto para colar no TCC II (`main.tex` no Prism), **na ordem do artigo**.
 
 Os trechos entre colchetes, como [N], são lacunas para preencher com números reais.
 
-Atualizado em 31/10/2026 (Frentes 2 e 3 concluídas, A1 corrigido, 68 testes). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
+Atualizado em 03/11/2026 (Seção V até a V.F no TCC II; V.E simplificada com tabela de pontos; V.F sem o parágrafo de regras). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
 
 ---
 
@@ -24,7 +24,7 @@ Atualizado em 31/10/2026 (Frentes 2 e 3 concluídas, A1 corrigido, 68 testes). E
 | IV | Metodologia: Abordagem de desenvolvimento | E2 | ✅ (falta só a frase do cronograma, para depois) |
 | IV | Metodologia: Requisitos do sistema | E2 | ✅ |
 | IV | Metodologia: Procedimentos de validação | E2 | ✅ |
-| V | Solução desenvolvida (7 subseções) | E2 | ⏳ |
+| V | Solução desenvolvida (7 subseções) | E2 | ⏳ (V.A a V.F feitas; falta a V.G) |
 | VI | Resultados | E3 | ⏳ (VI.A, VI.B e VI.C prontas para colar; faltam os prints) |
 | VII | Conclusões | E3 | ⏳ |
 | — | Referências novas (BibTeX) | E2/E3 | ⏳ |
@@ -37,7 +37,7 @@ Atualizado em 31/10/2026 (Frentes 2 e 3 concluídas, A1 corrigido, 68 testes). E
 - [x] **Achados da heurística** (quantidade por severidade), para os Resultados.
 - [x] **Correção do A1 (lixeira):** diálogo "Apagar esta série?" com Cancelar e Apagar (commit `0f93077`, 31/10).
 - [ ] **Prints** tirados depois do code freeze, com `GEMINI_MOCK=false`.
-- [ ] **BibTeX novos** no `references.bib`: `nielsen1994severity` ✅ (31/10) e `googleStructuredOutput` (entra com a V.D).
+- [ ] **BibTeX novos** no `references.bib`: `nielsen1994severity` ✅ (31/10) e `googleStructuredOutput` (citado na V.D; conferir se já está no `.bib`).
 - [ ] **Frase do cronograma** no fim da Abordagem de Desenvolvimento (deixada para depois).
 - [ ] **D13 no `PLANEJAMENTO.md`:** ainda diz "grupamentos da divisão da semana"; o certo é "grupamentos treinados na sessão".
 - [ ] **PDF parcial ao orientador** (Introdução até Solução). O prazo era 25/10.
@@ -194,7 +194,7 @@ A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados 
 **Status (31/10):** colado no TCC II e `nielsen1994severity` adicionado ao `references.bib`.
 
 **Como os testes estão no repositório** (conferir com `npm test`):
-- 67 casos em 8 arquivos (`server/src/__tests__`);
+- 68 casos em 8 arquivos (`server/src/__tests__`);
 - a maioria testa as rotas da API com supertest, contra um banco de teste;
 - 3 são de unidade pura: `calcularPi`, `calcularPv` e `interpretarResposta` (`diagnostic.test.ts`);
 - `integration.test.ts` tem o fluxo completo, o teste de integridade e a falha simulada.
@@ -222,7 +222,9 @@ O sistema foi implementado como uma aplicação web com \textit{frontend} e \tex
 A arquitetura seguiu o padrão MVC \cite{freeman2018pro}, com uma diferença em relação à proposta: o Modelo não é o PostgreSQL em si, mas a camada de \textit{models} do \textit{backend}, onde ficam as consultas SQL. O \textit{backend} foi organizado em rotas, \textit{controllers}, \textit{models} e uma camada de serviços, que concentra as regras de domínio: o cálculo do volume semanal, o cálculo do \textit{score} e a comunicação com o Gemini (Fig.~\ref{figComponentes}). Essa separação permitiu testar os cálculos de forma isolada e substituir a chamada real à IA por uma simulação durante os testes.
 ```
 
-**Para redesenhar a Fig. 3 (componentes):**
+**Fig. 3:** refeita em 26/10 (Visão → Rotas → Controllers → Services → Models; PostgreSQL e Gemini fora do backend). Legenda: "arquitetura **implementada**".
+
+**Especificação usada (referência):**
 - **Visão:** React (Vite + Material UI) → HTTP/JSON →
 - **Backend Node.js/Express**, com quatro caixas: Rotas; Controllers; Services (`volumeService`, `scoreService`, `geminiService`); Models (SQL).
 - **Fora do backend:** PostgreSQL, ligado aos Models; API Gemini, ligada ao `geminiService`, como serviço externo.
@@ -241,7 +243,9 @@ O diagnóstico é gerado por sessão de treino finalizada, e não por semana, co
 Separar a finalização da avaliação foi a forma encontrada para atender ao RNF06: quando a IA é chamada, a sessão já está salva. Se a API falhar ou devolver uma resposta fora do formato, o servidor responde com erro 502, nenhuma série é alterada e a tela oferece a opção ``Tentar avaliar de novo''. Sessões finalizadas sem diagnóstico também podem ser avaliadas depois, a partir do histórico.
 ```
 
-**Para redesenhar a Fig. 4 (sequência).** Se faltar espaço, a figura sai e fica só o texto, sem o `(Fig.~\ref{figSequenciaIA})`.
+**Fig. 4:** refeita em 26/10 (`diagrama_sequencia.jpg`, gerada no chat): duas requisições, score calculado antes do Gemini e bloco `alt` com o erro 502. Os erros 409 e 400 ficam só no texto. Se faltar espaço, a figura sai e fica só o texto, sem o `(Fig.~\ref{figSequenciaIA})`.
+
+**Especificação usada (referência):**
 - **Participantes:** Usuário, React, Backend (Controller + Services), PostgreSQL e Gemini.
 - **Mensagens, em ordem:**
   1. Finalizar e avaliar →
@@ -263,7 +267,22 @@ A Fig.~\ref{figDER} apresenta o modelo de dados implementado. Em relação à pr
 A entidade \textit{Treino} passou a registrar se a sessão foi finalizada e, opcionalmente, a qual dia da divisão ela corresponde; se esse dia for excluído da rotina, os treinos já realizados são mantidos. Em \textit{SerieTreino}, o tipo admite três valores (aquecimento, \textit{feeder} e \textit{work}) e o esforço é gravado em RIR, mesmo quando informado em RPE; o RPE é uma coluna calculada pelo próprio banco (RPE $= 10 -$ RIR), o que impede valores incoerentes entre as duas escalas. Por fim, \textit{DiagnosticoIA} deixou de referenciar uma semana e passou a referenciar o treino avaliado, armazenando também o \textit{score} geral e o conteúdo retornado pela IA em formato JSON. Uma sessão pode ter mais de um diagnóstico, o que preserva o histórico quando uma avaliação é refeita.
 ```
 
-**Para redesenhar a Fig. 5 (DER), conforme o `schema.sql`:**
+**Fig. 5:** refeita em 31/10, com as 8 entidades. Como é grande, entra nas **duas colunas**:
+
+```latex
+\begin{figure*}[!t]
+\caption{Diagrama Entidade-Relacionamento do sistema}
+\centering
+\includegraphics[width=0.85\textwidth]{images/diagrama_der.jpg}
+\label{figDER}
+{\footnotesize Fonte: Elaborado pelo autor}
+\end{figure*}
+```
+
+- No IEEE, a `figure*` vai para o topo de uma página (normalmente a seguinte). É normal.
+- Ajustes sugeridos na imagem: Treino ↔ Divisão como **0..1** (a `fk_divisao` é opcional); a caixa de Legenda pode sair para economizar espaço.
+
+**Especificação usada (referência), conforme o `schema.sql`:**
 - **Usuario** (`id_usuario` PK UUID, `nome`, `email` único, `senha_hash`).
 - **GrupamentoMuscular** (`id_grupamento` PK, `nome`).
 - **Exercicio** (`id_exercicio` PK, `nome_exercicio`, `fk_grupamento` FK).
@@ -294,9 +313,9 @@ A entidade \textit{Treino} passou a registrar se a sessão foi finalizada e, opc
 ```latex
 \subsection{Integração com a IA Generativa}
 
-A comunicação com o Gemini segue o \textit{Template Pattern} \cite{white2023prompt}: o \textit{prompt} não é escrito pelo usuário, mas montado pelo servidor a partir de cinco blocos, apresentados na Tabela~\ref{tab:prompt-estruturado}. O bloco de persona aplica o \textit{Persona Pattern} \cite{white2023prompt}, restringindo o modelo ao papel de especialista em fisiologia do exercício. O bloco de contexto identifica a sessão avaliada e os grupamentos treinados nela. O bloco de dados traz as séries válidas da sessão, com exercício, grupamento, carga, repetições, RPE e RIR, e, como contexto, o volume acumulado na semana por grupamento, indicando se o limiar foi atingido. O bloco de diretrizes científicas fixa os critérios de avaliação do referencial: o limiar de 10 séries semanais \cite{schoenfeld2017dose} e a intensidade ótima em RPE 9, ou 1 RIR \cite{zourdos2016novel, helms2016application}. O bloco de formato exige resposta somente em JSON e proíbe qualquer campo de pontuação.
+A comunicação com o Gemini segue o \textit{Template Pattern} \cite{white2023prompt}: o \textit{prompt} não é escrito pelo usuário, mas montado pelo servidor a partir de cinco blocos, apresentados na Tabela~\ref{tab:prompt-estruturado}. O bloco de persona aplica o \textit{Persona Pattern} \cite{white2023prompt}, restringindo o modelo ao papel de especialista em fisiologia do exercício. O bloco de contexto identifica a sessão avaliada e os grupamentos treinados nela. O bloco de dados traz as séries válidas da sessão, com exercício, grupamento, carga, repetições, RPE e RIR, e, como contexto, o volume acumulado na semana por grupamento, indicando se o limiar foi atingido. O bloco de diretrizes científicas delimita os critérios de avaliação de acordo com o referencial: o limiar mínimo de 10 séries semanais por grupamento muscular \cite{schoenfeld2017dose} e a intensidade ótima em RPE 9, ou 1 RIR \cite{zourdos2016novel, helms2016application}. O bloco de formato exige que a resposta seja em JSON e proíbe qualquer campo de pontuação.
 
-Além da instrução no \textit{prompt}, a requisição envia ao Gemini um esquema de resposta, recurso de saída estruturada da API \cite{googleStructuredOutput}, com três campos obrigatórios: \texttt{diagnostico\_exercicios}, \texttt{analise\_grupamentos} e \texttt{recomendacoes\_proxima\_sessao}. Ao receber a resposta, o servidor confere a presença dos três campos e descarta qualquer outro; uma resposta fora do formato é tratada como falha e nada é gravado (RNF05).
+Para que a resposta da IA venha sempre no mesmo formato (RNF05), a requisição ao Gemini inclui um esquema com os campos esperados \cite{googleStructuredOutput}: a análise por exercício (\texttt{diagnostico\_exercicios}), a análise por grupamento (\texttt{analise\_grupamentos}) e as recomendações para a próxima sessão (\texttt{recomendacoes\_proxima\_sessao}). Quando a resposta chega, o servidor verifica se esses três campos estão presentes. Se algum faltar, a avaliação é tratada como falha e o diagnóstico não é gravado.
 
 \begin{table}[!h]
 \centering
@@ -317,62 +336,71 @@ Formato de saída & Somente JSON com três campos obrigatórios e sem campo de p
 \end{table}
 ```
 
+**Revisões de 01/11:** o parágrafo do esquema de resposta foi reescrito (o anterior estava denso) e o das diretrizes é a versão do autor. Os parágrafos de persona, contexto e dados podem ter sido ajustados direto no TCC II: em caso de diferença, vale o `.tex`.
+
+**Por que RPE 9 e não 10:** RPE 9 é o estímulo otimizado; RPE 10 (falha) é aceito, mas custa mais recuperação sem ganho claro de hipertrofia. O score dá 100 para os dois; a IA recomendou baixar de 10 para 9 no cenário C5.
+
 **Referência nova:** `googleStructuredOutput` (BibTeX no fim deste arquivo).
 
 **Conferido no código** (`geminiService.ts`): `montarPrompt` tem os 5 blocos; o `SCHEMA` declara os 3 campos obrigatórios; `interpretarResposta` só aceita JSON com os 3 arrays.
 
-## V.E · Cálculo do Score Geral (Equações)
+## V.E · Cálculo do Score Geral (Tabela de pontos) ✅
 
-**Onde:** substitui o parágrafo do TCC I depois da Tabela V ("O retorno da API Gemini deve seguir formato JSON...") e a Equação (1). A Tabela IV já foi apagada.
-
-**Hoje diz:** "Após o recebimento desse retorno, o backend em Node.js calculará o campo score_geral..." e "...desempenho **da semana**."
+**Feito no TCC II (03/11).** Versão final, simplificada: uma equação só e uma tabela de pontos por RPE no lugar das fórmulas com somatório.
 
 ```latex
-\subsection{Cálculo do \textit{Score} Geral}
+\subsection{Cálculo do Score Geral}
 
-Além do texto da IA, cada diagnóstico traz um \textit{score} geral de 0 a 100, exibido como indicador visual na tela de diagnóstico. Diferentemente do previsto na proposta, o \textit{score} é calculado pelo servidor antes da chamada à IA, apenas com os dados do banco, e não depende da resposta do modelo: a IA não atribui nota, e qualquer campo numérico que ela devolva é descartado. Assim, o mesmo conjunto de séries sempre produz o mesmo \textit{score}, e o valor pode ser conferido manualmente. O \textit{score} é a média entre uma pontuação de volume ($P_v$) e uma de intensidade ($P_i$), arredondada para o inteiro mais próximo:
+Para complementar as recomendações da IA, cada diagnóstico traz um \textit{score} geral de 0 a 100, exibido na tela de diagnóstico com um indicador visual. Ao contrário do previsto na proposta, o \textit{score} é calculado pelo \textit{backend} antes da chamada à IA, apenas com os dados do banco. A IA não atribui nota, e qualquer campo de pontuação que ela devolva é descartado pelo servidor. Assim, o mesmo conjunto de séries sempre produz o mesmo \textit{score}, e o valor pode ser conferido manualmente. O \textit{score} é a média, arredondada, entre uma pontuação de volume ($P_v$) e uma de intensidade ($P_i$):
 \begin{equation}
     \text{Score Geral} = \frac{P_v + P_i}{2}
 \end{equation}
 
-A pontuação de volume mede o quanto os grupamentos trabalhados se aproximam do limiar de 10 séries semanais \cite{schoenfeld2017dose}. Para cada um dos $n$ grupamentos treinados na sessão, considera-se o número $s_g$ de séries válidas acumuladas na semana:
-\begin{equation}
-    P_v = \frac{1}{n}\sum_{g=1}^{n} \min\left(\frac{s_g}{10},\, 1\right) \times 100
-\end{equation}
+A pontuação de volume indica o quanto os grupamentos treinados na sessão se aproximam do limiar de 10 séries semanais \cite{schoenfeld2017dose}. Para cada grupamento, calcula-se o percentual atingido desse limiar com as séries válidas acumuladas na semana, limitado a 100\%, e $P_v$ é a média desses percentuais. Optou-se por considerar apenas os grupamentos treinados na sessão porque o diagnóstico avalia a sessão: um grupamento trabalhado em outro dia não altera a nota deste treino.
 
-Optou-se por considerar apenas os grupamentos treinados na sessão porque o diagnóstico avalia a sessão: o volume acumulado na semana serve de referência para os músculos daquele treino, e um grupamento trabalhado em outro dia não altera a nota desta sessão.
+A pontuação de intensidade tem como referência a intensidade ótima em RPE 9, ou 1 RIR \cite{zourdos2016novel, helms2016application}. Cada série válida da sessão recebe pontos conforme o seu RPE (Tabela~\ref{tab:pontos-rpe}), e $P_i$ é a média desses pontos. Uma série em RPE 10 vale o mesmo que em RPE 9, pois treinar até a falha não traz benefício adicional para a hipertrofia.
 
-A pontuação de intensidade considera as $m$ séries válidas da sessão e tem como referência a intensidade ótima em RPE 9, ou 1 RIR \cite{zourdos2016novel, helms2016application}: RPE 6, o menor valor aceito, vale 0; RPE 9 ou 10 vale 100; e os valores intermediários são proporcionais:
-\begin{equation}
-    P_i = \frac{1}{m}\sum_{j=1}^{m} \min\left(\frac{\mathit{RPE}_j - 6}{3} \times 100,\, 100\right)
-\end{equation}
+\begin{table}[!h]
+\centering
+\caption{Pontos de intensidade por RPE}
+\label{tab:pontos-rpe}
+\scriptsize
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{RPE (RIR)} & 6 (4) & 7 (3) & 8 (2) & 9 (1) & 10 (0) \\ \hline
+\textbf{Pontos} & 0 & 33,3 & 66,7 & 100 & 100 \\ \hline
+\end{tabular}
+{\footnotesize Fonte: elaborado pelo autor.}
+\end{table}
 
-Por exemplo, em uma sessão de peito e tríceps na qual o peito acumula 12 séries válidas na semana e o tríceps 6, tem-se $P_v = (100 + 60)/2 = 80$. Se as séries válidas da sessão tiverem RPE 8, 9 e 9, tem-se $P_i = (66{,}7 + 100 + 100)/3 \approx 88{,}9$, e o \textit{score} geral é $\mathrm{round}((80 + 88{,}9)/2) = 84$.
+Por exemplo, em uma sessão de peito e tríceps em que o peito acumula 12 séries válidas na semana e o tríceps 6, os percentuais são 100\% e 60\%, e $P_v = 80$. Se as séries válidas da sessão tiverem RPE 8, 9 e 9, os pontos são 66,7, 100 e 100, e $P_i \approx 88{,}9$. O \textit{score} geral é, então, $(80 + 88{,}9)/2 \approx 84$.
 ```
 
-**Conferido no código** (`scoreService.ts`): `calcularPv`, `calcularPi` e `calcularScoreGeral` batem com as fórmulas. Exemplo refeito: Pv 80, Pi 88,9, score 84.
+**Conferido no código** (`scoreService.ts`): `calcularPv`, `calcularPi` e `calcularScoreGeral` batem com a tabela (pontos = (RPE − 6) / 3 × 100, com teto de 100). Exemplo: Pv 80, Pi 88,9, score 84.
+
+**Atenção na revisão (E4):** "treinar até a falha não traz benefício adicional para a hipertrofia" é uma afirmação forte. Conferir se o Referencial (II.B) sustenta isso com Zourdos ou Helms; se não, trocar por "pois ambos estão dentro da faixa de intensidade considerada ótima".
 
 **Por quê:** o texto antigo dizia "após o retorno", mas o código calcula **antes** (D13). A frase do $P_v$ responde à pergunta provável da banca: "por que não olhar a semana toda?".
 
-## V.F · Interface e Regras de Uso
+## V.F · Interface do Sistema ✅
 
-**Onde:** depois do score. Conteúdo novo, sem equivalente no TCC I.
+**Feito no TCC II (03/11).** O título mudou de "Interface e Regras de Uso" para "Interface do Sistema", e o 3º parágrafo (regras de uso) foi **cortado**: a semana de segunda a domingo já está no RF04, a duração calculada pelo servidor já está na V.B, e o resto eram regras internas sem peso para a banca.
 
 ```latex
-\subsection{Interface e Regras de Uso}
+\subsection{Interface do Sistema}
 
-A interface possui cinco telas: Minha Divisão, onde o usuário monta a rotina semanal; Treino de Hoje, onde registra as séries; Volume da Semana, com as séries válidas por grupamento em relação ao limiar; Diagnóstico, com o \textit{score}, as pontuações $P_v$ e $P_i$, a análise por exercício e por grupamento e as recomendações para a próxima sessão; e Histórico. Em telas estreitas, a barra lateral de navegação é substituída por uma barra inferior de ícones, pensada para o uso com uma mão durante o treino (RNF01). Os campos numéricos aceitam vírgula decimal.
+A interface possui cinco telas: Minha Divisão, onde o usuário monta a divisão semanal, dando um nome ao treino de cada dia e escolhendo os exercícios; Treino de Hoje, usada para acompanhamento durante o treino, onde o usuário começa o treino e registra as séries com tipo, carga, repetições e RIR ou RPE; Volume da Semana, com as séries válidas da semana atual por grupamento, em relação ao limiar; Diagnóstico da Sessão, com o \textit{score}, as pontuações $P_v$ e $P_i$, a análise por grupamento e por exercício e as recomendações para a próxima sessão; e Histórico, detalhado a seguir. Para atender telas estreitas, a barra de navegação lateral passa a ser uma barra inferior, pensada para o uso em celulares durante o treino (RNF01). Os campos numéricos aceitam vírgula decimal.
 
-O histórico (RF07) foi organizado em três abas. A aba Cargas mostra, por exercício, a maior carga válida de cada sessão, com as repetições e a tonelagem (soma de carga $\times$ repetições); optou-se por não estimar a carga máxima (1RM), pois isso exigiria fórmulas fora do referencial adotado. A aba Volume mostra as séries válidas por grupamento nas últimas oito semanas. A aba Sessões apresenta um calendário mensal das sessões finalizadas, e cada sessão pode ser aberta com suas séries e seu diagnóstico.
-
-Durante o desenvolvimento, surgiram regras que a proposta não previa. A semana de volume vai de segunda a domingo, as séries de uma sessão ainda aberta já contam no volume e grupamentos sem séries aparecem com zero. A duração da sessão é calculada pelo servidor, e não informada pelo usuário. Séries só podem ser registradas em uma sessão aberta. Ao iniciar uma nova sessão, uma sessão esquecida aberta de outro dia é encerrada automaticamente, sem duração, para não misturar dados de dias diferentes.
+A tela do histórico (RF07) foi dividida em três abas. A aba Cargas é separada por exercício e mostra, com gráficos, a maior carga válida de cada sessão, com as repetições e a tonelagem (soma de carga $\times$ repetições), permitindo acompanhar a progressão do usuário. A aba Volume mostra as séries válidas por grupamento nas últimas oito semanas, em relação ao limiar de 10 séries. A aba Sessões possui um calendário do mês com as sessões finalizadas, e cada sessão pode ser aberta para visualização, mostrando as séries registradas e o diagnóstico gerado pela IA.
 ```
 
-**Decisões cobertas:** D6 (barra inferior), D10 (segunda a domingo), D11 (treino aberto conta no volume), D12 (duração no servidor), D17 (aba Cargas sem 1RM), D18 (calendário só com sessões finalizadas), D20 (série só em treino aberto), D22 (novo treino fecha o esquecido).
+**Dois ajustes que ainda faltam no `.tex`:** "dando um nome ao treino **de dia**" → "**de cada dia**"; "mostra com gráficos**,** a maior carga" → "mostra**,** com gráficos**,** a maior carga". O texto acima já está corrigido.
+
+**Decisões cobertas:** D6 (barra inferior), D17 (aba Cargas sem 1RM), D18 (calendário só com sessões finalizadas). Saíram do texto, mas continuam valendo no sistema: D10, D11, D12, D20 e D22.
 
 **Atenção:** "tonelagem" (carga × repetições) é diferente de "volume" (contagem de séries). Não misturar.
 
-## V.G · Ajustes em Relação à Proposta
+## V.G · Ajustes em Relação à Proposta ⏳ (próxima)
 
 **Onde:** última subseção da Solução.
 
