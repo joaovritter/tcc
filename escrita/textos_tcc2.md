@@ -205,7 +205,7 @@ A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados 
 
 Seção nova, logo depois da Metodologia. Cerca de 2,25 páginas. Sete subseções, nesta ordem.
 
-## V.A · Tecnologias e Arquitetura (Fig. 3)
+## V.A · Tecnologias e Arquitetura (Fig. 3) ✅
 
 **Onde:** abre a seção. Recebe o parágrafo da arquitetura que estava antes da Fig. 3 na Metodologia do TCC I.
 
@@ -231,7 +231,7 @@ A arquitetura seguiu o padrão MVC \cite{freeman2018pro}, com uma diferença em 
 
 **Por quê:** o TCC I dizia "Modelo = PostgreSQL", e o código não é assim.
 
-## V.B · Fluxo da Sessão e do Diagnóstico (Fig. 4)
+## V.B · Fluxo da Sessão e do Diagnóstico (Fig. 4) ✅
 
 **Hoje diz:** "...desde a solicitação do diagnóstico até a persistência e exibição."
 
@@ -255,7 +255,7 @@ Separar a finalização da avaliação foi a forma encontrada para atender ao RN
 
 **Conferido no código:** `diagnosticController.ts` (409, 400, 502 e score calculado antes da chamada).
 
-## V.C · Modelo de Dados (Fig. 5)
+## V.C · Modelo de Dados (Fig. 5) ✅
 
 **Onde:** substitui o parágrafo do DER do TCC I ("Por fim, a persistência dos dados foi representada...").
 
@@ -304,7 +304,7 @@ A entidade \textit{Treino} passou a registrar se a sessão foi finalizada e, opc
 
 **O que mudou em relação à Fig. 5 do TCC I:** `DiagnosticoIA` perde `semana_referencia` e ganha `fk_treino` e `score_geral`; `Treino` ganha `completed` e `fk_divisao`; tabelas novas `Divisao` e `DivisaoExercicio`.
 
-## V.D · Integração com a IA Generativa (Tabela do prompt)
+## V.D · Integração com a IA Generativa (Tabela do prompt) ✅
 
 **Onde:** a subseção "Integração com Inteligência Artificial Generativa" do TCC I passa para cá. Substitui os dois parágrafos antes da Tabela V e a própria tabela.
 
