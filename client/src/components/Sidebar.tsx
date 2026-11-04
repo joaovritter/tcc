@@ -86,7 +86,7 @@ function BarraLateral() {
             animate={{ opacity: 1 }}
             sx={{ fontFamily: '"Sora", sans-serif', fontWeight: 700, fontSize: 15, color: '#F3F6F4', whiteSpace: 'nowrap' }}
           >
-            HyperTrack
+            Hipertrofia App
           </Typography>
         )}
       </Stack>
