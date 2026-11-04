@@ -9,7 +9,7 @@ Texto pronto para colar no TCC II (`main.tex` no Prism), **na ordem do artigo**.
 
 Os trechos entre colchetes, como [N], são lacunas para preencher com números reais.
 
-Atualizado em 03/11/2026 (Seção V até a V.F no TCC II; V.E simplificada com tabela de pontos; V.F sem o parágrafo de regras). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
+Atualizado em 03/11/2026 (Seção V fechada no TCC II; próxima: VI Resultados). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
 
 ---
 
@@ -24,7 +24,7 @@ Atualizado em 03/11/2026 (Seção V até a V.F no TCC II; V.E simplificada com t
 | IV | Metodologia: Abordagem de desenvolvimento | E2 | ✅ (falta só a frase do cronograma, para depois) |
 | IV | Metodologia: Requisitos do sistema | E2 | ✅ |
 | IV | Metodologia: Procedimentos de validação | E2 | ✅ |
-| V | Solução desenvolvida (7 subseções) | E2 | ⏳ (V.A a V.F feitas; falta a V.G) |
+| V | Solução desenvolvida (7 subseções) | E2 | ✅ (03/11) |
 | VI | Resultados | E3 | ⏳ (VI.A, VI.B e VI.C prontas para colar; faltam os prints) |
 | VII | Conclusões | E3 | ⏳ |
 | — | Referências novas (BibTeX) | E2/E3 | ⏳ |
@@ -201,7 +201,7 @@ A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados 
 
 ---
 
-# V · Solução desenvolvida — E2 ⏳
+# V · Solução desenvolvida — E2 ✅
 
 Seção nova, logo depois da Metodologia. Cerca de 2,25 páginas. Sete subseções, nesta ordem.
 
@@ -338,7 +338,7 @@ Formato de saída & Somente JSON com três campos obrigatórios e sem campo de p
 
 **Revisões de 01/11:** o parágrafo do esquema de resposta foi reescrito (o anterior estava denso) e o das diretrizes é a versão do autor. Os parágrafos de persona, contexto e dados podem ter sido ajustados direto no TCC II: em caso de diferença, vale o `.tex`.
 
-**Por que RPE 9 e não 10:** RPE 9 é o estímulo otimizado; RPE 10 (falha) é aceito, mas custa mais recuperação sem ganho claro de hipertrofia. O score dá 100 para os dois; a IA recomendou baixar de 10 para 9 no cenário C5.
+**Por que RPE 9 e não 10:** o Referencial (II.B, Helms) define RPE 9 (1 RIR) como o estímulo otimizado. RPE 10 (falha) é aceito, mas não aumenta a nota: o score dá 100 para os dois. A IA recomendou baixar de 10 para 9 no cenário C5.
 
 **Referência nova:** `googleStructuredOutput` (BibTeX no fim deste arquivo).
 
@@ -358,7 +358,7 @@ Para complementar as recomendações da IA, cada diagnóstico traz um \textit{sc
 
 A pontuação de volume indica o quanto os grupamentos treinados na sessão se aproximam do limiar de 10 séries semanais \cite{schoenfeld2017dose}. Para cada grupamento, calcula-se o percentual atingido desse limiar com as séries válidas acumuladas na semana, limitado a 100\%, e $P_v$ é a média desses percentuais. Optou-se por considerar apenas os grupamentos treinados na sessão porque o diagnóstico avalia a sessão: um grupamento trabalhado em outro dia não altera a nota deste treino.
 
-A pontuação de intensidade tem como referência a intensidade ótima em RPE 9, ou 1 RIR \cite{zourdos2016novel, helms2016application}. Cada série válida da sessão recebe pontos conforme o seu RPE (Tabela~\ref{tab:pontos-rpe}), e $P_i$ é a média desses pontos. Uma série em RPE 10 vale o mesmo que em RPE 9, pois treinar até a falha não traz benefício adicional para a hipertrofia.
+A pontuação de intensidade tem como referência a intensidade ótima em RPE 9, ou 1 RIR \cite{zourdos2016novel, helms2016application}. Cada série válida da sessão recebe pontos conforme o seu RPE (Tabela~\ref{tab:pontos-rpe}), e $P_i$ é a média desses pontos. Uma série em RPE 10 recebe a mesma pontuação que uma em RPE 9, pois o referencial adotado considera o RPE 9 como o estímulo otimizado \cite{helms2016application}; levar a série até a falha, portanto, não aumenta a nota.
 
 \begin{table}[!h]
 \centering
@@ -378,7 +378,7 @@ Por exemplo, em uma sessão de peito e tríceps em que o peito acumula 12 série
 
 **Conferido no código** (`scoreService.ts`): `calcularPv`, `calcularPi` e `calcularScoreGeral` batem com a tabela (pontos = (RPE − 6) / 3 × 100, com teto de 100). Exemplo: Pv 80, Pi 88,9, score 84.
 
-**Atenção na revisão (E4):** "treinar até a falha não traz benefício adicional para a hipertrofia" é uma afirmação forte. Conferir se o Referencial (II.B) sustenta isso com Zourdos ou Helms; se não, trocar por "pois ambos estão dentro da faixa de intensidade considerada ótima".
+**RPE 10 = RPE 9 (resolvido em 03/11):** a justificativa usa só o que o Referencial (II.B) diz: RPE 9 "indica que o estímulo foi otimizado" (Helms). Não afirmar que a falha "não traz benefício", porque o Referencial não sustenta isso e a literatura não é consenso.
 
 **Por quê:** o texto antigo dizia "após o retorno", mas o código calcula **antes** (D13). A frase do $P_v$ responde à pergunta provável da banca: "por que não olhar a semana toda?".
 
@@ -400,15 +400,21 @@ A tela do histórico (RF07) foi dividida em três abas. A aba Cargas é separada
 
 **Atenção:** "tonelagem" (carga × repetições) é diferente de "volume" (contagem de séries). Não misturar.
 
-## V.G · Ajustes em Relação à Proposta ⏳ (próxima)
+## V.G · Ajustes em Relação à Proposta ✅
 
-**Onde:** última subseção da Solução.
+**Feito no TCC II (03/11).** Versão do autor, em três parágrafos (diagnóstico; esforço; score, *feeder* e *deload*). Decisão do autor: **sem ponto e vírgula** no texto.
 
 ```latex
 \subsection{Ajustes em Relação à Proposta}
 
-A implementação manteve os objetivos, os requisitos e a arquitetura da proposta, mas alguns pontos foram ajustados ao longo dos ciclos de desenvolvimento e registrados como decisões de projeto. O principal foi a unidade do diagnóstico: a proposta previa consolidar as métricas da semana, e o sistema passou a avaliar cada sessão finalizada, usando o volume semanal como contexto, para que o retorno chegasse logo após o treino e tratasse do que acabou de ser feito. O registro do esforço também mudou: em vez de pedir RPE e RIR separadamente, o sistema pede uma das escalas e calcula a outra, o que evita dupla digitação e valores incoerentes. Foi acrescentado o tipo de série \textit{feeder}, para registrar séries de aproximação sem inflar o volume. O \textit{score} passou a ser calculado antes da chamada à IA, e não depois, o que o torna independente do modelo. Por fim, a sugestão de \textit{deload} mencionada na proposta não foi implementada como regra, pois o \textit{deload} é uma redução planejada e o sistema não conhece a intenção do praticante; recomendações desse tipo aparecem apenas no texto gerado pela IA.
+A implementação seguiu o planejado nos objetivos, nos requisitos e na arquitetura da proposta, mas alguns pontos foram modificados durante o desenvolvimento. A principal mudança foi no diagnóstico. A proposta previa que as métricas consolidadas eram da semana, agora, o sistema avalia cada sessão finalizada, usando o volume semanal como contexto, para que o diagnóstico seja logo após o treino, o que faz mais sentido para o usuário.
+
+No registro do esforço, em vez de pedir RPE e RIR separadamente, como previa a proposta, o usuário passou a escolher a escala de sua preferência. O valor em RIR é gravado diretamente, mas, se o valor for em RPE, é convertido para RIR antes de ser gravado. Assim, o RIR é a única escala armazenada, e o RPE é calculado a partir dele, o que evita dupla digitação e valores incoerentes entre as escalas.
+
+O \textit{score}, para ser independente do modelo, é calculado antes da chamada ao Gemini, e não depois. Também foi acrescentado o tipo de série \textit{feeder}, para registrar as séries de preparação, feitas antes das séries válidas para sinalizar ao organismo a carga que vem a seguir, sem que elas contem no volume. Por fim, a sugestão de \textit{deload} não foi implementada como regra, por ser uma redução planejada e o sistema não saber a intenção do praticante, recomendações desse tipo aparecem apenas no texto gerado pela IA.
 ```
+
+**Opcional (E4):** duas vírgulas emendam frases ("eram da semana, agora" e "do praticante, recomendações"); dá para trocar por ponto final.
 
 **Por quê:** a banca avalia a "consistência com a proposta apresentada". Mudança explicada conta a favor; mudança sem explicação conta contra.
 
