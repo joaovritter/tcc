@@ -9,7 +9,7 @@ Texto pronto para colar no TCC II (`main.tex` no Prism), **na ordem do artigo**.
 
 Os trechos entre colchetes, como [N], são lacunas para preencher com números reais.
 
-Atualizado em 03/11/2026 (Seção V fechada no TCC II; próxima: VI Resultados). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
+Atualizado em 04/11/2026 (VI.A, VI.B e VI.C coladas no TCC II; falta a VI.D, prints). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
 
 ---
 
@@ -25,7 +25,7 @@ Atualizado em 03/11/2026 (Seção V fechada no TCC II; próxima: VI Resultados).
 | IV | Metodologia: Requisitos do sistema | E2 | ✅ |
 | IV | Metodologia: Procedimentos de validação | E2 | ✅ |
 | V | Solução desenvolvida (7 subseções) | E2 | ✅ (03/11) |
-| VI | Resultados | E3 | ⏳ (VI.A, VI.B e VI.C prontas para colar; faltam os prints) |
+| VI | Resultados | E3 | ⏳ (VI.A, VI.B e VI.C ✅ 04/11; falta a VI.D, prints) |
 | VII | Conclusões | E3 | ⏳ |
 | — | Referências novas (BibTeX) | E2/E3 | ⏳ |
 | — | Lista de busca (Ctrl+F) | E4 | ⏳ |
@@ -424,7 +424,7 @@ O \textit{score}, para ser independente do modelo, é calculado antes da chamada
 
 Seção nova, depois da Solução. Cerca de 2 páginas.
 
-## VI.A · Testes Automatizados (Tabela de rastreabilidade)
+## VI.A · Testes Automatizados (Tabela de rastreabilidade) ✅
 
 **Onde:** a Tabela VI do TCC I (`tab:matriz-rastreabilidade`) vem para cá e ganha a coluna **Resultado**.
 
@@ -465,50 +465,30 @@ RNF06 & Teste de integração & Registros intactos após falha simulada & Atendi
 
 **Antes de escrever:** rodar `npm test` em `server/` e copiar o total (`# tests` / `# pass`). Se algum requisito não passar por inteiro, trocar "Atendido" por "Atendido com ressalva" e explicar em uma frase.
 
-## VI.B · Avaliação Heurística de Usabilidade
+## VI.B · Avaliação Heurística de Usabilidade ✅
 
-Preenchido em 29/10/2026 com os achados de `01-planejamento/resultados_heuristica.md`.
-
-**Contagem (8 achados):**
-
-| Sev. | Qtd. | Achados |
-|---|---|---|
-| 1 | 1 | Histórico (abas Cargas e Volume) vazio não diz o que fazer (H10). Duas abas, mesmo problema: conta como um achado só |
-| 2 | 6 | Salvar semana sem confirmação (H1); diálogo de exercícios descarta sem avisar (H3); série não editável (H3); carga sem limite (H5); erro do RIR fora da tela (H9); barra do celular só com ícones (H6) |
-| 3 | 1 | Lixeira apaga a série sem confirmação nem desfazer (H5) |
-| 4 | 0 | — |
+**Feito no TCC II (04/11).** Versão do autor, em dois parágrafos:
 
 ```latex
 \subsection{Avaliação Heurística de Usabilidade}
 
-A inspeção identificou oito problemas de usabilidade nos fluxos avaliados: um de severidade 1, seis de severidade 2, um de severidade 3 e nenhum de severidade 4. O mais grave estava na tela Treino de Hoje, em que o botão de excluir apagava a série imediatamente, sem confirmação nem opção de desfazer, violando a heurística de prevenção de erros (severidade 3). Na tela Minha Divisão, a ação de salvar a semana não exibia nenhuma confirmação, o que viola a heurística de visibilidade do estado do sistema e leva o usuário a repetir a ação (severidade 2). Entre os aspectos bem avaliados, destaca-se o tratamento de estados vazios: na tela Diagnóstico, um usuário que ainda não avaliou nenhuma sessão é orientado a, em Treino de Hoje, tocar em ``Finalizar e avaliar treino'' ao término do treino, o que atende à heurística de ajuda e documentação. O problema de severidade 3 foi corrigido com a inclusão de uma janela de confirmação antes da exclusão da série, e os demais, de severidade 1 e 2, foram registrados como melhorias para versões futuras. Assim, nenhum problema de severidade 3 ou 4 permaneceu, atendendo ao critério definido para o RNF01.
+A inspeção identificou oito problemas de usabilidade nos fluxos avaliados, com um de severidade 1, seis de severidade 2, um de severidade 3 e nenhum de severidade 4. O mais grave estava na tela Treino de Hoje, em que o botão de excluir apagava a série diretamente, sem confirmação nem opção de desfazer, que viola a heurística de prevenção de erros (severidade 3). Na tela Minha Divisão, ao salvar a semana, a tela não exibia nenhuma confirmação, o que viola a heurística de visibilidade do estado do sistema e leva o usuário a repetir a ação (severidade 2).
+
+Entre os aspectos bem avaliados, o tratamento de estados vazios foi o destacado. Na tela Diagnóstico, o usuário que ainda não avaliou nenhuma sessão é orientado a ir para Treino de Hoje, clicar em "Finalizar e avaliar treino" ao término do treino, o que atende à heurística de ajuda e documentação. O problema de severidade 3 foi corrigido com a inclusão de uma janela de confirmação antes de excluir a série. Os problemas de severidade 1 e 2 foram registrados como melhorias para futuras versões. Assim, atendendo o critério do RNF01, nenhum problema de severidade 3 ou 4 permaneceu.
 ```
 
-**Pronto para colar:** a lixeira (A1) foi corrigida em 31/10 (commit `0f93077`) com um diálogo "Apagar esta série?" (Cancelar / Apagar). Se corrigir mais algum achado, citar no texto. Detalhes por tela em `01-planejamento/avaliacao-heuristica.md`.
-
-**Atenção:** não dizer que as correções vieram "antes do congelamento do código". Elas foram feitas depois do *code freeze* (19/10), como ajustes de usabilidade apontados pela própria avaliação, o que o roteiro permite.
-
-**Ponto positivo** (verificado com o usuário sem dados, `joao2@teste.com`): já está no texto acima. Mostra que a inspeção também registrou o que funciona, e não só problemas, o que deixa a avaliação mais crível para a banca.
-
-Tabela opcional, se couber:
-```latex
-\begin{tabular}{|p{0.30\columnwidth}|p{0.30\columnwidth}|p{0.12\columnwidth}|p{0.16\columnwidth}|}
-\hline
-\textbf{Tela} & \textbf{Heurística violada} & \textbf{Sev.} & \textbf{Situação} \\ \hline
-Treino de Hoje & [...] & [2] & Corrigido \\ \hline
-\end{tabular}
-```
+**Contagem (8 achados):** sev. 1: 1 (A8); sev. 2: 6 (A2–A7); sev. 3: 1 (A1, corrigido em 31/10, commit `0f93077`, diálogo "Apagar esta série?"); sev. 4: 0. Detalhes em `01-planejamento/avaliacao-heuristica.md`.
 
 ## VI.C · Validação do Conteúdo dos Diagnósticos ✅
 
-Preenchido em 30/10/2026 com os resultados de `validacao-ia-cenarios.md`.
+**Feito no TCC II (04/11).** Versão do autor, com a tabela dos cenários:
 
 ```latex
 \subsection{Validação do Conteúdo dos Diagnósticos}
 
-Os cinco cenários foram submetidos à API real, e os resultados estão na Tabela~\ref{tab:cenarios-ia}. Em todos, o \textit{score} exibido coincidiu com o calculado manualmente a partir das séries registradas, e o diagnóstico foi coerente com o limiar de volume \cite{schoenfeld2017dose} e com a leitura de intensidade por RPE e RIR \cite{zourdos2016novel, helms2016application}. No cenário de intensidade baixa, o modelo recomendou aumentar a carga, e não o número de séries; nos cenários com volume no limiar ou acima dele, não sugeriu séries adicionais para o grupamento. No cenário com aquecimento e \textit{feeder}, considerou apenas as três séries válidas, e no cenário com séries de um dia anterior, usou o volume semanal acumulado. Em nenhum caso foram citados exercícios ou valores ausentes dos dados, as respostas permaneceram no domínio do treinamento de força e todas vieram no formato JSON esperado.
+Os cinco cenários da terceira frente foram realizados com a API real, e os resultados estão na Tabela~\ref{tab:cenarios-ia}. Em todos os cenários, o \textit{score} exibido coincidiu com o cálculo manual a partir das séries registradas, e o diagnóstico foi coerente com o limiar de volume \cite{schoenfeld2017dose} e com a leitura de intensidade por RPE e RIR \cite{zourdos2016novel, helms2016application}. No cenário de intensidade baixa, a recomendação foi aumentar a carga, e não o número de séries. Nos cenários com volume no limiar ou acima dele, o modelo não sugeriu séries a mais para o grupamento. No cenário com séries de aquecimento e \textit{feeder}, o modelo considerou apenas as séries válidas, e no cenário com séries válidas de um dia anterior, usou o volume semanal acumulado. Em nenhum diagnóstico foram citados exercícios ou valores ausentes dos dados. As respostas permaneceram no domínio do treinamento de força e todas vieram no formato JSON esperado.
 
-Foram observadas duas imprecisões. Em um cenário, o modelo afirmou que cinco séries de um exercício atingiam o volume, embora o limiar se refira ao grupamento. Além disso, o comentário sobre grupamentos sem séries na semana apareceu em um cenário e não em outro, em situação semelhante. Por outro lado, a IA acrescentou informação que o \textit{score} não capta: apontou grupamentos não treinados na semana, que não afetam o $P_v$, e, no cenário em RPE 10, recomendou reduzir para RPE 9, embora o $P_i$ atribua pontuação máxima a ambos.
+Foram observadas duas imprecisões. Em um cenário, o modelo considerou as cinco séries de um único exercício como volume atingido, embora o limiar de 10 séries se aplique ao grupamento muscular, e não a cada exercício. Além disso, em situação semelhante, o comentário sobre grupamentos sem séries na semana apareceu em um cenário e não em outro. Por outro lado, a IA complementou com informação que o \textit{score} não capta: apontou grupamentos não treinados na semana, que não afetam o $P_v$, e, no cenário de RPE 10, recomendou reduzir para RPE 9, embora o $P_i$ atribua pontuação máxima a ambos.
 
 \begin{table}[!h]
 \centering
@@ -526,15 +506,14 @@ C3 & Pernas, 12 séries válidas em RPE 8 e 9 & 89 & 4/4 \\ \hline
 C4 & Peito e tríceps, com séries de um dia anterior (12 e 6 na semana) & 90 & 4/4 \\ \hline
 C5 & Ombros, 2 aquecimentos, 1 \textit{feeder} e 3 séries válidas em RPE 10 & 65 & 4/4 \\ \hline
 \end{tabular}
-{\footnotesize Fonte: elaborado pelo autor.}
+\par
+{\footnotesize Critérios: coerência, fidelidade, domínio e formato JSON. Fonte: elaborado pelo autor.}
 \end{table}
 ```
 
-**Critérios:** coerência, fidelidade, domínio e JSON. "4/4" quer dizer os quatro atendidos.
+**De onde vem cada imprecisão:** a do "volume atingido" é do C2 (Puxada Articulada, 5 séries); a do comentário sobre grupamentos zerados é do C3 (comentou) × C4 (não comentou). Detalhes em `validacao-ia-cenarios.md`.
 
-**Se faltar espaço:** a tabela pode sair. O texto se sustenta sozinho; nesse caso, tirar o "e os resultados estão na Tabela~\ref{tab:cenarios-ia}".
-
-**Não esconder as imprecisões:** um resultado com falhas explicadas é mais crível para a banca do que 5 de 5 perfeitos sem comentário.
+**Se a banca perguntar por que o *prompt* manda o volume de todos os grupamentos:** vai como "contexto, não é o foco" (`geminiService.ts`), para a IA poder avisar de grupamentos esquecidos, que o $P_v$ não pune. Como ela não sabe o dia da divisão, o aviso pode vir cedo demais: está nos trabalhos futuros.
 
 ## VI.D · Prints das telas
 
