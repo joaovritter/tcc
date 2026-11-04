@@ -570,10 +570,12 @@ A decisão de maior impacto foi separar o que é calculado do que é interpretad
 
 O trabalho tem limitações. Cada exercício está associado a um único grupamento muscular, o que subestima o volume dos grupamentos sinergistas. O $P_v$ considera apenas os grupamentos da sessão avaliada; um grupamento previsto na divisão e negligenciado na semana não reduz o \textit{score}, embora apareça na tela de volume semanal. A validação foi feita sem usuários reais, a inspeção de usabilidade contou com um único avaliador e a responsividade foi verificada no modo de dispositivo móvel do navegador, e não em aparelhos físicos. O sistema não registra o descanso entre séries e não foi publicado em ambiente de produção. A qualidade dos diagnósticos também depende do modelo de linguagem utilizado, que pode mudar de versão.
 
-Como trabalhos futuros, sugerem-se: avaliar o sistema com praticantes reais por um período prolongado; associar cada exercício a mais de um grupamento, com pesos diferentes; incluir o perfil e a anamnese do usuário no contexto do \textit{prompt}; e publicar o sistema em ambiente de produção.
+Como trabalhos futuros, sugerem-se: avaliar o sistema com praticantes reais por um período prolongado; associar cada exercício a mais de um grupamento, com pesos diferentes; incluir o perfil e a anamnese do usuário no contexto do \textit{prompt}; incluir a divisão semanal no contexto do \textit{prompt}, para que o modelo saiba quais grupamentos ainda serão treinados na semana; e publicar o sistema em ambiente de produção.
 ```
 
 **Antes de fechar:** conferir se as limitações batem com o que aconteceu nas Frentes 2 e 3, e se os trabalhos futuros batem com a lista 🧊 do Trello.
+
+**Acrescentado em 04/11 (decisão do autor):** o trabalho futuro da **divisão semanal no contexto do *prompt*** (a frase de limitação foi descartada pelo autor). Origem: na Frente 3, a IA comentou os grupamentos zerados no C3 e não no C4. O *prompt* envia o volume de todos os grupamentos como "contexto, não é o foco" (`geminiService.ts`), mas o modelo não sabe que dia da divisão é. Decisão: **não mexer no código** antes da entrega; registrar como limitação. O texto usa ponto e vírgula na lista de trabalhos futuros; trocar por vírgulas se preferir.
 
 ---
 
