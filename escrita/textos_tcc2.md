@@ -9,7 +9,7 @@ Texto pronto para colar no TCC II (`main.tex` no Prism), **na ordem do artigo**.
 
 Os trechos entre colchetes, como [N], são lacunas para preencher com números reais.
 
-Atualizado em 04/11/2026 (VI.A, VI.B e VI.C coladas no TCC II; falta a VI.D, prints). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
+Atualizado em 04/11/2026 à noite (Resultados fechados; prints na V.F; a VI.D foi removida). Esta versão segue a ordem do artigo e já traz as decisões tomadas na escrita (E1 e E2). Os cards ✍️ do Trello têm a versão antiga dos textos: **em caso de diferença, vale este arquivo.**
 
 ---
 
@@ -25,7 +25,7 @@ Atualizado em 04/11/2026 (VI.A, VI.B e VI.C coladas no TCC II; falta a VI.D, pri
 | IV | Metodologia: Requisitos do sistema | E2 | ✅ |
 | IV | Metodologia: Procedimentos de validação | E2 | ✅ |
 | V | Solução desenvolvida (7 subseções) | E2 | ✅ (03/11) |
-| VI | Resultados | E3 | ⏳ (VI.A, VI.B e VI.C ✅ 04/11; falta a VI.D, prints) |
+| VI | Resultados | E3 | ✅ (VI.A, VI.B e VI.C em 04/11; a VI.D saiu, os prints foram para a V.F) |
 | VII | Conclusões | E3 | ⏳ |
 | — | Referências novas (BibTeX) | E2/E3 | ⏳ |
 | — | Lista de busca (Ctrl+F) | E4 | ⏳ |
@@ -36,9 +36,10 @@ Atualizado em 04/11/2026 (VI.A, VI.B e VI.C coladas no TCC II; falta a VI.D, pri
 - [x] **Números do `npm test`:** 68 testes em 8 arquivos, todos passando (31/10).
 - [x] **Achados da heurística** (quantidade por severidade), para os Resultados.
 - [x] **Correção do A1 (lixeira):** diálogo "Apagar esta série?" com Cancelar e Apagar (commit `0f93077`, 31/10).
-- [ ] **Prints** tirados depois do code freeze, com `GEMINI_MOCK=false`.
+- [x] **Prints** (04/11): 4 prints na V.F (Treino de Hoje e Volume da Semana lado a lado, Diagnóstico do cenário C4, Histórico · Cargas). Arquivos em `02-prints\artigo`.
 - [ ] **BibTeX novos** no `references.bib`: `nielsen1994severity` ✅ (31/10) e `googleStructuredOutput` (citado na V.D; conferir se já está no `.bib`).
 - [ ] **Frase do cronograma** no fim da Abordagem de Desenvolvimento (deixada para depois).
+- [ ] **Trello na Abordagem de Desenvolvimento** (pedido do autor, 04/11): dizer que os ciclos S1–S9 foram gerenciados num quadro Trello. Sugestão: "Os ciclos foram gerenciados em um quadro no Trello, com uma lista por semana e um cartão por funcionalidade." Entra no parágrafo dos ciclos, junto com a frase do cronograma.
 - [ ] **D13 no `PLANEJAMENTO.md`:** ainda diz "grupamentos da divisão da semana"; o certo é "grupamentos treinados na sessão".
 - [ ] **PDF parcial ao orientador** (Introdução até Solução). O prazo era 25/10.
 
@@ -205,7 +206,7 @@ A terceira frente validou o conteúdo dos diagnósticos (RNF04). Foram montados 
 
 Seção nova, logo depois da Metodologia. Cerca de 2,25 páginas. Sete subseções, nesta ordem.
 
-## V.A · Tecnologias e Arquitetura (Fig. 3) ✅
+## V.A · Tecnologias e Arquitetura (Fig. 3)
 
 **Onde:** abre a seção. Recebe o parágrafo da arquitetura que estava antes da Fig. 3 na Metodologia do TCC I.
 
@@ -231,7 +232,7 @@ A arquitetura seguiu o padrão MVC \cite{freeman2018pro}, com uma diferença em 
 
 **Por quê:** o TCC I dizia "Modelo = PostgreSQL", e o código não é assim.
 
-## V.B · Fluxo da Sessão e do Diagnóstico (Fig. 4) ✅
+## V.B · Fluxo da Sessão e do Diagnóstico (Fig. 4)
 
 **Hoje diz:** "...desde a solicitação do diagnóstico até a persistência e exibição."
 
@@ -255,7 +256,7 @@ Separar a finalização da avaliação foi a forma encontrada para atender ao RN
 
 **Conferido no código:** `diagnosticController.ts` (409, 400, 502 e score calculado antes da chamada).
 
-## V.C · Modelo de Dados (Fig. 5) ✅
+## V.C · Modelo de Dados (Fig. 5)
 
 **Onde:** substitui o parágrafo do DER do TCC I ("Por fim, a persistência dos dados foi representada...").
 
@@ -304,7 +305,7 @@ A entidade \textit{Treino} passou a registrar se a sessão foi finalizada e, opc
 
 **O que mudou em relação à Fig. 5 do TCC I:** `DiagnosticoIA` perde `semana_referencia` e ganha `fk_treino` e `score_geral`; `Treino` ganha `completed` e `fk_divisao`; tabelas novas `Divisao` e `DivisaoExercicio`.
 
-## V.D · Integração com a IA Generativa (Tabela do prompt) ✅
+## V.D · Integração com a IA Generativa (Tabela do prompt)
 
 **Onde:** a subseção "Integração com Inteligência Artificial Generativa" do TCC I passa para cá. Substitui os dois parágrafos antes da Tabela V e a própria tabela.
 
@@ -384,14 +385,49 @@ Por exemplo, em uma sessão de peito e tríceps em que o peito acumula 12 série
 
 ## V.F · Interface do Sistema ✅
 
-**Feito no TCC II (03/11).** O título mudou de "Interface e Regras de Uso" para "Interface do Sistema", e o 3º parágrafo (regras de uso) foi **cortado**: a semana de segunda a domingo já está no RF04, a duração calculada pelo servidor já está na V.B, e o resto eram regras internas sem peso para a banca.
+**Feito no TCC II (03/11; prints em 04/11).** Os 4 prints entraram aqui, e não numa seção própria: cada figura fica junto do texto que descreve a tela. O título mudou de "Interface e Regras de Uso" para "Interface do Sistema", e o 3º parágrafo (regras de uso) foi **cortado**: a semana de segunda a domingo já está no RF04, a duração calculada pelo servidor já está na V.B, e o resto eram regras internas sem peso para a banca.
 
 ```latex
 \subsection{Interface do Sistema}
 
 A interface possui cinco telas: Minha Divisão, onde o usuário monta a divisão semanal, dando um nome ao treino de cada dia e escolhendo os exercícios; Treino de Hoje, usada para acompanhamento durante o treino, onde o usuário começa o treino e registra as séries com tipo, carga, repetições e RIR ou RPE; Volume da Semana, com as séries válidas da semana atual por grupamento, em relação ao limiar; Diagnóstico da Sessão, com o \textit{score}, as pontuações $P_v$ e $P_i$, a análise por grupamento e por exercício e as recomendações para a próxima sessão; e Histórico, detalhado a seguir. Para atender telas estreitas, a barra de navegação lateral passa a ser uma barra inferior, pensada para o uso em celulares durante o treino (RNF01). Os campos numéricos aceitam vírgula decimal.
 
+A Fig.~\ref{fig:telas-celular} mostra o registro de séries e o volume da semana no celular.
+
+\begin{figure}[!h]
+\caption{Telas Treino de Hoje (a) e Volume da Semana (b) no celular}
+\centering
+\begin{minipage}{0.48\columnwidth}\centering
+\includegraphics[width=\linewidth]{images/tela_treino_hoje.png}\\{\footnotesize (a)}
+\end{minipage}\hfill
+\begin{minipage}{0.48\columnwidth}\centering
+\includegraphics[width=\linewidth]{images/tela_volume.png}\\{\footnotesize (b)}
+\end{minipage}
+\label{fig:telas-celular}
+{\footnotesize Fonte: Elaborado pelo autor}
+\end{figure}
+
+A Fig.~\ref{fig:tela-diagnostico} mostra o diagnóstico do cenário C4 da Tabela~\ref{tab:cenarios-ia}.
+
+\begin{figure}[!h]
+\caption{Tela de diagnóstico de uma sessão}
+\centering
+\includegraphics[width=\columnwidth]{images/tela_diagnostico.png}
+\label{fig:tela-diagnostico}
+{\footnotesize Fonte: Elaborado pelo autor}
+\end{figure}
+
 A tela do histórico (RF07) foi dividida em três abas. A aba Cargas é separada por exercício e mostra, com gráficos, a maior carga válida de cada sessão, com as repetições e a tonelagem (soma de carga $\times$ repetições), permitindo acompanhar a progressão do usuário. A aba Volume mostra as séries válidas por grupamento nas últimas oito semanas, em relação ao limiar de 10 séries. A aba Sessões possui um calendário do mês com as sessões finalizadas, e cada sessão pode ser aberta para visualização, mostrando as séries registradas e o diagnóstico gerado pela IA.
+
+A Fig.~\ref{fig:tela-historico} mostra a aba Cargas do histórico.
+
+\begin{figure}[!h]
+\caption{Aba Cargas do histórico}
+\centering
+\includegraphics[width=\columnwidth]{images/tela_historico_cargas.png}
+\label{fig:tela-historico}
+{\footnotesize Fonte: Elaborado pelo autor}
+\end{figure}
 ```
 
 **Dois ajustes que ainda faltam no `.tex`:** "dando um nome ao treino **de dia**" → "**de cada dia**"; "mostra com gráficos**,** a maior carga" → "mostra**,** com gráficos**,** a maior carga". O texto acima já está corrigido.
@@ -515,24 +551,18 @@ C5 & Ombros, 2 aquecimentos, 1 \textit{feeder} e 3 séries válidas em RPE 10 & 
 
 **Se a banca perguntar por que o *prompt* manda o volume de todos os grupamentos:** vai como "contexto, não é o foco" (`geminiService.ts`), para a IA poder avisar de grupamentos esquecidos, que o $P_v$ não pune. Como ela não sabe o dia da divisão, o aviso pode vir cedo demais: está nos trabalhos futuros.
 
-## VI.D · Prints das telas
+## VI.D · Prints das telas — removida (04/11)
 
-3 ou 4 figuras, seguindo o card de prints do Trello (tirar depois do code freeze, mesmo usuário e mesma semana de dados, `GEMINI_MOCK=false`). Plano B: volume + diagnóstico numa figura só.
+Não há mais seção própria de prints. Decisão: distribuir as figuras junto do texto, para economizar o título e o parágrafo de abertura e para cada print aparecer ao lado da tela que descreve. Os 4 prints estão na **V.F · Interface do Sistema**:
 
-```latex
-\begin{figure}[!h]
-\caption{Tela de diagnóstico de uma sessão}
-\centering
-\includegraphics[width=\columnwidth]{images/tela_diagnostico.png}
-\label{fig:tela-diagnostico}
-{\footnotesize Fonte: elaborado pelo autor.}
-\end{figure}
-```
+| Figura | Tela | Requisito |
+|---|---|---|
+| `fig:telas-celular` (a) | Treino de Hoje, no celular | RF03, RNF01 |
+| `fig:telas-celular` (b) | Volume da Semana, no celular | RF04, RNF01 |
+| `fig:tela-diagnostico` | Diagnóstico da Sessão (cenário C4) | RF05, RF06 |
+| `fig:tela-historico` | Histórico · Cargas | RF07 |
 
-Frase que cita a figura:
-```latex
-A Fig.~\ref{fig:tela-diagnostico} mostra o diagnóstico de uma sessão: o \textit{score} geral, as pontuações $P_v$ e $P_i$, a análise por exercício e por grupamento e as recomendações para a próxima sessão.
-```
+**Espaço:** na prova de 04/11, o documento fechou em exatamente 10 páginas com os 4 prints. Se passar, cortar primeiro o print do Histórico e depois a Fig. 2 (sequência).
 
 ---
 
