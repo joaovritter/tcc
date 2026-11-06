@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:3000';
+//no build (npm run build) usa o nginx da VPS; no npm run dev continua o localhost
+const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3000';
+
 
 //Estende as opções de configurações padrão do fetch (method, headers, etc.)
 //e flexibiliza o 'body' para aceitar objetos JS antes da conversão para JSON.
