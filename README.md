@@ -7,6 +7,13 @@ TCC II.
 - **Aluno:** João Vitor dos Santos Ritter
 - **Orientador:** Fabiano Niederauer Flôres
 
+## Acesso para a banca
+
+Sistema online, sem precisar instalar nada: https://tcc.trainna.com.br
+
+- **E-mail:** `joao@teste.com` (5 semanas de treino com diagnósticos)
+- **Senha:** `www.com.brj`
+
 ## O que o sistema faz
 
 - **Minha divisão:** monta a rotina da semana, escolhendo os exercícios de cada dia.
@@ -68,7 +75,7 @@ client/             front React
 
 ## Como rodar
 
-Precisa de Node.js 18+ e PostgreSQL.
+Precisa de Node.js 22+ e PostgreSQL.
 
 ```bash
 git clone https://github.com/joaovritter/tcc.git
@@ -78,8 +85,7 @@ cd tcc
 cd server
 npm install
 cp .env.example .env     # preencher DATABASE_URL e JWT_SECRET
-psql -d nome_do_banco -f schema.sql
-npm run seed             # grupos musculares e exercícios
+npm run db:reset         # tabelas, exercícios e usuários de demonstração
 npm run dev              # http://localhost:3000
 
 # frontend (outro terminal)
@@ -100,8 +106,8 @@ Para usar a IA de verdade, coloque a chave em `GEMINI_API_KEY` e mude
 | `npm run seed:demo` | carrega os usuários de demonstração (`src/demo/usuariosDemo.json`) |
 | `npm run demo:export` | salva os usuários de demonstração do banco local no JSON |
 | `npm run db:reset` | apaga e recria o banco com o seed e os usuários de demonstração |
+| `npm run test` | roda os testes |
+| `npm run build` | compila o TypeScript |
 
 Usuários de demonstração (senha `www.com.brj`): `joao@teste.com`, com 5 semanas
 de treino e diagnósticos, e `joao2@teste.com`, sem dados, para ver as telas vazias.
-| `npm run test` | roda os testes |
-| `npm run build` | compila o TypeScript |
