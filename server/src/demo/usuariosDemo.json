@@ -4149,6 +4149,339 @@
             ]
           }
         }
+      },
+      {
+        "data": "2026-10-28 12:17:07.095102",
+        "dia_divisao": 3,
+        "completed": true,
+        "duracao_total": 595,
+        "series": [
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "feeder",
+            "carga": 60,
+            "repeticoes": 6,
+            "rir": null
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 80,
+            "repeticoes": 8,
+            "rir": 3
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 85,
+            "repeticoes": 7,
+            "rir": 2
+          },
+          {
+            "exercicio": "Agachamento Livre com Barra",
+            "tipo": "work",
+            "carga": 90,
+            "repeticoes": 6,
+            "rir": 1
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "aquecimento",
+            "carga": 100,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "feeder",
+            "carga": 160,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 200,
+            "repeticoes": 10,
+            "rir": 3
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 220,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Leg Press 45",
+            "tipo": "work",
+            "carga": 240,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "feeder",
+            "carga": 50,
+            "repeticoes": 8,
+            "rir": null
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 10,
+            "rir": 3
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 70,
+            "repeticoes": 8,
+            "rir": 1
+          },
+          {
+            "exercicio": "Stiff com Barra",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 9,
+            "rir": 2
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "aquecimento",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "feeder",
+            "carga": 45,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 55,
+            "repeticoes": 12,
+            "rir": 3
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 60,
+            "repeticoes": 11,
+            "rir": 2
+          },
+          {
+            "exercicio": "Cadeira Extensora",
+            "tipo": "work",
+            "carga": 65,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "aquecimento",
+            "carga": 25,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "feeder",
+            "carga": 35,
+            "repeticoes": 10,
+            "rir": null
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 40,
+            "repeticoes": 12,
+            "rir": 3
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 11,
+            "rir": 2
+          },
+          {
+            "exercicio": "Mesa Flexora (Deitada)",
+            "tipo": "work",
+            "carga": 50,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "aquecimento",
+            "carga": 40,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 80,
+            "repeticoes": 12,
+            "rir": 3
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 90,
+            "repeticoes": 12,
+            "rir": 2
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "work",
+            "carga": 100,
+            "repeticoes": 10,
+            "rir": 1
+          },
+          {
+            "exercicio": "Gêmeos em Pé",
+            "tipo": "feeder",
+            "carga": 60,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "aquecimento",
+            "carga": 20,
+            "repeticoes": 15,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "feeder",
+            "carga": 30,
+            "repeticoes": 12,
+            "rir": null
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 35,
+            "repeticoes": 12,
+            "rir": 3
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 40,
+            "repeticoes": 11,
+            "rir": 2
+          },
+          {
+            "exercicio": "Abdominal na Polia Alta",
+            "tipo": "work",
+            "carga": 45,
+            "repeticoes": 10,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 66,
+          "data_geracao": "2026-10-28 22:15:04.335295",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 66.66666666666667,
+              "pv": 65
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "Apesar da boa execução nesta sessão, o volume semanal de 3 séries está muito abaixo do limiar de 10, comprometendo o potencial hipertrófico total.",
+                "nome_grupamento": "Abdômen"
+              },
+              {
+                "comentario": "Volume excelente com 18 séries semanais, acima do limiar de 10. A intensidade foi alta, embora a variação de carga dentro dos exercícios de base (agachamento/leg press) precise de maior consistência.",
+                "nome_grupamento": "Pernas"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "Progresso de carga adequado com manutenção da qualidade técnica. O incremento progressivo até RIR 1 demonstra excelente gerenciamento de intensidade.",
+                "nome_exercicio": "Abdominal na Polia Alta"
+              },
+              {
+                "comentario": "A inversão da pirâmide (carga decrescente) reduziu a intensidade efetiva nas últimas séries. Recomenda-se manter a carga máxima nas séries subsequentes para otimizar o recrutamento de unidades motoras.",
+                "nome_exercicio": "Agachamento Livre com Barra"
+              },
+              {
+                "comentario": "Execução consistente com RPE final em 9, garantindo o estresse mecânico necessário para o quadríceps.",
+                "nome_exercicio": "Cadeira Extensora"
+              },
+              {
+                "comentario": "Volume e intensidade bem distribuídos, permitindo uma boa progressão de sobrecarga ao longo das séries.",
+                "nome_exercicio": "Gêmeos em Pé"
+              },
+              {
+                "comentario": "A flutuação de carga entre as séries prejudicou a manutenção da intensidade. A série final poderia ter mantido a carga da série inicial para evitar queda de performance.",
+                "nome_exercicio": "Leg Press 45"
+              },
+              {
+                "comentario": "Boa progressão de carga, atingindo o RIR 1 na série final conforme esperado para o ganho de hipertrofia.",
+                "nome_exercicio": "Mesa Flexora (Deitada)"
+              },
+              {
+                "comentario": "A oscilação de cargas impediu um estímulo constante próximo à falha concêntrica. Focar na estabilização da carga máxima é preferível.",
+                "nome_exercicio": "Stiff com Barra"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume semanal de treinamento para grupamentos deficitários (Abdômen, Bíceps, Costas, Ombros, Peito, Tríceps) para atingir no mínimo 10 séries.",
+              "Em exercícios de base como Agachamento e Leg Press, priorize a manutenção da carga principal entre as séries para evitar a redução da intensidade efetiva.",
+              "Adotar estratégias de progressão de carga linear ou dupla progressão para garantir o estímulo em RPE 8-9 ao longo de toda a sessão de Pernas.",
+              "Considerar uma divisão de treino mais equilibrada para redistribuir o volume excessivo de pernas em favor da frequência de outros grupamentos musculares."
+            ]
+          }
+        }
+      },
+      {
+        "data": "2026-10-28 22:36:29.949977",
+        "dia_divisao": 3,
+        "completed": true,
+        "duracao_total": 1,
+        "series": [],
+        "diagnostico": null
+      },
+      {
+        "data": "2026-10-28 22:51:02.089649",
+        "dia_divisao": 3,
+        "completed": true,
+        "duracao_total": null,
+        "series": [],
+        "diagnostico": null
+      },
+      {
+        "data": "2026-11-03 15:44:30.058862",
+        "dia_divisao": 2,
+        "completed": true,
+        "duracao_total": 1,
+        "series": [],
+        "diagnostico": null
       }
     ]
   },
@@ -4156,7 +4489,111 @@
     "nome": "João",
     "email": "joao2@teste.com",
     "senha_hash": "$2b$10$GBy20RzhjMEVF1ZinXp3ZOfT2YIzHjFnlyrsSnOFTeVp2py3k2a5i",
-    "divisoes": [],
-    "treinos": []
+    "divisoes": [
+      {
+        "dia_semana": 1,
+        "nome": "peito",
+        "exercicios": []
+      },
+      {
+        "dia_semana": 2,
+        "nome": "costas",
+        "exercicios": []
+      },
+      {
+        "dia_semana": 3,
+        "nome": "PERNA",
+        "exercicios": []
+      },
+      {
+        "dia_semana": 4,
+        "nome": "peito",
+        "exercicios": [
+          "Supino Inclinado com Barra",
+          "Supino Inclinado na Máquina",
+          "Flexão de Braços"
+        ]
+      }
+    ],
+    "treinos": [
+      {
+        "data": "2026-10-29 20:31:40.995578",
+        "dia_divisao": 4,
+        "completed": true,
+        "duracao_total": 8,
+        "series": [],
+        "diagnostico": null
+      },
+      {
+        "data": "2026-10-29 20:40:00.984242",
+        "dia_divisao": 4,
+        "completed": true,
+        "duracao_total": 1,
+        "series": [],
+        "diagnostico": null
+      },
+      {
+        "data": "2026-10-29 20:40:49.426316",
+        "dia_divisao": 4,
+        "completed": true,
+        "duracao_total": 1,
+        "series": [],
+        "diagnostico": null
+      },
+      {
+        "data": "2026-10-29 20:40:59.250457",
+        "dia_divisao": 4,
+        "completed": true,
+        "duracao_total": 1,
+        "series": [
+          {
+            "exercicio": "Supino Inclinado com Barra",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 121,
+            "rir": 1
+          },
+          {
+            "exercicio": "Supino Inclinado na Máquina",
+            "tipo": "work",
+            "carga": 12,
+            "repeticoes": 12,
+            "rir": 1
+          }
+        ],
+        "diagnostico": {
+          "score_geral": 60,
+          "data_geracao": "2026-10-29 20:41:44.506867",
+          "conteudo_json": {
+            "score_detalhe": {
+              "pi": 100,
+              "pv": 20
+            },
+            "analise_grupamentos": [
+              {
+                "comentario": "O volume semanal atual de 2 séries está muito abaixo do limiar mínimo de 10 séries, resultando em um estímulo insuficiente para promover adaptações hipertróficas consistentes.",
+                "nome_grupamento": "Peito"
+              }
+            ],
+            "diagnostico_exercicios": [
+              {
+                "comentario": "O volume de 121 repetições em uma única série é fisiologicamente inconsistente para hipertrofia, possivelmente indicando um erro de registro ou uma carga excessivamente leve que foca em resistência de curtíssima duração, perdendo a especificidade para a tensão mecânica necessária.",
+                "nome_exercicio": "Supino Inclinado com Barra"
+              },
+              {
+                "comentario": "A execução está dentro da faixa de RPE otimizada, porém o volume por série é insuficiente para gerar sinalização anabólica significativa se não houver um maior número de séries planejadas.",
+                "nome_exercicio": "Supino Inclinado na Máquina"
+              }
+            ],
+            "recomendacoes_proxima_sessao": [
+              "Aumentar o volume semanal de peito para atingir gradualmente a meta de 10 séries semanais.",
+              "Revisar a carga no Supino Inclinado com Barra para que o número de repetições caia na faixa de 6 a 12, permitindo maior tensão mecânica com RPE 9.",
+              "Diversificar a seleção de exercícios para incluir movimentos de isolamento ou outras angulações de empurrar que completem o volume necessário.",
+              "Garantir a precisão no registro dos dados para assegurar que a carga externa reflita a intensidade real aplicada."
+            ]
+          }
+        }
+      }
+    ]
   }
 ]
